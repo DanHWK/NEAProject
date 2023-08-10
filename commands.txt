@@ -1,0 +1,13 @@
+Update GitHub:
+
+git add .
+git commit -m "Commit Message"
+git push
+
+Other git commands:
+# see which files have changes you haven't updated on GitHub
+git status
+
+Run file:
+
+python3 "file name"
