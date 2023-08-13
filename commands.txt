@@ -8,6 +8,15 @@ Other git commands:
 # see which files have changes you haven't updated on GitHub
 git status
 
-Run file:
+Run file
 
 python3 "file name"
+
+
+div{
+  width: 340px;
+  padding: 10px;
+  border: 10px solid green;
+  margin: 0;
+}
+  <div style = "font-family:inter "> Exercise session </div>

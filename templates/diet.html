@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+<!doctype html>
+{% block body %}
+<h1> Diet </h1>
+<br>
+<h2> Add meal record </h2>
+<br>
+<br>
+<form action="#" method = "POST">
+  <div class="form-group">
+    <label for="meal_name">Meal name</label>
+    <input type="text" class="form-control" id="meal_name" placeholder="Enter meal name" name = "meal_name">
+  </div>
+
+
+  <div class="form-group">
+    <label for="meal_time">Time of meal</label>
+    <select class ="form-control" id="meal_time" name = "meal_time">
+      <option>Breakfast</option>
+      <option>Lunch</option>
+      <option>Dinner</option>
+      <option>Snack</option>
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>
+
+
+{% endblock %}

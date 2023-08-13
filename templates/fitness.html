@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+<!doctype html>
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+<h1> Fitness </h1>
+<br>
+<h2> Add exercise session </h2>
+<br>
+<br>
+<form action="#" method="POST">
+  <h4> Duration of exercise </h4>
+
+  <div class="form-group">
+    <label for="exercisedurationhours">Hours</label>
+    <input type="number" class="form-control form-control-sm" id="exercisedurationhours" placeholder="Enter duration of session" name = "exercise_hours">
+  </div>
+  <div class="form-group">
+    <label for="exercisedurationminutes">Minutes</label>
+    <input type="number" class="form-control form-control-sm" id="exercisedurationminutes" placeholder="Enter duration of session" name = "exercise_minutes">
+  </div>
+
+  <br>
+
+  <div class="form-group">
+    <label for="exerciseMETvalue">MET value of activity</label>
+    <input type="number" class="form-control" id="exerciseMETvalue" placeholder="MET value" name = "MET_value">
+    <small class="form-text text-muted"> MET value signifies the intensity of an activity, you can search the MET value of your activity online</small>
+  </div>
+
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>
+
+{% endblock %}
