@@ -18,5 +18,4 @@ div{
   padding: 10px;
   border: 10px solid green;
   margin: 0;
-}
-  <div style = "font-family:inter "> Exercise session </div>
+} # RIP green box
