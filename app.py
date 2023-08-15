@@ -1,31 +1,13 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
 import requests
+from models import db, MealRecord, ExerciseRecord
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///record.db'
-#initialise the database
-db = SQLAlchemy(app)
-
-#database model
-class meal_record(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(200), nullable = False)
-    time = db.Column(db.String(50), nullable = False)
-    calories = db.Column(db.Integer, nullable = False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
-
-#database model
-class exercise_record(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    hours = db.Column(db.Integer, nullable = False)
-    minutes = db.Column(db.Integer, nullable = False)
-    stored_MET_value = db.Column(db.Integer, nullable = False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
-
 
 with app.app_context():
+    db.init_app(app) #configuring the application to support the db
     db.drop_all()
     db.create_all()
 
@@ -53,7 +35,7 @@ def fitness():
         exercise_hours = request.form.get("exercise_hours")
         exercise_minutes = request.form.get("exercise_minutes")
         MET_value = request.form.get("MET_value")
-        new_exercise_record = exercise_record(hours = exercise_hours, minutes = exercise_minutes, stored_MET_value = MET_value)
+        new_exercise_record = ExerciseRecord(hours = exercise_hours, minutes = exercise_minutes, stored_MET_value = MET_value)
 
         # push to database
         try:
@@ -73,7 +55,7 @@ def diet():
         calories = getCalories(request.form.get("meal_name"))
         meal_name = request.form.get("meal_name")
         meal_time = request.form.get("meal_time")
-        new_meal_record = meal_record(name = meal_name, time = meal_time, calories = calories)
+        new_meal_record = MealRecord(name = meal_name, time = meal_time, calories = calories)
 
         # push to database
         try:
