@@ -12,6 +12,14 @@ Run file
 
 python3 "file name"
 
+About sessions:
+https://flask.palletsprojects.com/en/2.3.x/quickstart/#sessions
+
+About the flask-login module:
+https://flask-login.readthedocs.io/en/latest/
+
+More about how the aunthetication works:
+https://www.digitalocean.com/community/tutorials/how-to-add-authentication-to-your-app-with-flask-login
 
 div{
   width: 340px;
