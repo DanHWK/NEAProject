@@ -2,30 +2,13 @@ from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import requests
+from models import db, MealRecord, ExerciseRecord
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///record.db'
-#initialise the database
-db = SQLAlchemy(app)
-
-#database model
-class meal_record(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(200), nullable = False)
-    time = db.Column(db.String(50), nullable = False)
-    calories = db.Column(db.Integer, nullable = False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
-
-#database model
-class exercise_record(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    hours = db.Column(db.Integer, nullable = False)
-    minutes = db.Column(db.Integer, nullable = False)
-    stored_MET_value = db.Column(db.Integer, nullable = False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
-
 
 with app.app_context():
+    db.init_app(app) #configuring the application to support the db
     db.drop_all()
     db.create_all()
 
