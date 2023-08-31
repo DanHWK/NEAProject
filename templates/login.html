@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+<!doctype html>
+{% block body %}
+<div>
+    <h3>Login</h3>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="alert alert-danger">
+            {{ messages[0] }}
+        </div>
+        {% endif %}
+        {% endwith %}
+        <form action="#" method="POST">
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="email" name="user_email" placeholder="Your Email" autofocus="">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="password" name="user_password" placeholder="Your Password">
+                </div>
+            </div>
+            <button class="button is-block is-info is-large is-fullwidth">Login</button>
+        </form>
+</div>
+{% endblock %}
