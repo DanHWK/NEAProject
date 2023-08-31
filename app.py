@@ -6,7 +6,10 @@ import bcrypt
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///record.db'
+#Gets the app configured for the databases
+
 app.config['SECRET_KEY'] = b'3733939879b55267c99dee411ca3c0369437268c9781771dcd258859f270292a'
+# Configures the app to the secret key and allows it to use sessions to store user information
 
 with app.app_context():
     db.init_app(app) #configuring the application to support the db
@@ -15,6 +18,7 @@ with app.app_context():
 
     login_manager = LoginManager()
     login_manager.init_app(app)
+    # creates an object of the LoginManage() class that allows the app and the flask_login module to work together
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -91,7 +95,7 @@ def login():
 
         # check if the user actually exists
         # take the user-supplied password, hash it, and compare it to the hashed password in the database
-        if not user or not bcrypt.checkpw(password.encode('utf-8'), (user.password).encode('utf-8')):
+        if not user or not bcrypt.checkpw(password.encode('utf-8'), user.password):
             flash('Please check your login details and try again.')
             return redirect(url_for('login')) # if the user doesn't exist or password is wrong, reload the page
 
@@ -106,16 +110,18 @@ def signup():
         email = request.form.get('user_email')
         name = request.form.get('user_name')
         password = request.form.get('user_password').encode('utf-8')
-
+        #.encode('utf-8') turns the password data type from string to bytes, this is needed to use the bcrypt salt function
         user = User.query.filter_by(email=email).first() # if this returns a user, then the email already exists in database
 
         if user: # if a user is found, we want to redirect back to signup page so user can try again
+            #if a user isn't found the if statement will not run as user will equal None
             flash('Email address already exists')
             return redirect(url_for('signup'))
 
         # create a new user with the form data. Hash the password so the plaintext version isn't saved.
 
         salt = bcrypt.gensalt() # Adding the salt to password
+        #this is so if the same password is used they will have different hash values
 
         new_user = User(email=email, name=name, password=bcrypt.hashpw(password, salt))
 
@@ -134,7 +140,7 @@ def signup():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('home'))
+    return redirect(url_for('login'))
 
 if __name__ == "__main__":
     app.run(debug=True)

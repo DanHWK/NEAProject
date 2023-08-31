@@ -12,6 +12,8 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(200))
     meals = db.relationship('MealRecord', backref='user')
     exercises = db.relationship('ExerciseRecord', backref='user')
+    #establishes link to the ExerciseRecord table, User.exercises would refer to both the exercises record and user databases
+    #backref = 'user' allows ExerciseRecord.user to also be used, basically turning it into a two way link
 
 #meal table
 class MealRecord(db.Model):
@@ -21,6 +23,7 @@ class MealRecord(db.Model):
     calories = db.Column(db.Integer, nullable = False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    #The ForeignKey is linked to the primary key of the User database
 
 #exercise table
 class ExerciseRecord(db.Model):
@@ -30,3 +33,4 @@ class ExerciseRecord(db.Model):
     stored_MET_value = db.Column(db.Integer, nullable = False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    #The ForeignKey is linked to the primary key of the User database
