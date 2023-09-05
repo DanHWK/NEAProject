@@ -24,6 +24,7 @@ with app.app_context():
     def load_user(user_id):
         #user_id is the primary key of the user table
         return User.query.get(int(user_id))
+        # returns the user object when given the user id
 
 def getCalories(query):
     api_url = 'https://api.calorieninjas.com/v1/nutrition?query='
@@ -41,7 +42,12 @@ def getCalories(query):
 
 @app.route("/")
 def home():
-    return render_template("homepage.html")
+    if current_user.is_authenticated == True:
+        #username = User.query.filter_by(name=name)
+        return render_template("homepage.html", )
+    else:
+        username = "user"
+        return render_template("homepage.html",username = username)
 
 @app.route("/fitness", methods = ["POST","GET"])
 @login_required
@@ -96,6 +102,8 @@ def login():
         # check if the user actually exists
         # take the user-supplied password, hash it, and compare it to the hashed password in the database
         if not user or not bcrypt.checkpw(password.encode('utf-8'), user.password):
+        #.encode('utf-8') turns the password data type from string to bytes, this is necessary as the password
+        #is stored as the byte data type in the database.
             flash('Please check your login details and try again.')
             return redirect(url_for('login')) # if the user doesn't exist or password is wrong, reload the page
 
