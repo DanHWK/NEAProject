@@ -43,8 +43,8 @@ def getCalories(query):
 @app.route("/")
 def home():
     if current_user.is_authenticated == True:
-        #username = User.query.filter_by(name=name)
-        return render_template("homepage.html", )
+        username = current_user.name
+        return render_template("homepage.html", username = username)
     else:
         username = "user"
         return render_template("homepage.html",username = username)
@@ -83,12 +83,12 @@ def diet():
         try:
             db.session.add(new_meal_record)
             db.session.commit()
-
         except:
             return "There was an error whilst recording your meal"
 
         return redirect("/diet")
     else:
+
         return render_template("diet.html")
 
 @app.route("/login", methods = ["POST", "GET"])
