@@ -99,12 +99,19 @@
   <br>
 
   <div class="form-group">
-    <label for="exerciseMETvalue">MET value of activity</label>
-    <input type="number" class="form-control" id="exerciseMETvalue" placeholder="MET value" name = "MET_value">
+    <label for="exerciseIntensityvalue">Intensity of activity</label>
+    <input type="number" class="form-control" id="exerciseIntensityvalue" placeholder="value" name = "Intensity_value" required>
     <small class="form-text text-muted"> MET value signifies the intensity of an activity, you can search the MET value of your activity online</small>
   </div>
 
   <button type="submit" class="btn btn-success">Submit</button>
 </form>
+<br>
+<br>
+{% if success == True %}
+  <div class="alert alert-success" role="alert">
+    Exercise Record successfully recorded
+  </div>
+{% endif %}
 
 {% endblock %}

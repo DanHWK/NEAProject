@@ -12,7 +12,13 @@ Run file
 
 python3 "file name"
 
-About sessions:
+About creating a permanent (local) database:
+- Whilst the app is running create a new tab(MUST BE TAB) in the terminal
+- Import the db from the app
+- Then db.create_all() function must be used in the terminal
+https://www.youtube.com/watch?v=hbDRTZarMUw
+
+About sessions: (basically cookies but stored on the server side)
 https://flask.palletsprojects.com/en/2.3.x/quickstart/#sessions
 
 About the flask-login module:
@@ -28,4 +34,6 @@ div{
   margin: 0;
 } # RIP green box
 
-=
+{% if success == True %}
+  <p> Meal Record successfuly recorded </p>
+{% endif %}
