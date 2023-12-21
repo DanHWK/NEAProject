@@ -1,0 +1,28 @@
+{% extends 'base.html' %} #Inherits the base html template
+<!doctype html>
+{% block body %}
+<h1> Sleep </h1>
+<br>
+<h2> Add sleep session </h2>
+<br>
+<br>
+<form method = "POST">
+  <div class="form-group">
+    <label for="hours_slept"> Hours of sleep </label>
+    <input type="integer" class="form-control" id="hours_slept" name = "hours_slept" placeholder="Hours of sleep" required>
+  </div>
+
+  <div class="form-group">
+    <label for="minutes_slept"> Minutes of sleep </label>
+    <input type="integer" class="form-control" id="minutes_slept" name = "minutes_slept" placeholder="Minutes of sleep" required>
+  </div>
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>
+
+{% if success == True %}
+  <div class="alert alert-success" role="alert">
+    Sleep session successfully recorded
+  </div>
+{% endif %}
+
+{% endblock %}

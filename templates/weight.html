@@ -1,0 +1,24 @@
+{% extends 'base.html' %} #Inherits the base html template
+<!doctype html>
+{% block body %}
+<h1> Weight </h1>
+<br>
+<h2> Add weight record </h2>
+<br>
+<br>
+<form method = "POST">
+  <div class="form-group">
+    <label for="weight"> Hours of sleep </label>
+    <input type="integer" class="form-control" id="weight" name = "weight" placeholder="Enter your weight (kg)" required>
+  </div>
+
+  <button type ="submit" class = "btn btn-success">Submit</button>
+</form>
+
+{% if success == True %}
+  <div class="alert alert-success" role="alert">
+    Weight successfully recorded
+  </div>
+{% endif %}
+
+{% endblock %}

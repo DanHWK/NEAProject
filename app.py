@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, login_required, current_user, logout_user, login_user
 import requests
-from models import db, MealRecord, ExerciseRecord, User
+from models import db, MealRecord, ExerciseRecord, SleepRecord, WeightRecord, GoalRecord, User
 import bcrypt
 
 app = Flask(__name__)
@@ -49,18 +49,23 @@ def getCalories(query):
         print("Error:", response.status_code, response.text)
         #prints error message if there is a problem during transmission
 
-def CaloriesBurned(activity,duration):
-    #api_url = 'https://api.api-ninjas.com/v1/caloriesburned'
-    api_url = "https://trackapi.nutritionix.com/v2/natural/exercise?query="
-    query = "swam for 1 hour"
-    #query = {"activity":activity,"duration":str(duration)}
-    # The query variable passes in the activity name and the duration
-    # Duration needs to be converted from an integer into a string for the URL to work
-    #response = requests.get(api_url, headers={'X-Api-Key': 'CykZrnTm3hnrG+/WRu3gwA==C6rJlO3bZqLjVfmP'}, params = query)
-    response = requests.get(api_url + query, headers = {"x-app-key":"cb4162e3761f026ca66e3e947f26ca3a" , "x-app-id": "4fc7ca2a"}, )
+def CaloriesBurned(activity, duration_minutes, duration_hours):
+    api_url = "https://trackapi.nutritionix.com/v2/natural/exercise"
+    parameter = activity+" for "+str(duration_minutes)+" minutes and "+str(duration_hours)+" hours"
+    # The API accepts a string as a quety it then uses an AI to parse through the string to produce the calories burned
+    data = {"query":parameter}
+    response = requests.post(api_url , headers = {"x-app-key":"cb4162e3761f026ca66e3e947f26ca3a" , "x-app-id": "4fc7ca2a"}, json = data)
     if response.status_code == requests.codes.ok:
+        print(parameter)
         print(response.json())
 
+        exercises = response.json().get('exercises')
+        #retrieves all the exercises in json file
+
+        calories_burned = 0
+        for exercise in exercises:
+            calories_burned += exercise.get("nf_calories")
+        return calories_burned
     else:
         print("Error:", response.status_code, response.text)
 
@@ -73,9 +78,7 @@ def home():
         #text that will only show when the user has logged in
         return render_template("homepage.html", username = username, progress = progress)
     else:
-        username = ""
-        progress = ""
-        return render_template("homepage.html",username = username, progress = progress)
+        return render_template("homepage.html",username = "", progress = "")
 
 @app.route("/fitness", methods = ["POST","GET"])
 @login_required
@@ -84,12 +87,10 @@ def fitness():
         #If a form is sent from the website carry this code out
         exercise_hours = request.form.get("exercise_hours")
         exercise_minutes = request.form.get("exercise_minutes")
-        Intensity_value = request.form.get("Intensity_value")
-        activity = "football"
-        duration = (exercise_hours*60)+exercise_minutes
-        calories = CaloriesBurned(activity,duration)
+        exercise_name = request.form.get("exercise_name")
+        calories_burned = CaloriesBurned(exercise_name, exercise_minutes, exercise_hours)
         #Retrieves all the value from the form
-        new_exercise_record = ExerciseRecord(hours = exercise_hours, minutes = exercise_minutes, intensity = Intensity_value, user_id=current_user.id)
+        new_exercise_record = ExerciseRecord(hours = exercise_hours, minutes = exercise_minutes, name = exercise_name, calories_burned = calories_burned, user_id=current_user.id)
         #Creates an object of the class ExerciseRecord and assigns all the values retrieved to attributes
 
         try:
@@ -108,7 +109,16 @@ def fitness():
 def diet():
     if request.method == "POST":
         #If a form is sent from the website carry this code out
-        calories = getCalories(request.form.get("meal_name"))
+        if request.form.get("custom_meal_carbs") == None:
+            calories = getCalories(request.form.get("meal_name"))
+        else:
+            carbohydrates = int(request.form.get("custom_meal_carbs"))
+            protein = int(request.form.get("custom_meal_protein"))
+            fats = int(request.form.get("custom_meal_fats"))
+            #Calories calculated are based of the 4-9-4 system
+            # i.e 4 calories per gram of carbs, 9 calories per grams of fat and 4 calories per grams of protein
+            calories = (carbohydrates*4)+(protein*4)+(fats*9)
+
         #The if statement checks if a meal name is valid i.e recognised by calorieninjas as a food item
         if calories == 0:
             return render_template("diet.html", valid = False)
@@ -127,6 +137,87 @@ def diet():
     else:
 
         return render_template("diet.html", success = False)
+
+@app.route("/sleep", methods = ["POST", "GET"])
+@login_required
+def sleep():
+    if request.method == "POST":
+        minutes_slept = request.form.get("minutes_slept")
+        hours_slept = request.form.get("hours_slept")
+
+        new_sleep_record = SleepRecord(minutes_slept = minutes_slept, hours_slept = hours_slept, user_id = current_user.id)
+        try:
+            db.session.add(new_sleep_record)
+            db.session.commit()
+            # push to database
+        except:
+            return "There was an error whilst recording your activity"
+                # Sends error message if there is a problem with adding the record to the database
+        return render_template("sleep.html", success = True)
+    else:
+        return render_template("sleep.html", success = False)
+
+@app.route("/weight", methods = ["POST", "GET"])
+@login_required
+def weight():
+    if request.method == "POST":
+        weight = request.form.get("weight")
+
+        new_weight_record = WeightRecord(weight = weight, user_id = current_user.id)
+        try:
+            db.session.add(new_weight_record)
+            db.session.commit()
+            # push to database
+        except:
+            return "There was an error whilst recording your activity"
+                # Sends error message if there is a problem with adding the record to the database
+        return render_template("weight.html", success = True)
+    else:
+        return render_template("weight.html", success = False)
+
+@app.route("/goals", methods = ["POST", "GET"])
+@login_required
+def goals():
+    current_goals = GoalRecord.query.filter_by(user_id = current_user.id).first()
+    if request.method == "POST":
+        if request.form.get("new_meal_goal") != None:
+            #Checks if the User filled in the input
+            try:
+            #Checks if the User gave a valid input
+                int(request.form.get("new_meal_goal"))
+                current_goals.meal_goal = request.form.get("new_meal_goal")
+            except:
+            #Renders the goal template with an error message if it isn't valid 
+                return render_template('goals.html', current_goals = current_goals, valid = False)
+
+        if request.form.get("new_exercise_goal") != None:
+            try:
+                int(request.form.get("new_exercise_goal"))
+                current_goals.exercise_goal = request.form.get("new_exercise_goal")
+            except:
+                return render_template('goals.html', current_goals = current_goals, valid = False)
+
+        if request.form.get("new_sleep_goal") != None:
+            try:
+                int(request.form.get("new_sleep_goal"))
+                current_goals.sleep_goal = request.form.get("new_sleep_goal")
+            except:
+                return render_template('goals.html', current_goals = current_goals, valid = False)
+
+        if request.form.get("new_weight_goal") != None:
+            try:
+                int(request.form.get("new_weight_goal"))
+                current_goals.weight_goal = request.form.get("new_weight_goal")
+            except:
+                return render_template('goals.html', current_goals = current_goals, valid = False)
+        try:
+            db.session.commit()
+        except:
+            return "There was an error whilst setting your new goals"
+        current_goals = GoalRecord.query.filter_by(user_id = current_user.id).first()
+        return render_template("goals.html", current_goals = current_goals, success = True, valid = True)
+    else:
+        return render_template("goals.html", current_goals = current_goals, success = False)
 
 @app.route("/login", methods = ["POST", "GET"])
 def login():
@@ -172,6 +263,13 @@ def signup():
 
         # add the new user to the database
         db.session.add(new_user)
+        db.session.commit()
+
+        #set default goals for the new user
+        default_goal = GoalRecord(meal_goal = 2000, exercise_goal = 2000, sleep_goal = 7, weight_goal = 70, user_id = current_user.id)
+        #add the goal record to the database for the new user
+        #this record will be edited if the user sets a new goal
+        db.session.add(default_goal)
         db.session.commit()
 
         #succesful signup redirects to login page

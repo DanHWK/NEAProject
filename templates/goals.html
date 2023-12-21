@@ -1,0 +1,96 @@
+{% extends 'base.html' %} #Inherits the base html template
+<!doctype html>
+{% block body %}
+<h1> Goals </h1>
+<br>
+<h2> Set your daily goals </h2>
+<br>
+<br>
+<div class="btn-group btn-group-toggle" data-toggle = "buttons" >
+  <button type="button"  data-toggle= "collapse" data-target= "#meal_goal" class="btn btn-secondary">Meal goal</button>
+  <button type="button"  data-toggle= "collapse" data-target= "#exercise_goal" class="btn btn-secondary">Exercise goal</button>
+  <button type="button"  data-toggle= "collapse" data-target= "#sleep_goal" class="btn btn-secondary">Sleep goal</button>
+  <button type="button"  data-toggle= "collapse" data-target= "#weight_goal" class="btn btn-secondary">Weight goal</button>
+</div>
+
+<div class="collapse" id="meal_goal">
+  <form method = "POST">
+
+  <label for ="current_meal_goal"> Current meal goal </label>
+  <div class="shadow-lg p-3 mb-5 bg-white rounded" id = "current_meal_goal">
+  <b> Consume {{current_goals.meal_goal}} calories </b>
+  </div>
+  <div class="form-group">
+    <label for="new_meal_goal"> New meal goal </label>
+    <input type="integer" class="form-control" id="new_meal_goal" name = "new_meal_goal"
+    placeholder="Enter in new meal goal (only input the number of calories)" required>
+  </div>
+
+  <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+</div>
+
+<div class="collapse" id="exercise_goal">
+  <form method = "POST">
+
+  <label for ="current_exercise_goal"> Current exercise goal </label>
+  <div class="shadow-lg p-3 mb-5 bg-white rounded" id = "current_exercise_goal">
+  <b> Burn {{current_goals.exercise_goal}} calories </b>
+  </div>
+  <div class="form-group">
+    <label for="new_exercise_goal"> New exercise goal </label>
+    <input type="integer" class="form-control" id="new_exercise_goal" name = "new_exercise_goal"
+    placeholder="Enter in new exercise goal (only input the number of calories)" required>
+  </div>
+
+  <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+</div>
+
+<div class="collapse" id="sleep_goal">
+  <form method = "POST">
+
+  <label for ="current_sleep_goal"> Current sleep goal </label>
+  <div class="shadow-lg p-3 mb-5 bg-white rounded" id = "current_sleep_goal">
+  <b> Sleep for {{current_goals.sleep_goal}} hours </b>
+  </div>
+  <div class="form-group">
+    <label for="new_sleep_goal"> New sleep goal </label>
+    <input type="integer" class="form-control" id="new_sleep_goal" name = "new_sleep_goal"
+    placeholder="Enter in new sleep goal (only input the number of hours)" required>
+  </div>
+
+  <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+</div>
+
+<div class="collapse" id="weight_goal">
+  <form method = "POST">
+
+  <label for ="current_weight_goal"> Current weight goal </label>
+  <div class="shadow-lg p-3 mb-5 bg-white rounded" id = "current_weight_goal">
+  <b> {{current_goals.weight_goal}} kg </b>
+  </div>
+  <div class="form-group">
+    <label for="new_weight_goal"> New weight goal </label>
+    <input type="integer" class="form-control" id="new_weight_goal" name = "new_weight_goal"
+    placeholder="Enter in new weight goal (only input the weight value (in kg))" required>
+  </div>
+
+  <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+</div>
+
+{% if success == True %}
+  <div class="alert alert-success" role="alert">
+    New goal successfully recorded
+  </div>
+{% endif %}
+
+{% if valid == False %}
+  <div class="alert alert-warning" role="alert">
+  Invalid goal, new goal not set
+  </div>
+{% endif %}
+
+{% endblock %}

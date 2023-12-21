@@ -6,34 +6,80 @@
 <h2> Add meal record </h2>
 <br>
 <br>
-<form action="#" method = "POST">
-  <div class="form-group">
-    <label for="meal_name">Meal name</label>
-    <input type="text" class="form-control" id="meal_name" placeholder="Enter meal name" name = "meal_name" required>
-    <small class="form-text text-muted"> The serving size of the meal should be specified (e.g 50 grams of cheese) or else a default serving of 100 grams will be assumed </small>
-  </div>
+<div class="btn-group" role="group">
+  <button type="button"  data-toggle= "collapse" data-target= "#normal" class="btn btn-secondary">Normal</button>
+  <button type="button"  data-toggle= "collapse" data-target= "#custom" class="btn btn-secondary">Custom</button>
+</div>
+
+<div class="collapse" id="normal">
+  <form method = "POST">
+    <div class="form-group">
+      <label for="meal_name">Meal name</label>
+      <input type="text" class="form-control" id="meal_name" placeholder="Enter meal name" name = "meal_name" required>
+      <small class="form-text text-muted"> The serving size of the meal should also be specified (e.g 50 grams of cheese) or else a default serving of 100 grams will be assumed </small>
+    </div>
 
 
-  <div class="form-group">
-    <label for="meal_time">Time of meal</label>
-    <select class ="form-control" id="meal_time" name = "meal_time">
-      <option>Breakfast</option>
-      <option>Lunch</option>
-      <option>Dinner</option>
-      <option>Snack</option>
-    </select>
-  </div>
+    <div class="form-group">
+      <label for="meal_time">Time of meal</label>
+      <select class ="form-control" id="meal_time" name = "meal_time">
+        <option>Breakfast</option>
+        <option>Lunch</option>
+        <option>Dinner</option>
+        <option>Snack</option>
+      </select>
+    </div>
 
-  <button type="submit" class="btn btn-success">Submit</button>
-</form>
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+</div>
+
+<div class="collapse" id="custom">
+  <form method = "POST">
+    <div class="form-group">
+      <label for="meal_name">Meal name</label>
+      <input type="text" class="form-control" id="meal_name" placeholder="Enter meal name" name = "meal_name" required>
+      <small class="form-text text-muted"> This will be the name of your custom meal </small>
+    </div>
+
+    <div class="form-group">
+      <label for="custom_meal_carbs"> Carbohydrates</label>
+      <input type="integer" class="form-control" id="custom_meal_carbs" name = "custom_meal_carbs" placeholder="Amount of carbs in grams (g)" required>
+    </div>
+
+    <div class="form-group">
+      <label for="custom_meal_protein"> Protein</label>
+      <input type="integer" class="form-control" id="custom_meal_protein" name = "custom_meal_protein" placeholder="Amount of protein in grams (g)" required>
+    </div>
+
+    <div class="form-group">
+      <label for="custom_meal_fats"> Fats</label>
+      <input type="integer" class="form-control" id="custom_meal_carbs" name = "custom_meal_fats" placeholder="Amount of fats in grams (g)" required>
+    </div>
+
+    <div class="form-group">
+      <label for="meal_time">Time of meal</label>
+      <select class ="form-control" id="meal_time" name = "meal_time">
+        <option>Breakfast</option>
+        <option>Lunch</option>
+        <option>Dinner</option>
+        <option>Snack</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+</div>
 <br>
 <br>
+#If it is successful this flash message is shown
 {% if success == True %}
   <div class="alert alert-success" role="alert">
     Meal Record successfully recorded
   </div>
 {% endif %}
 
+#If the input isn't valid this error message is flashed
 {% if valid == False %}
   <div class="alert alert-warning" role="alert">
   Unrecognised meal name, meal not recorded
