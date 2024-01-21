@@ -3,6 +3,14 @@ from flask_login import LoginManager, login_required, current_user, logout_user,
 import requests
 from models import db, MealRecord, ExerciseRecord, SleepRecord, WeightRecord, GoalRecord, User
 import bcrypt
+import pygal
+from datetime import datetime
+import calendar
+from graphclasses import Graph, MealGraph
+#graphclasses are imported here to avoid the circular import problem
+#This is because graphclasses imports app from app and thus can't be imported
+#before the app is created
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///record.db'
@@ -74,11 +82,18 @@ def home():
     if current_user.is_authenticated == True:
         #checks if the user has logged in, if the user has logged in the home page will display their username
         username = current_user.name
-        progress = "Progress"
+        user_logged_in = True
         #text that will only show when the user has logged in
-        return render_template("homepage.html", username = username, progress = progress)
+
+        testgraph = Graph("month")
+        graph_uri = testgraph.create_graph().render_data_uri()
+        testmeal = MealGraph("month")
+        testsql = MealGraph.daily_calories_consumed(datetime.utcnow().strftime('%Y-%m-%d'))
+
+        return render_template("homepage.html", username = username, user_logged_in = user_logged_in, testgraphuri = graph_uri, testsql = testsql)
     else:
-        return render_template("homepage.html",username = "", progress = "")
+        #Passes these values to the homepage so nothing is shown when signing up
+        return render_template("homepage.html",username = "", user_logged_in = False)
 
 @app.route("/fitness", methods = ["POST","GET"])
 @login_required
@@ -187,7 +202,7 @@ def goals():
                 int(request.form.get("new_meal_goal"))
                 current_goals.meal_goal = request.form.get("new_meal_goal")
             except:
-            #Renders the goal template with an error message if it isn't valid 
+            #Renders the goal template with an error message if it isn't valid
                 return render_template('goals.html', current_goals = current_goals, valid = False)
 
         if request.form.get("new_exercise_goal") != None:
@@ -265,6 +280,9 @@ def signup():
         db.session.add(new_user)
         db.session.commit()
 
+        #logs in the user this is needed to get the user id for default_goal
+        login_user(new_user)
+
         #set default goals for the new user
         default_goal = GoalRecord(meal_goal = 2000, exercise_goal = 2000, sleep_goal = 7, weight_goal = 70, user_id = current_user.id)
         #add the goal record to the database for the new user
@@ -273,6 +291,7 @@ def signup():
         db.session.commit()
 
         #succesful signup redirects to login page
+        #logs out the user as it would cause an error when they try and use the log in page
         logout_user()
         return redirect(url_for('login'))
     else:

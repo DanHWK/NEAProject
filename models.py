@@ -25,7 +25,7 @@ class MealRecord(db.Model):
     name = db.Column(db.String(200), nullable = False)
     time = db.Column(db.String(50), nullable = False)
     calories = db.Column(db.Integer, nullable = False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    date_created = db.Column(db.String(50), default=datetime.utcnow().strftime('%Y-%m-%d'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     #The ForeignKey is linked to the primary key of the User database
 
@@ -36,7 +36,7 @@ class ExerciseRecord(db.Model):
     minutes = db.Column(db.Integer, nullable = False)
     name = db.Column(db.String(100), nullable = False)
     calories_burned = db.Column(db.Integer)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    date_created = db.Column(db.String(50), default=datetime.utcnow().strftime('%Y-%m-%d'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     #The ForeignKey is linked to the primary key of the User database
 
@@ -45,14 +45,14 @@ class SleepRecord(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     hours_slept = db.Column(db.Integer, nullable = False)
     minutes_slept = db.Column(db.Integer, nullable = False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    date_created = db.Column(db.String(50), default=datetime.utcnow().strftime('%Y-%m-%d'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 #weight table
 class WeightRecord(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     weight = db.Column(db.Integer, nullable = False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    date_created = db.Column(db.String(50), default=datetime.utcnow().strftime('%Y-%m-%d'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 #goal table

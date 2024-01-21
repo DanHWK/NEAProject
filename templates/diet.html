@@ -72,14 +72,14 @@
 </div>
 <br>
 <br>
-#If it is successful this flash message is shown
+
 {% if success == True %}
   <div class="alert alert-success" role="alert">
     Meal Record successfully recorded
   </div>
 {% endif %}
 
-#If the input isn't valid this error message is flashed
+
 {% if valid == False %}
   <div class="alert alert-warning" role="alert">
   Unrecognised meal name, meal not recorded

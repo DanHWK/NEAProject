@@ -1,7 +1,17 @@
 {% extends 'base.html' %}
 <!doctype html>
 {% block body %}
+
+{% if user_logged_in: %}
 <h1> {{username}} </h1>
 <br></br>
-<h3> {{progress}} </h3>
+<h3> progress </h3>
+
+<div class = "container" align = "left">
+  <embed type = "image/svg+xml" src = {{testgraphuri|safe}} style = 'max-width: 500px'/>
+</div>
+
+<h1> {{testsql}} </h1>
+
+{%endif %}
 {% endblock %}
