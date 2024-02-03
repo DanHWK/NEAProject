@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask_login import UserMixin
 
 db = SQLAlchemy() #This variable will be used to call upon SQLAlchemy() commands
@@ -25,7 +25,7 @@ class MealRecord(db.Model):
     name = db.Column(db.String(200), nullable = False)
     time = db.Column(db.String(50), nullable = False)
     calories = db.Column(db.Integer, nullable = False)
-    date_created = db.Column(db.String(50), default=datetime.utcnow().strftime('%Y-%m-%d'))
+    date_created = db.Column(db.String(50))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     #The ForeignKey is linked to the primary key of the User database
 
@@ -36,7 +36,7 @@ class ExerciseRecord(db.Model):
     minutes = db.Column(db.Integer, nullable = False)
     name = db.Column(db.String(100), nullable = False)
     calories_burned = db.Column(db.Integer)
-    date_created = db.Column(db.String(50), default=datetime.utcnow().strftime('%Y-%m-%d'))
+    date_created = db.Column(db.String(50))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     #The ForeignKey is linked to the primary key of the User database
 
@@ -45,14 +45,14 @@ class SleepRecord(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     hours_slept = db.Column(db.Integer, nullable = False)
     minutes_slept = db.Column(db.Integer, nullable = False)
-    date_created = db.Column(db.String(50), default=datetime.utcnow().strftime('%Y-%m-%d'))
+    date_created = db.Column(db.String(50))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 #weight table
 class WeightRecord(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     weight = db.Column(db.Integer, nullable = False)
-    date_created = db.Column(db.String(50), default=datetime.utcnow().strftime('%Y-%m-%d'))
+    date_created = db.Column(db.String(50))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 #goal table
@@ -62,4 +62,26 @@ class GoalRecord(db.Model):
     exercise_goal = db.Column(db.Integer)
     sleep_goal = db.Column(db.Integer)
     weight_goal = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+#Streak table
+class StreakRecord(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    meal_streak = db.Column(db.Integer, default = 0)
+    latest_date_for_meal_streak = db.Column(db.String(50))
+    #stores the date of the last time a value was added to the streak score
+    meal_streak_done = db.Column(db.Boolean, default=False)
+    #Stores a boolean value that will say whether a streak value has already been added for that day
+
+    exercise_streak = db.Column(db.Integer, default = 0)
+    latest_date_for_exercise_streak = db.Column(db.String(50))
+    exercise_streak_done = db.Column(db.Boolean, default=False)
+
+    sleep_streak = db.Column(db.Integer, default = 0)
+    latest_date_for_sleep_streak = db.Column(db.String(50))
+    sleep_streak_done = db.Column(db.Boolean, default=False)
+
+    weight_streak = db.Column(db.Integer, default = 0)
+    latest_date_for_weight_streak = db.Column(db.String(50))
+    weight_streak_done = db.Column(db.Boolean, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

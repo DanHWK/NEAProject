@@ -9,15 +9,21 @@
 <form method = "POST">
   <div class="form-group">
     <label for="weight"> Weight (kg) </label>
-    <input type="integer" class="form-control" id="weight" name = "weight" placeholder="Enter your weight (kg)" required>
+    <input type="number" class="form-control" id="weight" name = "weight" placeholder="Enter your weight (kg)" required>
   </div>
-
+  <small class="form-text text-muted"> If multiple records are made on one day the graph will take the average value </small>
   <button type ="submit" class = "btn btn-success">Submit</button>
 </form>
 
 {% if success == True %}
   <div class="alert alert-success" role="alert">
     Weight successfully recorded
+  </div>
+{% endif %}
+
+{% if valid == False %}
+  <div class="alert alert-warning" role="alert">
+  Unrecognised weight value, weight not recorded
   </div>
 {% endif %}
 

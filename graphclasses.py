@@ -1,5 +1,5 @@
 import pygal
-from datetime import datetime
+from datetime import datetime, timedelta
 import calendar
 
 from flask import Flask
@@ -7,7 +7,7 @@ from flask_login import current_user
 from flask_sqlalchemy import SQLAlchemy
 
 from sqlalchemy import select
-from models import db, MealRecord, ExerciseRecord, SleepRecord, WeightRecord, GoalRecord, User
+from models import db, MealRecord, ExerciseRecord, SleepRecord, WeightRecord, GoalRecord, User, StreakRecord
 
 
 class Graph:
@@ -15,10 +15,14 @@ class Graph:
         self.title = "title"
         self.timeframe = timeframe
         self.linename1 = "line1"
-        y_axis_values = []
+        self.linename2 = "line2"
+        self.desired_goal = "desired goal"
+        #All values here apart from timeframe are to be reassigned new values
+        #They are just here to be used as a common interface for functions
+
         global today
-        today = datetime.utcnow()
-        #Stores the current UTC time
+        today = datetime.now()
+        #Stores the current  time
 
         global weekday
         weekday = today.weekday()
@@ -28,11 +32,15 @@ class Graph:
         calendar_object = calendar.Calendar()
         #Creates a calendar object
 
-        global dates_in_month
-        dates_in_month = calendar_object.itermonthdates(today.year,today.month)
-        #Gets all the days in the month in this year in the form of datetime objects
+        global currentuser
+        currentuser = current_user.id
+        #stores the current user id in this variable
 
-    def get_y_axis_values():
+        global goals
+        goals = GoalRecord.query.filter_by(user_id = currentuser).first()
+        #stores the GoalRecord query of the current user in this variable, there should only be one Goal Record per user
+
+    def get_y_axis_values(self):
         pass
 
     def get_x_axis_values(self):
@@ -44,6 +52,7 @@ class Graph:
             x_axis_values.append(current_day)
             return x_axis_values
             # returns the x axis values for a day graph
+            # this is done so if it is looking for day graph data it doesn't have to run through the other if statements
 
         elif self.timeframe == "week":
             x_axis_values = days_of_the_week
@@ -51,7 +60,8 @@ class Graph:
             # returns the x axis values for a week graph
 
         elif self.timeframe == "month":
-            for dates in dates_in_month:
+            for dates in calendar_object.itermonthdates(today.year,today.month):
+            #Goes through all the dates in the month
                 if dates.month == today.month:
                     #Itermonth dates also includes all the days before the start of the month
                     #and after the end of the month to get complete weeks
@@ -63,8 +73,27 @@ class Graph:
             return x_axis_values
             # returns the x axis values for a month graph
 
+    def get_goal(self):
+        goal_graph_data = []
+
+        if self.timeframe == "day":
+            goal_graph_data.append(self.desired_goal)
+            return goal_graph_data
+
+        elif self.timeframe == "week":
+            for x in range(0,7):
+            #This for loop makes it so every day in the week displays the goal value
+            #This is so it doesn't just look like a single dot on the graph
+                goal_graph_data.append(self.desired_goal)
+            return goal_graph_data
+
+        elif self.timeframe == "month":
+            for x in range(0,31):
+                goal_graph_data.append(self.desired_goal)
+            return goal_graph_data
+
     def create_graph(self):
-        graph_data = pygal.Line()
+        graph_data = pygal.Line(include_x_axis=True)
         #Calls upon the line graph function of pygal
         graph_data.title = self.title
         #assigns the name of the graph
@@ -72,8 +101,11 @@ class Graph:
         graph_data.x_labels = map(str,self.get_x_axis_values())
         #Gets the x axis values
 
-        graph_data.add(self.linename1, [5,4,2,5,6,8,9,10])
-        #Creates the line with it's name and values
+        graph_data.add(self.linename1, self.get_y_axis_values())
+        #Creates the line with the values in the database
+
+        graph_data.add(self.linename2, self.get_goal())
+        #Line for goal value
 
         return graph_data
         #Returns all the graph data where it will then be rendered in the app
@@ -83,16 +115,173 @@ class MealGraph(Graph):
         Graph.__init__(self,timeframe)
         self.title = "Diet graph"
         self.linename1 = "Calories consumed"
-
-        global currentuser
-        currentuser = current_user.id
+        self.linename2 = "Meal Goal calories"
+        # Set the names of the lines and the title of the graph
+        self.desired_goal = goals.meal_goal
 
     def daily_calories_consumed(date):
-        #user_meal_data = db.session.execute(select(MealRecord).where(MealRecord.user_id == current_user.id).order_by(MealRecord.date_created))
-        date = date
-        user_meal_data = MealRecord.query.filter_by(user_id = currentuser, date_created = date)
-        print(user_meal_data)
-        print(date)
+        day_calories_consumed = 0
+        user_meal_data = MealRecord.query.filter_by(user_id = currentuser, date_created = date).all()
+        #Gets all the meal records created on the specified date
+        for x in user_meal_data:
+            day_calories_consumed = day_calories_consumed + x.calories
+            #Add all the calories of the meal records for that day
+        if user_meal_data != []:
+            #if there is meal data return the total calories consumed for that day
+            return day_calories_consumed
+        else:
+            return 0
 
-    def get_y_axis_values():
-        pass
+    def get_y_axis_values(self):
+        y_axis_values = []
+        if self.timeframe == "day":
+            y_axis_values.append(MealGraph.daily_calories_consumed(datetime.now().strftime('%Y-%m-%d')))
+            return y_axis_values
+
+        elif self.timeframe == "week":
+            for dates in calendar_object.itermonthdates(today.year,today.month):
+                if datetime.now().strftime('%W') == dates.strftime('%W'):
+                    y_axis_values.append(MealGraph.daily_calories_consumed(dates.strftime('%Y-%m-%d')))
+            return y_axis_values
+
+        elif self.timeframe == "month":
+            for dates in calendar_object.itermonthdates(today.year,today.month):
+                if dates.month == today.month:
+                    y_axis_values.append(MealGraph.daily_calories_consumed(dates.strftime('%Y-%m-%d')))
+            return y_axis_values
+
+class ExerciseGraph(Graph):
+
+    def __init__(self,timeframe):
+        Graph.__init__(self,timeframe)
+        self.title = "Fitness graph"
+        self.linename1 = "Calories burnt"
+        self.linename2 = "Exercise Goal calories"
+        # Set the names of the lines and the title of the graph
+        self.desired_goal = goals.exercise_goal
+
+
+    def daily_calories_burnt(date):
+        day_calories_burnt = 0
+        user_exercise_data = ExerciseRecord.query.filter_by(user_id = currentuser, date_created = date).all()
+        #Gets all the exercise records created on the specified date
+        for x in user_exercise_data:
+            day_calories_burnt = day_calories_burnt + x.calories_burned
+            #Add all the calories burnt from the exercise records for that day
+        if user_exercise_data != []:
+            #if there is exercise data return the total calories burnt from exercise for that day
+            return day_calories_burnt
+        else:
+            return 0
+
+    def get_y_axis_values(self):
+        y_axis_values = []
+        if self.timeframe == "day":
+            y_axis_values.append(ExerciseGraph.daily_calories_burnt(datetime.now().strftime('%Y-%m-%d')))
+            return y_axis_values
+
+        elif self.timeframe == "week":
+            for dates in calendar_object.itermonthdates(today.year,today.month):
+                if datetime.now().strftime('%W') == dates.strftime('%W'):
+                    y_axis_values.append(ExerciseGraph.daily_calories_burnt(dates.strftime('%Y-%m-%d')))
+            return y_axis_values
+
+        elif self.timeframe == "month":
+            for dates in calendar_object.itermonthdates(today.year,today.month):
+                if dates.month == today.month:
+                    y_axis_values.append(ExerciseGraph.daily_calories_burnt(dates.strftime('%Y-%m-%d')))
+            return y_axis_values
+
+class SleepGraph(Graph):
+
+    def __init__(self,timeframe):
+        Graph.__init__(self,timeframe)
+        self.title = "Sleep graph"
+        self.linename1 = "Hours of sleep"
+        self.linename2 = "Sleep goal hours"
+        # Set the names of the lines and the title of the graph
+        self.desired_goal = goals.sleep_goal
+
+    def daily_sleep_hours(date):
+        day_sleep_hours = 0
+        user_sleep_data = SleepRecord.query.filter_by(user_id = currentuser, date_created = date).all()
+        #Gets all the Sleep records created on the specified date
+        for x in user_sleep_data:
+            day_sleep_hours = day_sleep_hours+ int(x.hours_slept) +(x.minutes_slept/60)
+            #Add all the sleep hours for the specified day, minutes are converted into hours by divding by 60
+        if user_sleep_data != []:
+            #if there is sleep data return the total hours of sleep for that day
+            return day_sleep_hours
+        else:
+            return 0
+
+    def get_y_axis_values(self):
+        y_axis_values = []
+        if self.timeframe == "day":
+            y_axis_values.append(SleepGraph.daily_sleep_hours(datetime.now().strftime('%Y-%m-%d')))
+            return y_axis_values
+
+        elif self.timeframe == "week":
+            for dates in calendar_object.itermonthdates(today.year,today.month):
+                if datetime.now().strftime('%W') == dates.strftime('%W'):
+                    y_axis_values.append(SleepGraph.daily_sleep_hours(dates.strftime('%Y-%m-%d')))
+            return y_axis_values
+
+        elif self.timeframe == "month":
+            for dates in calendar_object.itermonthdates(today.year,today.month):
+                if dates.month == today.month:
+                    y_axis_values.append(SleepGraph.daily_sleep_hours(dates.strftime('%Y-%m-%d')))
+            return y_axis_values
+
+class WeightGraph(Graph):
+
+    def __init__(self,timeframe):
+        Graph.__init__(self,timeframe)
+        self.title = "Weight graph"
+        self.linename1 = "Weight (kg)"
+        self.linename2 = "Weight goal (kg)"
+        # Set the names of the lines and the title of the graph
+        self.desired_goal = goals.weight_goal
+
+    def daily_weight(date):
+        day_weight = 0
+        user_weight_data = WeightRecord.query.filter_by(user_id = currentuser, date_created = date).all()
+        #Gets all the weight records created on the specified date
+        weight_values = []
+        number_of_weight_records = 0
+        total_weight_value = 0
+
+        for x in user_weight_data:
+            weight_values.append(x.weight)
+            number_of_weight_records = number_of_weight_records+1
+
+        for x in weight_values:
+            total_weight_value = total_weight_value+x
+        #These for loops are used to get the value needed to calculate the average weight value of the day
+
+        if user_weight_data != []:
+            average_weight_value = total_weight_value/number_of_weight_records
+            #if there is weight data return the average weight for the day
+            return average_weight_value
+        else:
+            return 0
+            #returns 0 instead of pass to prevent an error in the streak system
+            #caused by the code trying to compare None to an integer
+
+    def get_y_axis_values(self):
+        y_axis_values = []
+        if self.timeframe == "day":
+            y_axis_values.append(WeightGraph.daily_weight(datetime.now().strftime('%Y-%m-%d')))
+            return y_axis_values
+
+        elif self.timeframe == "week":
+            for dates in calendar_object.itermonthdates(today.year,today.month):
+                if datetime.now().strftime('%W') == dates.strftime('%W'):
+                    y_axis_values.append(WeightGraph.daily_weight(dates.strftime('%Y-%m-%d')))
+            return y_axis_values
+
+        elif self.timeframe == "month":
+            for dates in calendar_object.itermonthdates(today.year,today.month):
+                if dates.month == today.month:
+                    y_axis_values.append(WeightGraph.daily_weight(dates.strftime('%Y-%m-%d')))
+            return y_axis_values
