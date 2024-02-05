@@ -9,6 +9,13 @@
         {{ messages[0] }}. Go to <a href="{{ url_for('login') }}">login page</a>.
     </div>
     {% endif %}
+
+    {% if WeakPassword == True %}
+      <div class="alert alert-warning" role="alert">
+        Password is too short
+      </div>
+    {% endif %}
+
     {% endwith %}
         <form action="#" method="POST">
             <div class="field">
@@ -26,6 +33,7 @@
             <div class="field">
                 <div class="control">
                     <input class="input is-large" type="password" name="user_password" placeholder="Password" required>
+                    <small class="form-text text-muted"> Password should be at least 8 characters long</small>
                 </div>
             </div>
         <br>

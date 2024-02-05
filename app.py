@@ -348,11 +348,16 @@ def login():
 @app.route("/signup", methods = ["POST", "GET"])
 def signup():
     if request.method == "POST":
+        WeakPassword = False
         email = request.form.get('user_email')
         name = request.form.get('user_name')
         password = request.form.get('user_password').encode('utf-8')
         #.encode('utf-8') turns the password data type from string to bytes, this is needed to use the bcrypt salt function
+
         user = User.query.filter_by(email=email).first() # if this returns a user, then the email already exists in database
+
+        if len(request.form.get('user_password')) < 8:
+            return render_template('signup.html', WeakPassword = True)
 
         if user: # if a user is found, we want to redirect back to signup page so user can try again as a email can only have one account
             #if a user isn't found the if statement will not run as user will equal None
