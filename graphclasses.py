@@ -40,8 +40,26 @@ class Graph:
         goals = GoalRecord.query.filter_by(user_id = currentuser).first()
         #stores the GoalRecord query of the current user in this variable, there should only be one Goal Record per user
 
-    def get_y_axis_values(self):
+    def calculate_daily_values(self, date):
         pass
+
+    def get_y_axis_values(self):
+        y_axis_values = []
+        if self.timeframe == "day":
+            y_axis_values.append(self.calculate_daily_values(datetime.now().strftime('%Y-%m-%d')))
+            return y_axis_values
+
+        elif self.timeframe == "week":
+            for dates in calendar_object.itermonthdates(today.year,today.month):
+                if datetime.now().strftime('%W') == dates.strftime('%W'):
+                    y_axis_values.append(self.calculate_daily_values(dates.strftime('%Y-%m-%d')))
+            return y_axis_values
+
+        elif self.timeframe == "month":
+            for dates in calendar_object.itermonthdates(today.year,today.month):
+                if dates.month == today.month:
+                    y_axis_values.append(self.calculate_daily_values(dates.strftime('%Y-%m-%d')))
+            return y_axis_values
 
     def get_x_axis_values(self):
         x_axis_values = []
@@ -119,7 +137,7 @@ class MealGraph(Graph):
         # Set the names of the lines and the title of the graph
         self.desired_goal = goals.meal_goal
 
-    def daily_calories_consumed(date):
+    def calculate_daily_values(self, date):
         day_calories_consumed = 0
         user_meal_data = MealRecord.query.filter_by(user_id = currentuser, date_created = date).all()
         #Gets all the meal records created on the specified date
@@ -132,24 +150,6 @@ class MealGraph(Graph):
         else:
             return 0
 
-    def get_y_axis_values(self):
-        y_axis_values = []
-        if self.timeframe == "day":
-            y_axis_values.append(MealGraph.daily_calories_consumed(datetime.now().strftime('%Y-%m-%d')))
-            return y_axis_values
-
-        elif self.timeframe == "week":
-            for dates in calendar_object.itermonthdates(today.year,today.month):
-                if datetime.now().strftime('%W') == dates.strftime('%W'):
-                    y_axis_values.append(MealGraph.daily_calories_consumed(dates.strftime('%Y-%m-%d')))
-            return y_axis_values
-
-        elif self.timeframe == "month":
-            for dates in calendar_object.itermonthdates(today.year,today.month):
-                if dates.month == today.month:
-                    y_axis_values.append(MealGraph.daily_calories_consumed(dates.strftime('%Y-%m-%d')))
-            return y_axis_values
-
 class ExerciseGraph(Graph):
 
     def __init__(self,timeframe):
@@ -160,8 +160,7 @@ class ExerciseGraph(Graph):
         # Set the names of the lines and the title of the graph
         self.desired_goal = goals.exercise_goal
 
-
-    def daily_calories_burnt(date):
+    def calculate_daily_values(self, date):
         day_calories_burnt = 0
         user_exercise_data = ExerciseRecord.query.filter_by(user_id = currentuser, date_created = date).all()
         #Gets all the exercise records created on the specified date
@@ -174,24 +173,6 @@ class ExerciseGraph(Graph):
         else:
             return 0
 
-    def get_y_axis_values(self):
-        y_axis_values = []
-        if self.timeframe == "day":
-            y_axis_values.append(ExerciseGraph.daily_calories_burnt(datetime.now().strftime('%Y-%m-%d')))
-            return y_axis_values
-
-        elif self.timeframe == "week":
-            for dates in calendar_object.itermonthdates(today.year,today.month):
-                if datetime.now().strftime('%W') == dates.strftime('%W'):
-                    y_axis_values.append(ExerciseGraph.daily_calories_burnt(dates.strftime('%Y-%m-%d')))
-            return y_axis_values
-
-        elif self.timeframe == "month":
-            for dates in calendar_object.itermonthdates(today.year,today.month):
-                if dates.month == today.month:
-                    y_axis_values.append(ExerciseGraph.daily_calories_burnt(dates.strftime('%Y-%m-%d')))
-            return y_axis_values
-
 class SleepGraph(Graph):
 
     def __init__(self,timeframe):
@@ -202,7 +183,7 @@ class SleepGraph(Graph):
         # Set the names of the lines and the title of the graph
         self.desired_goal = goals.sleep_goal
 
-    def daily_sleep_hours(date):
+    def calculate_daily_values(self, date):
         day_sleep_hours = 0
         user_sleep_data = SleepRecord.query.filter_by(user_id = currentuser, date_created = date).all()
         #Gets all the Sleep records created on the specified date
@@ -215,24 +196,6 @@ class SleepGraph(Graph):
         else:
             return 0
 
-    def get_y_axis_values(self):
-        y_axis_values = []
-        if self.timeframe == "day":
-            y_axis_values.append(SleepGraph.daily_sleep_hours(datetime.now().strftime('%Y-%m-%d')))
-            return y_axis_values
-
-        elif self.timeframe == "week":
-            for dates in calendar_object.itermonthdates(today.year,today.month):
-                if datetime.now().strftime('%W') == dates.strftime('%W'):
-                    y_axis_values.append(SleepGraph.daily_sleep_hours(dates.strftime('%Y-%m-%d')))
-            return y_axis_values
-
-        elif self.timeframe == "month":
-            for dates in calendar_object.itermonthdates(today.year,today.month):
-                if dates.month == today.month:
-                    y_axis_values.append(SleepGraph.daily_sleep_hours(dates.strftime('%Y-%m-%d')))
-            return y_axis_values
-
 class WeightGraph(Graph):
 
     def __init__(self,timeframe):
@@ -243,7 +206,7 @@ class WeightGraph(Graph):
         # Set the names of the lines and the title of the graph
         self.desired_goal = goals.weight_goal
 
-    def daily_weight(date):
+    def calculate_daily_values(self, date):
         day_weight = 0
         user_weight_data = WeightRecord.query.filter_by(user_id = currentuser, date_created = date).all()
         #Gets all the weight records created on the specified date
@@ -267,21 +230,3 @@ class WeightGraph(Graph):
             return 0
             #returns 0 instead of pass to prevent an error in the streak system
             #caused by the code trying to compare None to an integer
-
-    def get_y_axis_values(self):
-        y_axis_values = []
-        if self.timeframe == "day":
-            y_axis_values.append(WeightGraph.daily_weight(datetime.now().strftime('%Y-%m-%d')))
-            return y_axis_values
-
-        elif self.timeframe == "week":
-            for dates in calendar_object.itermonthdates(today.year,today.month):
-                if datetime.now().strftime('%W') == dates.strftime('%W'):
-                    y_axis_values.append(WeightGraph.daily_weight(dates.strftime('%Y-%m-%d')))
-            return y_axis_values
-
-        elif self.timeframe == "month":
-            for dates in calendar_object.itermonthdates(today.year,today.month):
-                if dates.month == today.month:
-                    y_axis_values.append(WeightGraph.daily_weight(dates.strftime('%Y-%m-%d')))
-            return y_axis_values

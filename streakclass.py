@@ -74,7 +74,7 @@ class MealStreak(Streak):
         Streak.__init__(self)
         self.desired_streak = StreakRecord.meal_streak
         self.latest_date_for_streak = StreakRecord.latest_date_for_meal_streak
-        self.streak_condition = MealGraph.daily_calories_consumed(datetime.now().strftime('%Y-%m-%d'))
+        self.streak_condition = MealGraph.calculate_daily_values(datetime.now().strftime('%Y-%m-%d'))
         self.streak_done = StreakRecord.meal_streak_done
         self.desired_goal = goals.meal_goal
 
@@ -91,7 +91,7 @@ class ExerciseStreak(Streak):
         Streak.__init__(self)
         self.desired_streak = StreakRecord.exercise_streak
         self.latest_date_for_streak = StreakRecord.latest_date_for_exercise_streak
-        self.streak_condition = ExerciseGraph.daily_calories_burnt(datetime.now().strftime('%Y-%m-%d'))
+        self.streak_condition = ExerciseGraph.calculate_daily_values(datetime.now().strftime('%Y-%m-%d'))
         self.streak_done = StreakRecord.exercise_streak_done
         self.desired_goal = goals.exercise_goal
 
@@ -107,7 +107,7 @@ class SleepStreak(Streak):
         Streak.__init__(self)
         self.desired_streak = StreakRecord.sleep_streak
         self.latest_date_for_streak = StreakRecord.latest_date_for_sleep_streak
-        self.streak_condition = SleepGraph.daily_sleep_hours(datetime.now().strftime('%Y-%m-%d'))
+        self.streak_condition = SleepGraph.calculate_daily_values(datetime.now().strftime('%Y-%m-%d'))
         self.streak_done = StreakRecord.sleep_streak_done
         self.desired_goal = goals.sleep_goal
 
@@ -123,7 +123,7 @@ class WeightStreak(Streak):
             Streak.__init__(self)
             self.desired_streak = StreakRecord.weight_streak
             self.latest_date_for_streak = StreakRecord.latest_date_for_weight_streak
-            self.streak_condition = WeightGraph.daily_weight(datetime.now().strftime('%Y-%m-%d'))
+            self.streak_condition = WeightGraph.calculate_daily_values(datetime.now().strftime('%Y-%m-%d'))
             self.streak_done = StreakRecord.weight_streak_done
             self.desired_goal = goals.weight_goal
 
