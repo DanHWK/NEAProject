@@ -12,11 +12,12 @@
 
     {% if WeakPassword == True %}
       <div class="alert alert-warning" role="alert">
-        Password is too short
+        {{password_failed_reason}}
       </div>
     {% endif %}
 
     {% endwith %}
+    <div class = "d-flex flex-row">
         <form action="#" method="POST">
             <div class="field">
                 <div class="control">
@@ -33,11 +34,19 @@
             <div class="field">
                 <div class="control">
                     <input class="input is-large" type="password" name="user_password" placeholder="Password" required>
-                    <small class="form-text text-muted"> Password should be at least 8 characters long</small>
                 </div>
             </div>
         <br>
             <button class="button is-block is-info is-large is-fullwidth">Sign Up</button>
         </form>
+        <div class="ml-5">
+            <bold class="form-text text-muted"> Password must: </bold>
+            <small class="form-text text-muted"> Contain at least 8 characters</small>
+            <small class="form-text text-muted"> Contain both uppercase and lowercase letters</small>
+            <small class="form-text text-muted"> Contain at least one digit</small>
+            <small class="form-text text-muted"> Contain a special character</small>
+        </div>
+    
+    </div>
 </div>
 {% endblock %}

@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 import calendar
 from graphclasses import GraphManager
 from streakclass import Streak, MealStreak, ExerciseStreak, SleepStreak, WeightStreak
+import re
 
 
 app = Flask(__name__)
@@ -77,6 +78,25 @@ def CaloriesBurned(activity, duration_minutes, duration_hours):
         print("Error:", response.status_code, response.text)
         #prints error message if there is a problem during transmission
 
+def test_password_strength(password):
+    uppercase_letter_pattern = "(?=.*?[A-Z])"
+    lowercase_letter_pattern = "(?=.*?[a-z])"
+    digit_pattern = "(?=.*?[0-9])"
+    special_character_pattern = "(?=.*?[#?!@$%^&*-])"
+
+    if len(password) < 8:
+        return False, "Password must be at least 8 characters long"
+    if not re.match(uppercase_letter_pattern, password):
+        return False, "Password must contain at least one uppercase letter"
+    if not re.match(lowercase_letter_pattern, password):
+        return False, "Password must contain at least one lowercase letter"
+    if not re.match(digit_pattern, password):
+        return False, "Password must contain at least one digit"
+    if not re.match(special_character_pattern, password):
+        return False, "Password must contain at least one special character"
+
+    return True, ""
+
 @app.route("/")
 def home():
     if current_user.is_authenticated == True:
@@ -140,6 +160,7 @@ def fitness():
     else:
         return render_template("fitness.html")
         #Renders the html template fitness.html
+
 @app.route("/diet", methods = ["POST", "GET"])
 @login_required
 def diet():
@@ -314,8 +335,10 @@ def signup():
 
         user = User.query.filter_by(email=email).first() # if this returns a user, then the email already exists in database
 
-        if len(request.form.get('user_password')) < 8:
-            return render_template('signup.html', WeakPassword = True)
+        password_strength, password_failed_reason = test_password_strength(request.form.get('user_password'))
+
+        if not password_strength:
+            return render_template('signup.html', WeakPassword = True, password_failed_reason = password_failed_reason)
 
         if user: # if a user is found, we want to redirect back to signup page so user can try again as a email can only have one account
             #if a user isn't found the if statement will not run as user will equal None
