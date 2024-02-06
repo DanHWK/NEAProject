@@ -75,4 +75,21 @@ this file allows bootstrap to be used and sets up the navbar for website
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
+    <script>
+      const buttons = document.querySelectorAll('.btn')
+      buttons.forEach(function (currentBtn) {
+        currentBtn.addEventListener('click', event => {
+          const divId = $(currentBtn).parent().attr("id")
+          const divBtns = document.querySelectorAll(`#${divId} button`);
+
+          divBtns.forEach(function (divBtn) {
+            if (divBtn.getAttribute("aria-expanded") === "true" && divBtn !== currentBtn) {
+              divBtn.removeAttribute("aria-expanded")
+              const dataTarget = document.getElementById(divBtn.getAttribute("data-target").substring(1))
+              dataTarget.setAttribute("class", "collapse")
+            }
+          })
+        });
+      })
+    </script>
 </body>
