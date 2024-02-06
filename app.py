@@ -6,7 +6,7 @@ import bcrypt
 import pygal
 from datetime import datetime, timedelta
 import calendar
-from graphclasses import Graph, MealGraph, ExerciseGraph, SleepGraph, WeightGraph
+from graphclasses import GraphManager
 from streakclass import Streak, MealStreak, ExerciseStreak, SleepStreak, WeightStreak
 
 
@@ -86,60 +86,22 @@ def home():
         #Passes the user_logged_in value to the HTML which has a if statement
         #which checks the value, this makes it so it will only show the text when the user has logged in
 
-        daymeal = MealGraph("day")
-        weekmeal = MealGraph("week")
-        monthmeal = MealGraph("month")
-        #Creates all the MealGraph objects for a day,week and month graph
-        day_meal_graph_uri = daymeal.create_graph().render_data_uri()
-        week_meal_graph_uri = weekmeal.create_graph().render_data_uri()
-        month_meal_graph_uri = monthmeal.create_graph().render_data_uri()
-        #Uses the create graph function defined in graphclasses to get the graph data before
-        #Using pygal's render_data_uri() to create a base 64 encoded data uri that will be embedded in the home page html
+        graph_uris = GraphManager().graphs
 
         MealStreakObject = MealStreak()
         Meal_Streak = MealStreakObject.create_streak()
         #Creates the streak object for Meals and then calls the function defined in streakclass
         #to check if a value should be added to the streak every time the home page is called
 
-        dayexercise = ExerciseGraph("day")
-        weekexercise = ExerciseGraph("week")
-        monthexercise = ExerciseGraph("month")
-        #Creates all the ExerciseGraph objects for a day,week and month graph
-        day_exercise_graph_uri = dayexercise.create_graph().render_data_uri()
-        week_exercise_graph_uri = weekexercise.create_graph().render_data_uri()
-        month_exercise_graph_uri = monthexercise.create_graph().render_data_uri()
-        #Uses the create graph function defined in graphclasses to get the graph data before
-        #Using pygal's render_data_uri() to create a base 64 encoded data uri that will be embedded in the home page html
-
         ExerciseStreakObject = ExerciseStreak()
         Exercise_Streak = ExerciseStreakObject.create_streak()
         #Creates the streak object for Exercise and then calls the function to check if a value should be added to the streak
         #Every time the home page is called
 
-        daysleep = SleepGraph("day")
-        weeksleep = SleepGraph("week")
-        monthsleep = SleepGraph("month")
-        #Creates all the SleepGraph objects for a day,week and month graph
-        day_sleep_graph_uri = daysleep.create_graph().render_data_uri()
-        week_sleep_graph_uri = weeksleep.create_graph().render_data_uri()
-        month_sleep_graph_uri = monthsleep.create_graph().render_data_uri()
-        #Uses the create graph function defined in graphclasses to get the graph data before
-        #Using pygal's render_data_uri() to create a base 64 encoded data uri that will be embedded in the home page html
-
         SleepStreakObject = SleepStreak()
         Sleep_Streak = SleepStreakObject.create_streak()
         #Creates the streak object for Sleep and then calls the function to check if a value should be added to the streak
         #Every time the home page is called
-
-        dayweight = WeightGraph("day")
-        weekweight = WeightGraph("week")
-        monthweight = WeightGraph("month")
-        #Creates all the WeightGraph objects for a day,week and month graph
-        day_weight_graph_uri = dayweight.create_graph().render_data_uri()
-        week_weight_graph_uri = weekweight.create_graph().render_data_uri()
-        month_weight_graph_uri = monthweight.create_graph().render_data_uri()
-        #Uses the create graph function defined in graphclasses to get the graph data before
-        #Using pygal's render_data_uri() to create a base 64 encoded data uri that will be embedded in the home page html
 
         WeightStreakObject = WeightStreak()
         Weight_Streak = WeightStreakObject.create_streak()
@@ -148,11 +110,7 @@ def home():
 
         Streak = StreakRecord.query.filter_by(user_id = current_user.id).first()
 
-        return render_template("homepage.html", username = username, user_logged_in = user_logged_in, StreakRecord =  Streak,
-        day_meal_graph_uri = day_meal_graph_uri, week_meal_graph_uri = week_meal_graph_uri, month_meal_graph_uri = month_meal_graph_uri,
-        day_exercise_graph_uri = day_exercise_graph_uri, week_exercise_graph_uri = week_exercise_graph_uri, month_exercise_graph_uri = month_exercise_graph_uri,
-        day_sleep_graph_uri = day_sleep_graph_uri, week_sleep_graph_uri = week_sleep_graph_uri, month_sleep_graph_uri = month_sleep_graph_uri,
-        day_weight_graph_uri = day_weight_graph_uri, week_weight_graph_uri = week_weight_graph_uri, month_weight_graph_uri = month_weight_graph_uri)
+        return render_template("homepage.html", username = username, user_logged_in = user_logged_in, StreakRecord =  Streak, graph_uris = graph_uris)
         #Passes all the graph uri's to the homepage html page
     else:
         return render_template("homepage.html",username = "", user_logged_in = False)

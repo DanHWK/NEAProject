@@ -230,3 +230,30 @@ class WeightGraph(Graph):
             return 0
             #returns 0 instead of pass to prevent an error in the streak system
             #caused by the code trying to compare None to an integer
+
+class GraphManager:
+    def __init__(self):
+        self.graphs = {
+            "diet" : self.create_graphs(MealGraph),
+            "exercise" : self.create_graphs(ExerciseGraph),
+            "sleep" : self.create_graphs(SleepGraph),
+            "weight" : self.create_graphs(WeightGraph)
+        }
+
+    def create_graphs(self, graph_type):
+        day = graph_type("day")
+        week = graph_type("week")
+        month = graph_type("month")
+
+        #Creates encoded data uris for a graph for each time period that'll be embedded in the home page html
+        day_graph_uri = day.create_graph().render_data_uri()
+        week_graph_uri = week.create_graph().render_data_uri()
+        month_graph_uri = month.create_graph().render_data_uri()
+
+        graphs = {
+            "day": day_graph_uri,
+            "week": week_graph_uri,
+            "month": month_graph_uri
+        }
+
+        return graphs
