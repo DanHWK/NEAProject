@@ -256,8 +256,11 @@ def goals():
             #Checks if the User filled in the input
             try:
             #Checks if the User gave a valid input
-                int(request.form.get("new_meal_goal"))
-                current_goals.meal_goal = request.form.get("new_meal_goal")
+                if int(request.form.get("new_meal_goal")) > 0:
+                    int(request.form.get("new_meal_goal"))
+                    current_goals.meal_goal = request.form.get("new_meal_goal")
+                else:
+                    return render_template('goals.html', current_goals = current_goals, valid = False)
             except:
             #Renders the goal template with an error message if it isn't valid
                 return render_template('goals.html', current_goals = current_goals, valid = False)
@@ -266,8 +269,11 @@ def goals():
             #Checks if the User filled in the input
             try:
             #Checks if the User gave a valid input
-                int(request.form.get("new_exercise_goal"))
-                current_goals.exercise_goal = request.form.get("new_exercise_goal")
+                if int(request.form.get("new_exercise_goal")) > 0:
+                    int(request.form.get("new_exercise_goal"))
+                    current_goals.exercise_goal = request.form.get("new_exercise_goal")
+                else:
+                    return render_template('goals.html', current_goals = current_goals, valid = False)
             except:
                 #Renders the goal template with an error message if it isn't valid
                 return render_template('goals.html', current_goals = current_goals, valid = False)
@@ -276,8 +282,11 @@ def goals():
             #Checks if the User filled in the input
             try:
             #Checks if the User gave a valid input
-                int(request.form.get("new_sleep_goal"))
-                current_goals.sleep_goal = request.form.get("new_sleep_goal")
+                if int(request.form.get("new_sleep_goal")) > 0:
+                    int(request.form.get("new_sleep_goal"))
+                    current_goals.sleep_goal = request.form.get("new_sleep_goal")
+                else:
+                    return render_template('goals.html', current_goals = current_goals, valid = False)
             except:
                 #Renders the goal template with an error message if it isn't valid
                 return render_template('goals.html', current_goals = current_goals, valid = False)
@@ -286,8 +295,12 @@ def goals():
             #Checks if the User filled in the input
             try:
             #Checks if the User gave a valid input
-                int(request.form.get("new_weight_goal"))
-                current_goals.weight_goal = request.form.get("new_weight_goal")
+                if int(request.form.get("new_weight_goal")) > 0:
+                    int(request.form.get("new_weight_goal"))
+                    current_goals.weight_goal = request.form.get("new_weight_goal")
+
+                else:
+                    return render_template('goals.html', current_goals = current_goals, valid = False)
             except:
                 #Renders the goal template with an error message if it isn't valid
                 return render_template('goals.html', current_goals = current_goals, valid = False)
