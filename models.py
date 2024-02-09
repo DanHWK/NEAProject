@@ -68,20 +68,7 @@ class GoalRecord(db.Model):
 class StreakRecord(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     meal_streak = db.Column(db.Integer, default = 0)
-    latest_date_for_meal_streak = db.Column(db.String(50))
-    #stores the date of the last time a value was added to the streak score
-    meal_streak_done = db.Column(db.Boolean, default=False)
-    #Stores a boolean value that will say whether a streak value has already been added for that day
-
     exercise_streak = db.Column(db.Integer, default = 0)
-    latest_date_for_exercise_streak = db.Column(db.String(50))
-    exercise_streak_done = db.Column(db.Boolean, default=False)
-
     sleep_streak = db.Column(db.Integer, default = 0)
-    latest_date_for_sleep_streak = db.Column(db.String(50))
-    sleep_streak_done = db.Column(db.Boolean, default=False)
-
     weight_streak = db.Column(db.Integer, default = 0)
-    latest_date_for_weight_streak = db.Column(db.String(50))
-    weight_streak_done = db.Column(db.Boolean, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

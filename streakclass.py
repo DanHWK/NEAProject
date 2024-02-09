@@ -1,8 +1,9 @@
+import logging
 from flask import Flask
 from flask_login import current_user
 from flask_sqlalchemy import SQLAlchemy
 
-from sqlalchemy import select
+from sqlalchemy import func
 from models import db, MealRecord, ExerciseRecord, SleepRecord, WeightRecord, GoalRecord, User, StreakRecord
 
 from datetime import datetime, timedelta
@@ -10,162 +11,92 @@ import calendar
 
 from graphclasses import Graph, MealGraph, ExerciseGraph, SleepGraph, WeightGraph
 
-class Streak:
+class StreakManager():
     def __init__(self):
-        #These attributes will be assigned their proper values in the subclasses
-        self.desired_streak = "desired streak value"
-        self.latest_date_for_streak = "latest date for streak"
-        #The latest date for a streak to continue on, after this date the streak is set back to 0
-        self.streak_condition = "condition for streak value to be added"
-        #The condition for the streak to continue
-        self.streak_done = "stores whether a streak value has been added"
-        #Boolean value is stored here to make sure only one streak value is added per day
-        self.desired_goal = "desired goal"
-        #The desired goal is stored here
+        self.streak_record = StreakRecord.query.filter_by(user_id = current_user.id).first()
 
-        global currentuser
-        currentuser = current_user.id
+    def set_streak(self, record_type, amount):
+        if record_type == MealRecord:
+            self.streak_record.meal_streak = amount
+        elif record_type == ExerciseRecord:
+            self.streak_record.exercise_streak = amount
+        elif record_type == SleepRecord:
+            self.streak_record.sleep_streak = amount
+        elif record_type == WeightRecord:
+            self.streak_record.weight_streak = amount
 
-        global goals
-        goals = GoalRecord.query.filter_by(user_id = currentuser).first()
-
-        global StreakRecord
-        StreakRecord = StreakRecord.query.filter_by(user_id = currentuser).first()
-
-    def commit_streak_to_database():
-        pass
-
-    def create_streak(self):
-        if self.streak_done == False:
-            if self.latest_date_for_streak < datetime.now().strftime('%Y-%m-%d'):
-                self.desired_streak = 0
-                self.latest_date_for_streak = (datetime.now()+timedelta(days = 1)).strftime('%Y-%m-%d')
-                self.commit_streak_to_database()
-                # This function is used to commit the new streak record values to the database
-                self.create_streak()
-                # This if statement checks if its been more than one day since a value was added to the streak
-                # If it has been more than one day the streak is set back to 0 and the latest date for a streak
-                # to continue is increased by one, (if it didn't increase it the next if statement condition would never be fufilled)
-                # The function is then called again to check if the user has met the conditions to start a new streak
-
-            elif self.latest_date_for_streak >= datetime.now().strftime('%Y-%m-%d') and self.streak_condition > self.desired_goal:
-                self.desired_streak = self.desired_streak + 1
-                self.latest_date_for_streak = (datetime.now()+timedelta(days = 1)).strftime('%Y-%m-%d')
-                self.streak_done = True
-                self.commit_streak_to_database()
-                pass
-            pass
-            #this pass is for when there is still time to continue the streak but the condition hasn't been fufilled
-
-        elif self.streak_done == True:
-            if datetime.now().strftime('%Y-%m-%d') >= self.latest_date_for_streak:
-                self.streak_done = False
-                self.commit_streak_to_database()
-                self.create_streak()
-                # This if statement checks if its been more than a day since the last streak value was added
-                # >= is used as latest_date_for_streak is equal to the date when the last streak value was added plus one day
-                # The function then calls upon itself to check if a streak value should be added again
-
-            else:
-                pass
-
-class MealStreak(Streak):
-    def __init__(self):
-        Streak.__init__(self)
-        self.desired_streak = StreakRecord.meal_streak
-        self.latest_date_for_streak = StreakRecord.latest_date_for_meal_streak
-        self.streak_condition = MealGraph.calculate_daily_values(self, datetime.now().strftime('%Y-%m-%d'))
-        self.streak_done = StreakRecord.meal_streak_done
-        self.desired_goal = goals.meal_goal
-
-    def commit_streak_to_database(self):
-        StreakRecord.meal_streak = self.desired_streak
-        StreakRecord.meal_streak_done = self.streak_done
-        StreakRecord.latest_date_for_meal_streak = self.latest_date_for_streak
         db.session.commit()
-        pass
-        # This function is used to commit the new streak record values to the database
 
-class ExerciseStreak(Streak):
-    def __init__(self):
-        Streak.__init__(self)
-        self.desired_streak = StreakRecord.exercise_streak
-        self.latest_date_for_streak = StreakRecord.latest_date_for_exercise_streak
-        self.streak_condition = ExerciseGraph.calculate_daily_values(self, datetime.now().strftime('%Y-%m-%d'))
-        self.streak_done = StreakRecord.exercise_streak_done
-        self.desired_goal = goals.exercise_goal
+    def get_current_streak(self, record_type):
+        if record_type == MealRecord:
+            return self.streak_record.meal_streak
+        elif record_type == ExerciseRecord:
+            return self.streak_record.exercise_streak
+        elif record_type == SleepRecord:
+            return self.streak_record.sleep_streak
+        elif record_type == WeightRecord:
+            return self.streak_record.weight_streak
 
-    def commit_streak_to_database(self):
-        StreakRecord.exercise_streak = self.desired_streak
-        StreakRecord.exercise_streak_done = self.streak_done
-        StreakRecord.latest_date_for_exercise_streak = self.latest_date_for_streak
-        db.session.commit()
-        pass
+    def get_recent_date(self, record_type):
+        record = record_type.query.order_by((record_type.date_created).desc()).first()
+        date_created = None if record is None else datetime.strptime(record.date_created, '%Y-%m-%d')
+        return date_created
 
-class SleepStreak(Streak):
-    def __init__(self):
-        Streak.__init__(self)
-        self.desired_streak = StreakRecord.sleep_streak
-        self.latest_date_for_streak = StreakRecord.latest_date_for_sleep_streak
-        self.streak_condition = SleepGraph.calculate_daily_values(self, datetime.now().strftime('%Y-%m-%d'))
-        self.streak_done = StreakRecord.sleep_streak_done
-        self.desired_goal = goals.sleep_goal
+    def should_be_reset(self, latest_date):
+        today = datetime.now()
+        return latest_date < today
 
-    def commit_streak_to_database(self):
-        StreakRecord.sleep_streak = self.desired_streak
-        StreakRecord.sleep_streak_done = self.streak_done
-        StreakRecord.latest_date_for_sleep_streak = self.latest_date_for_streak
-        db.session.commit()
-        pass
+    def reset_streak(self, record_type):
+        latest_date = self.get_recent_date(record_type)
+        if latest_date == None or self.should_be_reset(latest_date):
+            return
 
-class WeightStreak(Streak):
-        def __init__(self):
-            Streak.__init__(self)
-            self.desired_streak = StreakRecord.weight_streak
-            self.latest_date_for_streak = StreakRecord.latest_date_for_weight_streak
-            self.streak_condition = WeightGraph.calculate_daily_values(self, datetime.now().strftime('%Y-%m-%d'))
-            self.streak_done = StreakRecord.weight_streak_done
-            self.desired_goal = goals.weight_goal
+        self.set_streak(record_type, 0)
 
-        def commit_streak_to_database(self):
-            StreakRecord.weight_streak = self.desired_streak
-            StreakRecord.weight_streak_done = self.streak_done
-            StreakRecord.latest_date_for_weight_streak = self.latest_date_for_streak
-            db.session.commit()
-            pass
+    def reset_streaks(self):
+        self.reset_streak(MealRecord)
+        self.reset_streak(ExerciseRecord)
+        self.reset_streak(SleepRecord)
+        self.reset_streak(WeightRecord)
 
-        def create_streak(self):
-            #The if statement with the streak condition is changed here here so the streak value will increase as long as the user records
-            #Their weight at least once a day
-            if self.streak_done == False:
-                if self.latest_date_for_streak < datetime.now().strftime('%Y-%m-%d'):
-                    self.desired_streak = 0
-                    self.latest_date_for_streak = (datetime.now()+timedelta(days = 1)).strftime('%Y-%m-%d')
-                    self.commit_streak_to_database()
-                    # This function is used to commit the new streak record values to the database
-                    self.create_streak()
-                    # This if statement checks if its been more than one day since a value was added to the streak
-                    # If it has been more than one day the streak is set back to 0 and the latest date for a streak
-                    # to continue is increased by one, (if it didn't increase it the next if statement condition would never be fufilled)
-                    # The function is then called again to check if the user has met the conditions to start a new streak
+    def get_goal(self, record_type):
+        goal_record = GoalRecord.query.filter_by(user_id = current_user.id).first()
 
-                elif self.latest_date_for_streak >= datetime.now().strftime('%Y-%m-%d') and self.streak_condition != 0:
-                    self.desired_streak = self.desired_streak + 1
-                    self.latest_date_for_streak = (datetime.now()+timedelta(days = 1)).strftime('%Y-%m-%d')
-                    self.streak_done = True
-                    self.commit_streak_to_database()
-                    pass
-                pass
-                #this pass is for when there is still time to continue the streak but the condition hasn't been fufilled
+        if record_type == MealRecord:
+            return goal_record.meal_goal
+        elif record_type == ExerciseRecord:
+            return goal_record.exercise_goal
+        elif record_type == SleepRecord:
+            return goal_record.sleep_goal
 
-            elif self.streak_done == True:
-                if datetime.now().strftime('%Y-%m-%d') >= self.latest_date_for_streak:
-                    self.streak_done = False
-                    self.commit_streak_to_database()
-                    self.create_streak()
-                    # This if statement checks if its been more than a day since the last streak value was added
-                    # >= is used as latest_date_for_streak is equal to the date when the last streak value was added plus one day
-                    # The function then calls upon itself to check if a streak value should be added again
+    def get_daily_value(self, record_type):
+        today = datetime.now().strftime('%Y-%m-%d')
+        if record_type == MealRecord:
+            return MealGraph.calculate_daily_values(self, today)
+        elif record_type == ExerciseRecord:
+            return ExerciseGraph.calculate_daily_values(self, today)
+        elif record_type == SleepRecord:
+            return SleepGraph.calculate_daily_values(self, today)
+        elif record_type == WeightRecord:
+            return WeightGraph.calculate_daily_values(self, today)
 
-                else:
-                    pass
+    def has_streak_increased_today(self, record_type, increase_amount):
+        if record_type == MealRecord:
+            return self.get_daily_value(record_type) - increase_amount >= self.get_goal(record_type)
+        elif record_type == ExerciseRecord:
+            return self.get_daily_value(record_type) - increase_amount >= self.get_goal(record_type)
+        elif record_type == SleepRecord:
+            return self.get_daily_value(record_type) - increase_amount >= self.get_goal(record_type)
+
+    def should_increase_streak(self, record_type, increase_amount):
+        if record_type == WeightRecord:
+            return db.session.query(func.count(WeightRecord.date_created == datetime.now().strftime('%Y-%m-%d'))).scalar() > 1
+        if self.has_streak_increased_today(record_type, increase_amount):
+            return False
+        return self.get_daily_value(record_type) >= self.get_goal(record_type)
+
+    def increase_streak(self, record_type, increase_amount = None):
+        if not self.should_increase_streak(record_type, increase_amount):
+            return
+
+        self.set_streak(record_type, self.get_current_streak(record_type) + 1)

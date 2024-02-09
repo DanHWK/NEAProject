@@ -7,7 +7,7 @@ import pygal
 from datetime import datetime, timedelta
 import calendar
 from graphclasses import GraphManager
-from streakclass import Streak, MealStreak, ExerciseStreak, SleepStreak, WeightStreak
+from streakclass import StreakManager
 import re
 import logging
 
@@ -129,26 +129,8 @@ def home():
         #which checks the value, this makes it so it will only show the text when the user has logged in
 
         graph_uris = GraphManager().graphs
-
-        MealStreakObject = MealStreak()
-        Meal_Streak = MealStreakObject.create_streak()
-        #Creates the streak object for Meals and then calls the function defined in streakclass
-        #to check if a value should be added to the streak every time the home page is called
-
-        ExerciseStreakObject = ExerciseStreak()
-        Exercise_Streak = ExerciseStreakObject.create_streak()
-        #Creates the streak object for Exercise and then calls the function to check if a value should be added to the streak
-        #Every time the home page is called
-
-        SleepStreakObject = SleepStreak()
-        Sleep_Streak = SleepStreakObject.create_streak()
-        #Creates the streak object for Sleep and then calls the function to check if a value should be added to the streak
-        #Every time the home page is called
-
-        WeightStreakObject = WeightStreak()
-        Weight_Streak = WeightStreakObject.create_streak()
-        #Creates the streak object for weight and then calls the function to check if a value should be added to the streak
-        #Every time the home page is called
+        streak_manager = StreakManager()
+        streak_manager.reset_streaks()
 
         Streak = StreakRecord.query.filter_by(user_id = current_user.id).first()
 
@@ -178,6 +160,7 @@ def fitness():
         except:
             return "There was an error whilst recording your activity"
             # Sends error message if there is a problem with adding the record to the database
+        StreakManager().increase_streak(ExerciseRecord, calories_burned)
         return render_template("fitness.html", success = True)
     else:
         return render_template("fitness.html")
@@ -212,6 +195,7 @@ def diet():
         except:
             return "There was an error whilst recording your meal"
             # Sends error message if there is a problem with adding the record to the database
+        StreakManager().increase_streak(MealRecord, calories)
         return render_template("diet.html", success = True)
     else:
 
@@ -238,6 +222,8 @@ def sleep():
         except:
             return "There was an error whilst recording your activity"
                 # Sends error message if there is a problem with adding the record to the database
+        increase_amount = int(hours_slept) + (int(minutes_slept)/60)
+        StreakManager().increase_streak(SleepRecord, increase_amount)
         return render_template("sleep.html", success = True)
     else:
         return render_template("sleep.html", success = False)
@@ -263,6 +249,7 @@ def weight():
         except:
             return "There was an error whilst recording your activity"
                 # Sends error message if there is a problem with adding the record to the database
+        StreakManager().increase_streak(WeightRecord)
         return render_template("weight.html", success = True)
     else:
         return render_template("weight.html", success = False)
@@ -389,11 +376,7 @@ def signup():
         #set default goals for the new user
         #this record will be edited if the user sets a new goal
 
-        default_streak = StreakRecord(user_id = current_user.id,
-        latest_date_for_meal_streak =  (datetime.now()+timedelta(days = 1)).strftime('%Y-%m-%d'),
-        latest_date_for_exercise_streak =  (datetime.now()+timedelta(days = 1)).strftime('%Y-%m-%d'),
-        latest_date_for_sleep_streak =  (datetime.now()+timedelta(days = 1)).strftime('%Y-%m-%d'),
-        latest_date_for_weight_streak =  (datetime.now()+timedelta(days = 1)).strftime('%Y-%m-%d'), )
+        default_streak = StreakRecord(user_id = current_user.id)
         #create the streak record for the user, there should only be one streak record per user
         #This record will only be updated to store new streak values
 
@@ -402,9 +385,6 @@ def signup():
         db.session.commit()
         #add the goal record to the database for the new user
         #add the streak record to the database for the new user
-
-
-
 
         logout_user()
         #logs out the user as it would cause an error when they try and use the log in page

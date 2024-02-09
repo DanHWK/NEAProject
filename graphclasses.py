@@ -1,13 +1,8 @@
 import pygal
-from datetime import datetime, timedelta
+from datetime import datetime
 import calendar
-
-from flask import Flask
 from flask_login import current_user
-from flask_sqlalchemy import SQLAlchemy
-
-from sqlalchemy import select
-from models import db, MealRecord, ExerciseRecord, SleepRecord, WeightRecord, GoalRecord, User, StreakRecord
+from models import MealRecord, ExerciseRecord, SleepRecord, WeightRecord, GoalRecord
 
 
 class Graph:
