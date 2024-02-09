@@ -9,6 +9,7 @@ import calendar
 from graphclasses import GraphManager
 from streakclass import Streak, MealStreak, ExerciseStreak, SleepStreak, WeightStreak
 import re
+import logging
 
 
 app = Flask(__name__)
@@ -27,39 +28,58 @@ with app.app_context():
     login_manager.init_app(app)
     # creates an object of the LoginManage() class that allows the app and the flask_login module to work together
 
+    #Configure logging to log to a file with a specific format
+    logging.basicConfig(filename='app.log', level=logging.DEBUG, format='%(asctime)s %(levelname)s %(name)s : %(message)s')
+
     @login_manager.user_loader
     def load_user(user_id):
         #user_id is the primary key of the user table
         return User.query.get(int(user_id))
         # returns the user object's id as an integer when given the user id
 
-def getCalories(query):
-    #The query parameter will pass in the meal_name inputted by the user
+def get_total_calories(query):
+    '''
+    Calculates the total number of calories in a meal using an external api.
+
+    Parameters:
+        query(str): The meal input by the user.
+
+    Returns:
+        int: The total number of calories.
+    '''
     api_url = 'https://api.calorieninjas.com/v1/nutrition?query='
-    #This variable stores the URL of the external API
-    response = requests.get(api_url + query, headers={'X-Api-Key': 'CykZrnTm3hnrG+/WRu3gwA==soLKPt0ZajLEdfyi'})
-    #Sends a get request to CalorieNinjas along with the meal_name and the free API key that I was assigned for authentication
+    api_key = 'CykZrnTm3hnrG+/WRu3gwA==soLKPt0ZajLEdfyi'  #Required for authentication
+    response = requests.get(api_url + query, headers={'X-Api-Key': api_key})
     if response.status_code == requests.codes.ok:
-        #checks that there was no problem during transmission
-        print(response.json())
-        #prints the json file sent by CalorieNinjas in the terminal
+        app.logger.info(response.json())
+        #Gets the items returned in the json response
         items = response.json().get('items')
-        #retrieves all the items in json file
         calories = 0
+        #Iterates through the items and sums up their calorie values
         for item in items:
             calories += item.get('calories')
-            #Seperates all the calorie values in the items and adds them up to find the total value
 
         return calories
-        #returns the total calorie value
     else:
-        print("Error:", response.status_code, response.text)
-        #prints error message if there is a problem during transmission
+        #Logs the error
+        app.logger.error(f'{response.status_code} error: {response.text}')
 
-def CaloriesBurned(activity, duration_minutes, duration_hours):
+def get_calories_burned(activity, duration_minutes, duration_hours):
+    '''
+    Calculates the total number of calories burned from an activity using an external api.
+
+    Parameters:
+        activity(str): The type of activity that has been done.
+        duration_minutes(int): The number of minutes that the activity lasted for.
+        duration_hours(int): The number of hours that the activity lasted for.
+
+    Returns:
+        int: The total number of calories burned.
+    '''
     api_url = "https://trackapi.nutritionix.com/v2/natural/exercise"
-    parameter = activity+" for "+str(duration_minutes)+" minutes and "+str(duration_hours)+" hours"
-    # The API accepts a string as a quety it then uses an AI to parse through the string to produce the calories burned
+    # The query needs to be formatted in a certain way
+    parameter = f'{activity} for {str(duration_minutes)} minutes and {str(duration_hours)} hours'
+    # The API utilises AI to parse through the query and identify the correct number of calories burned
     data = {"query":parameter}
     response = requests.post(api_url , headers = {"x-app-key":"cb4162e3761f026ca66e3e947f26ca3a" , "x-app-id": "4fc7ca2a"}, json = data)
     if response.status_code == requests.codes.ok:
@@ -79,11 +99,13 @@ def CaloriesBurned(activity, duration_minutes, duration_hours):
         #prints error message if there is a problem during transmission
 
 def test_password_strength(password):
+    # Regex patterns for the different password requirements
     uppercase_letter_pattern = "(?=.*?[A-Z])"
     lowercase_letter_pattern = "(?=.*?[a-z])"
     digit_pattern = "(?=.*?[0-9])"
     special_character_pattern = "(?=.*?[#?!@$%^&*-])"
 
+    # Checks whether the password input by the user matches the
     if len(password) < 8:
         return False, "Password must be at least 8 characters long"
     if not re.match(uppercase_letter_pattern, password):
@@ -144,7 +166,7 @@ def fitness():
         exercise_hours = request.form.get("exercise_hours")
         exercise_minutes = request.form.get("exercise_minutes")
         exercise_name = request.form.get("exercise_name")
-        calories_burned = CaloriesBurned(exercise_name, exercise_minutes, exercise_hours)
+        calories_burned = get_calories_burned(exercise_name, exercise_minutes, exercise_hours)
         #Retrieves all the value from the form
         new_exercise_record = ExerciseRecord(hours = exercise_hours, minutes = exercise_minutes, name = exercise_name, calories_burned = calories_burned, user_id=current_user.id,date_created = datetime.now().strftime('%Y-%m-%d'))
         #Creates an object of the class ExerciseRecord and assigns all the values retrieved to attributes
@@ -167,7 +189,7 @@ def diet():
     if request.method == "POST":
         #If a form is sent from the website carry this code out
         if request.form.get("custom_meal_carbs") == None:
-            calories = getCalories(request.form.get("meal_name"))
+            calories = get_total_calories(request.form.get("meal_name"))
         else:
             carbohydrates = int(request.form.get("custom_meal_carbs"))
             protein = int(request.form.get("custom_meal_protein"))
