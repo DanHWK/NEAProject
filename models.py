@@ -2,7 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
 from flask_login import UserMixin
 
-db = SQLAlchemy() #This variable will be used to call upon SQLAlchemy() commands
+db = SQLAlchemy() #Used to call upon SQLAlchemy() commands
 
 #user table
 class User(UserMixin, db.Model):
