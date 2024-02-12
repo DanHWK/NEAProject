@@ -7,7 +7,7 @@ import pygal
 from datetime import datetime, timedelta
 import calendar
 from graphclasses import GraphManager
-from streakclass import StreakManager
+from streakclass import StreakManager, StreakType
 import re
 import logging
 
@@ -186,7 +186,7 @@ def fitness():
             app.logger.error(f'There was an error when trying to add {new_exercise_record} to the database')
             return "There was an error whilst recording your activity"
         #Checks whether the exercise streak needs to be increased and increases it if necessary.
-        StreakManager().increase_streak(ExerciseRecord, calories_burned)
+        StreakManager().increase_streak(StreakType.EXERCISE, calories_burned)
         #Renders the relevant html template.
         return render_template("fitness.html", success = True)
     else:
@@ -226,7 +226,7 @@ def diet():
             app.logger.error(f'There was an error when trying to add {new_meal_record} to the database')
             return "There was an error whilst recording your meal"
         #Checks whether the meal streak needs to be increased and increases it if necessary.
-        StreakManager().increase_streak(MealRecord, calories)
+        StreakManager().increase_streak(StreakType.DIET, calories)
         #Renders the relevant html template
         return render_template("diet.html", success = True)
     else:
@@ -259,7 +259,7 @@ def sleep():
         #How much sleep this newly added record would add to the daily total.
         increase_amount = int(hours_slept) + (int(minutes_slept)/60)
         #Checks whether the sleep streak needs to be increased and increases it if necessary.
-        StreakManager().increase_streak(SleepRecord, increase_amount)
+        StreakManager().increase_streak(StreakType.SLEEP, increase_amount)
         #Renders the relevant html template.
         return render_template("sleep.html", success = True)
     else:
@@ -286,7 +286,7 @@ def weight():
             app.logger.error(f'There was an error when trying to add {new_weight_record} to the database')
             return "There was an error whilst recording your activity"
         #Checks whether the sleep streak needs to be increased and increases it if necessary.
-        StreakManager().increase_streak(WeightRecord)
+        StreakManager().increase_streak(StreakType.WEIGHT)
         #Renders the relevant html template.
         return render_template("weight.html", success = True)
     else:

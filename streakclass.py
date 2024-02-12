@@ -1,15 +1,18 @@
-import logging
-from flask import Flask
 from flask_login import current_user
-from flask_sqlalchemy import SQLAlchemy
-
 from sqlalchemy import func
 from models import db, MealRecord, ExerciseRecord, SleepRecord, WeightRecord, GoalRecord, User, StreakRecord
 
 from datetime import datetime, timedelta
-import calendar
+from graphclasses import MealGraph, ExerciseGraph, SleepGraph, WeightGraph
+from enum import Enum
 
-from graphclasses import Graph, MealGraph, ExerciseGraph, SleepGraph, WeightGraph
+import logging
+
+class StreakType(Enum):
+    DIET = 0
+    SLEEP = 1
+    EXERCISE = 2
+    WEIGHT = 3
 
 class StreakManager():
     '''
@@ -26,18 +29,21 @@ class StreakManager():
         Updates the relevant streak value in the StreakRecord for a user in the database.
 
         Parameters:
-            record_type(db.Model): Indicates which streak type needs to be updated.
+            record_type(StreakType): Indicates which streak type needs to be updated.
             amount(int): The number to set the streak to.
         '''
-        if record_type == MealRecord:
-            self.streak_record.meal_streak = amount
-        elif record_type == ExerciseRecord:
-            self.streak_record.exercise_streak = amount
-        elif record_type == SleepRecord:
-            self.streak_record.sleep_streak = amount
-        elif record_type == WeightRecord:
-            self.streak_record.weight_streak = amount
-
+        match record_type:
+            case StreakType.DIET:
+                self.streak_record.meal_streak = amount
+            case StreakType.EXERCISE:
+                self.streak_record.exercise_streak = amount
+            case StreakType.SLEEP:
+                self.streak_record.sleep_streak = amount
+            case StreakType.WEIGHT:
+                self.streak_record.weight_streak = amount
+            case _:
+                logging.error(f'Unknown StreakType {record_type} passed into set_streak()')
+        
         db.session.commit() #Updates the database
 
     def get_current_streak(self, record_type):
@@ -45,19 +51,22 @@ class StreakManager():
         Gets the relevant streak value for a user from the database.
 
         Parameters:
-            record_type(db.Model): Indicates which streak type needs to be retrieved.
+            record_type(StreakType): Indicates which streak type needs to be retrieved.
 
         Returns:
             int: The revelant streak number.
         '''
-        if record_type == MealRecord:
-            return self.streak_record.meal_streak
-        elif record_type == ExerciseRecord:
-            return self.streak_record.exercise_streak
-        elif record_type == SleepRecord:
-            return self.streak_record.sleep_streak
-        elif record_type == WeightRecord:
-            return self.streak_record.weight_streak
+        match record_type:
+            case StreakType.DIET:
+                return self.streak_record.meal_streak
+            case StreakType.EXERCISE:
+                return self.streak_record.exercise_streak
+            case StreakType.SLEEP:
+                return self.streak_record.sleep_streak
+            case StreakType.WEIGHT:
+                return self.streak_record.weight_streak
+            case _:
+                logging.error(f'Unknown StreakType {record_type} passed into get_current_streak()')
 
     def get_recent_date(self, record_type):
         '''
@@ -67,7 +76,7 @@ class StreakManager():
             record_type(db.Model): The type of record to check for.
 
         Returns:
-            DateTime or None: The date of the most recently added record.
+            DateTime|None: The date of the most recently added record.
         '''
         #Order all the relevant records by the date_created column in descending order.
         #The first row would have the most recent date.
@@ -90,73 +99,102 @@ class StreakManager():
         #If there is at least a one day gap in between today's date and the date of the
         #latest record then the streak should be reset
         return latest_date.date() < yesterday.date()
+    
+    def get_model(self, record_type):
+        '''
+        Gets the relevant database model for the streak type.
+
+        Parameters:
+            record_type(StreakType): Indicates which database model to retrieve .
+        Returns:
+            db.Model: The database model for the relevant type.
+        '''
+        match record_type:
+            case StreakType.DIET:
+                return MealRecord
+            case StreakType.EXERCISE:
+                return ExerciseRecord
+            case StreakType.SLEEP:
+                return SleepRecord
+            case StreakType.WEIGHT:
+                return WeightRecord
+            case _:
+                logging.error(f'Unknown StreakType {record_type} passed into get_model()')
 
     def reset_streak(self, record_type):
         '''
         Determines whether a streak should be reset and reset it if necessary.
 
         Parameters:
-            record_type(db.Model): Indicates which streak type needs to be checked.
+            record_type(StreakType): Indicates which streak type needs to be checked.
         '''
-        latest_date = self.get_recent_date(record_type)
+        #The relevant database model needs to be retrieved in order to query the database correctly
+        streak_db_model = self.get_model(record_type)
+        latest_date = self.get_recent_date(streak_db_model)
         #If there are no records in the database for this record type or the check returns false
         #then the streak doesn't need to be reset
         if latest_date == None or not self.should_be_reset(latest_date):
             return
         #Otherwise reset the streak to 0
+        logging.info(f'Resetting the {record_type} streak to 0 for {current_user.name}')
         self.set_streak(record_type, 0)
 
     def reset_streaks(self):
-        #Calls the method that resets the streak is necessary for each type of record
-        self.reset_streak(MealRecord)
-        self.reset_streak(ExerciseRecord)
-        self.reset_streak(SleepRecord)
-        self.reset_streak(WeightRecord)
-
+        #Calls the method that resets the streak for each type of record
+        for streak_type in StreakType:
+            self.reset_streak(streak_type)
+    
     def get_goal(self, record_type):
         '''
         Gets the goal of the relevant type from the database.
 
         Parameters:
-            record_type(db.Model): Indicates which goal needs to be retrieved.
+            record_type(StreakType): Indicates which goal needs to be retrieved.
         Returns:
             int: The goal amount for the relevant type.
         '''
         #Queries the database for the GoalRecord that is linked to the currently logged in user
         goal_record = GoalRecord.query.filter_by(user_id = current_user.id).first()
-
-        if record_type == MealRecord:
-            return goal_record.meal_goal
-        elif record_type == ExerciseRecord:
-            return goal_record.exercise_goal
-        elif record_type == SleepRecord:
-            return goal_record.sleep_goal
+        match record_type:
+            case StreakType.DIET:
+                return goal_record.meal_goal
+            case StreakType.EXERCISE:
+                return goal_record.exercise_goal
+            case StreakType.SLEEP:
+                return goal_record.sleep_goal
+            case StreakType.WEIGHT:
+                return goal_record.weight_goal
+            case _:
+                logging.error(f'Unknown StreakType {record_type} passed into get_goal()')
 
     def get_daily_value(self, record_type):
         '''
         Gets the total value for the relevant record type for today
 
         Parameters:
-            record_type(db.Model): Indicates which record type the daily value need to be calculated for.
+            record_type(StreakType): Indicates which record type the daily value need to be calculated for.
         Returns:
             int: The total value amount for the relevant type for today.
         '''
         today = datetime.now().strftime('%Y-%m-%d')
-        if record_type == MealRecord:
-            return MealGraph.calculate_daily_values(self, today)
-        elif record_type == ExerciseRecord:
-            return ExerciseGraph.calculate_daily_values(self, today)
-        elif record_type == SleepRecord:
-            return SleepGraph.calculate_daily_values(self, today)
-        elif record_type == WeightRecord:
-            return WeightGraph.calculate_daily_values(self, today)
+        match record_type:
+            case StreakType.DIET:
+                return MealGraph.calculate_daily_values(self, today)
+            case StreakType.EXERCISE:
+                return ExerciseGraph.calculate_daily_values(self, today)
+            case StreakType.SLEEP:
+                return SleepGraph.calculate_daily_values(self, today)
+            case StreakType.WEIGHT:
+                return  WeightGraph.calculate_daily_values(self, today)
+            case _:
+                logging.error(f'Unknown StreakType {record_type} passed into get_daily_goal()')
 
     def has_streak_increased_today(self, record_type, increase_amount):
         '''
         Determines whether the relevant streak has already been increased for today
 
         Parameters:
-            record_type(db.Model): Indicates which record type this check applies to.
+            record_type(StreakType): Indicates which record type this check applies to.
             increase_amount(int): The amount that the record that has just been added is increasing the daily value by
         Returns:
             bool: Whether the streak has already been increased today.
@@ -166,32 +204,36 @@ class StreakManager():
         #The check for whether a streak needs to be increased happens every time a new record is added.
         #So if the total value amount for today not including the most recently added record already reached
         #the goal, that means the streak was already increased when a different record was added today.
-        if record_type == MealRecord:
-            return self.get_daily_value(record_type) - increase_amount >= self.get_goal(record_type)
-        elif record_type == ExerciseRecord:
-            return self.get_daily_value(record_type) - increase_amount >= self.get_goal(record_type)
-        elif record_type == SleepRecord:
-            return self.get_daily_value(record_type) - increase_amount >= self.get_goal(record_type)
+        match record_type:
+            case StreakType.DIET | StreakType.SLEEP | StreakType.EXERCISE:
+                return self.get_daily_value(record_type) - increase_amount >= self.get_goal(record_type)
+            case _:
+                logging.error(f'Unknown StreakType {record_type} passed into has_streak_increased_today()')
+
 
     def should_increase_streak(self, record_type, increase_amount):
         '''
         Checks whether a streak should be increased or not
 
         Parameters:
-            record_type(db.Model): Indicates which streak value this check applies to.
+            record_type(StreakType): Indicates which streak value this check applies to.
 
         Returns:
             boolean: Whether the streak should be increased.
         '''
-        #The weight record streak increases as long as the user has recorded their weight at least once for the day.
-        if record_type == WeightRecord:
-            #Queries the database to get the amount of WeightRecords added today
-            weight_record_count = db.session.query(func.count(WeightRecord.date_created == datetime.now().strftime('%Y-%m-%d'))).scalar()
-            return weight_record_count > 1
-        if self.has_streak_increased_today(record_type, increase_amount):
-            return False #A streak value should only be increased for each type once a day
-        #Unless its for weight a streak should only be increased if the user has reached their goal for the day
-        return self.get_daily_value(record_type) >= self.get_goal(record_type)
+        match record_type:
+            #The weight record streak increases as long as the user has recorded their weight at least once for the day.
+            case StreakType.WEIGHT:
+                #Queries the database to get the amount of WeightRecords added today
+                weight_record_count = db.session.query(func.count(WeightRecord.date_created == datetime.now().strftime('%Y-%m-%d'))).scalar()
+                return weight_record_count > 1
+            case StreakType.DIET | StreakType.SLEEP | StreakType.EXERCISE:
+                if self.has_streak_increased_today(record_type, increase_amount):
+                    return False #A streak value should only be increased for each type once a day
+                #Unless its for weight a streak should only be increased if the user has reached their goal for the day
+                return self.get_daily_value(record_type) >= self.get_goal(record_type)
+            case _:
+                logging.error(f'Unknown StreakType {record_type} passed into should_increase_streak()')
 
     def increase_streak(self, record_type, increase_amount = None):
         '''
@@ -199,11 +241,12 @@ class StreakManager():
         This is called every time a new record is added.
 
         Parameters:
-            record_type(db.Model): Indicates which streak value this check applies to.
+            record_type(StreakType): Indicates which streak value this check applies to.
             increase_amount(int): The amount the newest record is increasing the daily value by.
             The weight streak doesn't depend on values which is why there is a default value of None.
         '''
         if not self.should_increase_streak(record_type, increase_amount):
             return
         #Only increase the streak if the checks pass
+        logging.info(f'Increasing the {record_type} streak for {current_user.name}')
         self.set_streak(record_type, self.get_current_streak(record_type) + 1)

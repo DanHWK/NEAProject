@@ -3,6 +3,7 @@ from datetime import datetime
 import calendar
 from flask_login import current_user
 from models import MealRecord, ExerciseRecord, SleepRecord, WeightRecord, GoalRecord
+import logging
 
 class Graph:
     '''
@@ -57,24 +58,25 @@ class Graph:
             list: All the y-axis values
         '''
         y_axis_values = []
-        if self.timeframe == "day":
-            #Just needs to get the values for today.
-            y_axis_values.append(self.calculate_daily_values(datetime.now().strftime('%Y-%m-%d')))
-            return y_axis_values
-
-        elif self.timeframe == "week":
-            for dates in calendar_object.itermonthdates(today.year,today.month):
-                #Gets all the dates for the current week and gets their corresponding values.
-                if datetime.now().strftime('%W') == dates.strftime('%W'):
-                    y_axis_values.append(self.calculate_daily_values(dates.strftime('%Y-%m-%d')))
-            return y_axis_values
-
-        elif self.timeframe == "month":
-            for dates in calendar_object.itermonthdates(today.year,today.month):
-                #Gets all the dates for the current month and gets their corresponding values.
-                if dates.month == today.month:
-                    y_axis_values.append(self.calculate_daily_values(dates.strftime('%Y-%m-%d')))
-            return y_axis_values
+        match self.timeframe:
+            case "day":
+                #Just needs to get the values for today.
+                y_axis_values.append(self.calculate_daily_values(datetime.now().strftime('%Y-%m-%d')))
+                return y_axis_values
+            case "week":
+                for dates in calendar_object.itermonthdates(today.year,today.month):
+                    #Gets all the dates for the current week and gets their corresponding values.
+                    if datetime.now().strftime('%W') == dates.strftime('%W'):
+                        y_axis_values.append(self.calculate_daily_values(dates.strftime('%Y-%m-%d')))
+                return y_axis_values
+            case "month":
+                for dates in calendar_object.itermonthdates(today.year,today.month):
+                    #Gets all the dates for the current month and gets their corresponding values.
+                    if dates.month == today.month:
+                        y_axis_values.append(self.calculate_daily_values(dates.strftime('%Y-%m-%d')))
+                return y_axis_values
+            case _:
+                logging.error(f'Unknown graph timeframe {self.timeframe} was set - unable to get y-axis values')
 
     def get_x_axis_values(self):
         '''
@@ -85,28 +87,29 @@ class Graph:
         '''
         x_axis_values = []
         days_of_the_week = ["monday","tuesday","wednesday","thursday","friday","saturday","sunday"]
-
-        if self.timeframe == "day":
-            #Returns today's day
-            current_day = days_of_the_week[weekday]
-            x_axis_values.append(current_day)
-            return x_axis_values
-
-        elif self.timeframe == "week":
-            #Returns all the days in a week
-            x_axis_values = days_of_the_week
-            return x_axis_values
-
-        elif self.timeframe == "month":
-            #Goes through all the dates in the month
-            for dates in calendar_object.itermonthdates(today.year,today.month):
-                #Itermonth dates also includes all the days before the start of the month
-                #and after the end of the month to get complete weeks.
-                #This check ensures that only dates in the current month are included.
-                if dates.month == today.month:
-                    #Adds each day in the month as a number
-                    x_axis_values.append(dates.strftime("%d"))
-            return x_axis_values
+        
+        match self.timeframe:
+            case "day":
+                #Returns today's day
+                current_day = days_of_the_week[weekday]
+                x_axis_values.append(current_day)
+                return x_axis_values
+            case "week":
+                #Returns all the days in a week
+                x_axis_values = days_of_the_week
+                return x_axis_values
+            case "month":
+                #Goes through all the dates in the month
+                for dates in calendar_object.itermonthdates(today.year,today.month):
+                    #Itermonth dates also includes all the days before the start of the month
+                    #and after the end of the month to get complete weeks.
+                    #This check ensures that only dates in the current month are included.
+                    if dates.month == today.month:
+                        #Adds each day in the month as a number
+                        x_axis_values.append(dates.strftime("%d"))
+                return x_axis_values
+            case _:
+                logging.error(f'Unknown graph timeframe {self.timeframe} was set - unable to get x-axis values')
 
     def create_graph(self):
         '''
