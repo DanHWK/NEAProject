@@ -41,3 +41,10 @@ def create_graph(self):
       graph.add = ('Test', [5,6,3,2,8])
       graph_data = graph.render_data_uri()
       return graph_data
+
+      day_calories_consumed = db.session.query(func.sum(MealRecord.calories)).group_by(MealRecord.user_id, MealRecord.date_created).having(MealRecord.user_id == currentuser and MealRecord.date_created == date).scalar()
+
+      if day_calories_consumed == None:
+          return 0
+Healthtracker gmail app password
+qong smln fclv seho

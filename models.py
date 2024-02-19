@@ -15,6 +15,7 @@ class User(UserMixin, db.Model):
     sleep = db.relationship('SleepRecord', backref='user')
     weight = db.relationship('WeightRecord', backref='user')
     goal = db.relationship('GoalRecord', backref='user')
+    streak = db.relationship('StreakRecord', backref='user')
     # Establishes a one to many relationship between the user database and the meal, sleep, weight, goal and exercise database.
     #establishes link to the ExerciseRecord table, User.exercises would refer to both the exercises record and user databases
     #backref = 'user' allows ExerciseRecord.user to also be used, basically turning it into a two way link
@@ -72,3 +73,10 @@ class StreakRecord(db.Model):
     sleep_streak = db.Column(db.Integer, default = 0)
     weight_streak = db.Column(db.Integer, default = 0)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+#Password reset table
+class PasswordReset(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    token = db.Column(db.String(100))
+    token_expiry = db.Column(db.DateTime)
+    email = db.Column(db.String(100), unique=True)

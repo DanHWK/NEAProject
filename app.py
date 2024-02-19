@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_login import LoginManager, login_required, current_user, logout_user, login_user
 import requests
-from models import db, MealRecord, ExerciseRecord, SleepRecord, WeightRecord, GoalRecord, User, StreakRecord
+from models import db, MealRecord, ExerciseRecord, SleepRecord, WeightRecord, GoalRecord, User, StreakRecord, PasswordReset
 import bcrypt
 import pygal
 from datetime import datetime, timedelta
@@ -10,13 +10,34 @@ from graphclasses import GraphManager
 from streakclass import StreakManager, StreakType
 import re
 import logging
+from flask_mail import Mail, Message
+import os
+import secrets
+from flask_hashing import Hashing
 
 
 app = Flask(__name__)
+
+
 #Gets the app configured for the databases.
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///record.db'
 #Configures the app to the secret key and allows it to use sessions to store user information.
 app.config['SECRET_KEY'] = b'3733939879b55267c99dee411ca3c0369437268c9781771dcd258859f270292a'
+
+app.config['MAIL SERVER'] = 'smtp.gmail.com'
+app.config['MAIL PORT'] = 465
+app.config['MAIL USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+
+
+
+@app.before_request
+def before_request():
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(minutes=30)
+    session.modified = True
 
 with app.app_context():
     db.init_app(app) #Configuring the application to support the db, needed because db is defined globally.
@@ -26,7 +47,11 @@ with app.app_context():
     #Allows the app and the flask_login module to work together.
     login_manager = LoginManager()
     login_manager.init_app(app)
-    
+    mail = Mail()
+    mail.init_app(app)
+    hashing = Hashing()
+    hashing.init_app(app)
+
     #Configure logging to log to a file with a specific format.
     logging.basicConfig(filename='app.log', level=logging.DEBUG, format='%(asctime)s %(levelname)s %(name)s : %(message)s')
 
@@ -174,7 +199,7 @@ def fitness():
         exercise_hours = request.form.get("exercise_hours")
         exercise_minutes = request.form.get("exercise_minutes")
         exercise_name = request.form.get("exercise_name")
-        calories_burned = get_calories_burned(exercise_name, exercise_minutes, exercise_hours)   
+        calories_burned = get_calories_burned(exercise_name, exercise_minutes, exercise_hours)
         #Creates a new ExerciseRecord based on the values input by the user.
         new_exercise_record = ExerciseRecord(hours = exercise_hours, minutes = exercise_minutes, name = exercise_name, calories_burned = calories_burned, user_id=current_user.id,date_created = datetime.now().strftime('%Y-%m-%d'))
         #Tries to update the database with this new ExerciseRecord.
@@ -323,7 +348,7 @@ def goals():
                 current_goals.sleep_goal = sleep_goal
             else:
                 return render_template('goals.html', current_goals = current_goals, valid = False)
-        
+
         if request.form.get("new_weight_goal") != None:
             weight_goal = request.form.get("new_weight_goal")
             #Updates the relevant goal if valid.
@@ -380,7 +405,7 @@ def signup():
             #if a user isn't found the if statement will not run as user will equal None
             flash('Email address already exists')
             return redirect(url_for('signup'))
-        
+
         #Generates a salt which is added to the password. This is done for security reasons as it means that when used
         #the same password will no longer yield the same hash, making the hash algorithm’s output unpredicatable.
         salt = bcrypt.gensalt()
@@ -411,6 +436,28 @@ def signup():
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
+@app.route("/forgot", methods = ["POST", "GET"])
+def forgot():
+    if request.method == "POST":
+        email = request.form.get('forgotten_user_email')
+        #Gets the user based on their email from the database.
+        user = User.query.filter_by(email=email).first()
+
+        if not user:
+            flash('Please check your email and try again.')
+            return render_template("forgot.html")
+
+        original_token = secrets.token_urlsafe(32)
+        HashedToken = hashing.hash_value(original_token, salt="AbCdE")
+        PasswordResetRecord = PasswordReset(token = HashedToken, token_expiry = datetime.now() + timedelta(minutes = 15), email = email)
+        db.session.add(PasswordResetRecord)
+        db.session.commit()
+
+        PasswordResetEmail = Message("Reset password", sender = 'noreply@gmail.com', recipients = [email])
+        PasswordResetEmail.body = f"Copy and paste the token into it's respective input box before it expires in 15 minutes: {original_token}"
+        mail.send(PasswordResetEmail)
+    return render_template("forgot.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
