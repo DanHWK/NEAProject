@@ -74,9 +74,10 @@ class StreakRecord(db.Model):
     weight_streak = db.Column(db.Integer, default = 0)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-#Password reset table
-class PasswordReset(db.Model):
+#Email verification table
+class EmailVerification(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     token = db.Column(db.String(100))
     token_expiry = db.Column(db.DateTime)
     email = db.Column(db.String(100), unique=True)
+    password = db.Column(db.String(100))

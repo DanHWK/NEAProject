@@ -10,18 +10,48 @@
 {% endif %}
 {% endwith %}
 
+{% if WeakPassword == True %}
+  <div class="alert alert-warning" role="alert">
+    {{password_failed_reason}}
+  </div>
+{% endif %}
+
 <h3>Forgot Password</h3>
-<p><small>An email will be sent containing __ </small></p>
-<form method = "POST">
-  <h5> Email address </h5>
+<p><small>An email will be sent containing a token that you can redeem to reset your password </small></p>
+
+<div class = "d-flex flex-row">
+
+  <form action="#" method="POST">
+    <h5> Email address </h5>
+    <div class="field">
+        <div class="control">
+            <input class="input is-large" type="email" name="forgot_user_email" placeholder="Enter your email" autofocus="" required>
+        </div>
+    </div>
+  <br>
+  <h5> New password </h5>
   <div class="field">
       <div class="control">
-          <input class="input is-large" type="email" name="forgotten_user_email" placeholder="Enter your email" autofocus="" required>
+          <input class="input is-large" type="password" name="new_user_password" placeholder="Your New Password" required>
       </div>
   </div>
-
   <br>
-  <button class="button is-block is-info is-large is-fullwidth">Submit</button>
-</form>
+  <br>
+    <button class="button is-block is-info is-large is-fullwidth">Submit</button>
+  </form>
+
+  <div class="ml-5">
+      <bold class="form-text text-muted"> Password must: </bold>
+      <small class="form-text text-muted"> Contain at least 8 characters</small>
+      <small class="form-text text-muted"> Contain both uppercase and lowercase letters</small>
+      <small class="form-text text-muted"> Contain at least one digit</small>
+      <small class="form-text text-muted"> Contain a special character</small>
+  </div>
+</div>
+
+<br>
+
+<br>
+
 
 {% endblock %}

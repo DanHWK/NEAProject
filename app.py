@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_login import LoginManager, login_required, current_user, logout_user, login_user
 import requests
-from models import db, MealRecord, ExerciseRecord, SleepRecord, WeightRecord, GoalRecord, User, StreakRecord, PasswordReset
+from models import db, MealRecord, ExerciseRecord, SleepRecord, WeightRecord, GoalRecord, User, StreakRecord, EmailVerification
 import bcrypt
 import pygal
 from datetime import datetime, timedelta
@@ -11,9 +11,9 @@ from streakclass import StreakManager, StreakType
 import re
 import logging
 from flask_mail import Mail, Message
-import os
 import secrets
 from flask_hashing import Hashing
+from sqlalchemy import delete
 
 
 app = Flask(__name__)
@@ -24,13 +24,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///record.db'
 #Configures the app to the secret key and allows it to use sessions to store user information.
 app.config['SECRET_KEY'] = b'3733939879b55267c99dee411ca3c0369437268c9781771dcd258859f270292a'
 
-app.config['MAIL SERVER'] = 'smtp.gmail.com'
-app.config['MAIL PORT'] = 465
-app.config['MAIL USERNAME'] = os.environ.get('MAIL_USERNAME')
-app.config['MAIL PASSWORD'] = os.environ.get('MAIL_PASSWORD')
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
-
+app.config['MAIL_SERVER']='sandbox.smtp.mailtrap.io'
+app.config['MAIL_PORT'] = 2525
+app.config['MAIL_USERNAME'] = '5d0778c9ab4b8c'
+app.config['MAIL_PASSWORD'] = 'e5e5b5d527f28a'
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
 
 
 @app.before_request
@@ -61,6 +60,12 @@ with app.app_context():
         #Returns the user object's id as an integer when given the user id.
         return User.query.get(int(user_id))
 
+def sum(list, key):
+    if (len(list) == 0):
+        return(0)
+    else:
+        return(list[0].get(key))+sum(list[1:],key)
+
 def get_total_calories(query):
     '''
     Calculates the total number of calories in a meal using an external api.
@@ -78,12 +83,8 @@ def get_total_calories(query):
         app.logger.info(f'Query: {query}, Response: {response.json()}')
         #Gets the items returned in the json response.
         items = response.json().get('items')
-        calories = 0
-        #Iterates through the items and sums up their calorie values.
-        for item in items:
-            calories += item.get('calories')
 
-        return calories
+        return sum(items, 'calories')
     else:
         #Logs the error.
         app.logger.error(f'Status {response.status_code} - {response.text}')
@@ -111,11 +112,7 @@ def get_calories_burned(activity, duration_minutes, duration_hours):
         #Gets the exercises returned in the json response.
         exercises = response.json().get('exercises')
 
-        calories_burned = 0
-        #Iterates through the exercises and sums up their calorie values
-        for exercise in exercises:
-            calories_burned += exercise.get("nf_calories")
-        return calories_burned
+        return sum(exercises, 'nf_calories')
     else:
         #Logs the error.
         app.logger.error(f'Status {response.status_code} - {response.text}')
@@ -394,6 +391,10 @@ def signup():
         #.encode('utf-8') turns the password data type from string to bytes which is needed to use the bcrypt salt function
         password = request.form.get('user_password').encode('utf-8')
 
+        #Store the user's name in sessions to be retrieved in the verify account page
+        session["name"] = name
+        session["email"] = email
+
         user = User.query.filter_by(email=email).first() # if this returns a user, then the email already exists in database
         #Check whether the password input by the user passes all the requirements
         password_strength, password_failed_reason = test_password_strength(request.form.get('user_password'))
@@ -406,13 +407,53 @@ def signup():
             flash('Email address already exists')
             return redirect(url_for('signup'))
 
+
         #Generates a salt which is added to the password. This is done for security reasons as it means that when used
         #the same password will no longer yield the same hash, making the hash algorithm’s output unpredicatable.
         salt = bcrypt.gensalt()
+        HashedPassword = bcrypt.hashpw(password, salt)
+        #Creates a token that will be sent to the user
+        original_token = secrets.token_urlsafe(32)
+        #Hashes the token
+        HashedToken = hashing.hash_value(original_token, salt="AbCdE")
+        #Store token, hashed password and token expiry time in the database
+        EmailVerificationRecord = EmailVerification(token = HashedToken, token_expiry = datetime.now() + timedelta(minutes = 15), email = email, password= HashedPassword)
+        db.session.add(EmailVerificationRecord)
+        db.session.commit()
+
+        #Send email to the user with the token
+        try:
+            EmailVerificationMessage = Message("Email verification", sender = 'noreply@gmail.com', recipients = [email])
+            EmailVerificationMessage.body = f"To verify yout email copy and paste the token into it's respective input box before it expires in 15 minutes: {original_token}"
+            mail.send(EmailVerificationMessage)
+
+        except:
+            flash('There was a problem sending a email to your email address, check all your details are correct and try again')
+            return redirect(url_for('signup'))
+
+        return redirect(url_for('account_verification'))
+
+    else:
+        return render_template("signup.html")
+
+@app.route("/account_verification", methods = ["POST", "GET"])
+def account_verification():
+    if request.method == "POST":
+        user_token = request.form.get('user_token')
+
+        EmailVerificationRecord = EmailVerification.query.filter_by(email=session.get("email")).first()
+
+        #Check if the token inputted by the user is not the same as the token stored in the database when unhashed or if the token is expired
+        if not hashing.check_value(EmailVerificationRecord.token, user_token, salt='AbCdE') or datetime.now() > EmailVerificationRecord.token_expiry:
+            flash('Token is expired or invalid')
+            return render_template("signup.html")
+
         #Hash the password so the plaintext version isn't stored in the database.
-        new_user = User(email=email, name=name, password=bcrypt.hashpw(password, salt))
+        new_user = User(email=session.get("email"), name=session.get("name"), password=EmailVerificationRecord.password)
         #Add the new user to the database
         db.session.add(new_user)
+        #Deletes the user's email verification record from the database
+        EmailVerification.query.filter_by(email=session.get("email")).delete()
         db.session.commit()
 
         #Login the user in order to get the user id to create a GoalRecord
@@ -429,7 +470,7 @@ def signup():
         logout_user()
         return redirect(url_for('login'))
     else:
-        return render_template("signup.html")
+        return(render_template("account_verification.html"))
 
 @app.route('/logout')
 @login_required
@@ -440,7 +481,8 @@ def logout():
 @app.route("/forgot", methods = ["POST", "GET"])
 def forgot():
     if request.method == "POST":
-        email = request.form.get('forgotten_user_email')
+        email = request.form.get('forgot_user_email')
+        new_password = request.form.get('new_user_password').encode('utf-8')
         #Gets the user based on their email from the database.
         user = User.query.filter_by(email=email).first()
 
@@ -448,16 +490,56 @@ def forgot():
             flash('Please check your email and try again.')
             return render_template("forgot.html")
 
+
+        password_strength, password_failed_reason = test_password_strength(request.form.get('new_user_password'))
+
+        if not password_strength:
+            return render_template('forgot.html', WeakPassword = True, password_failed_reason = password_failed_reason)
+
+
+        salt = bcrypt.gensalt()
+        HashedPassword = bcrypt.hashpw(new_password, salt)
+
+        #Creates a token that will be sent to the user
         original_token = secrets.token_urlsafe(32)
+        #Hashes the token
         HashedToken = hashing.hash_value(original_token, salt="AbCdE")
-        PasswordResetRecord = PasswordReset(token = HashedToken, token_expiry = datetime.now() + timedelta(minutes = 15), email = email)
+        #Store token and token expiry time in the database
+        PasswordResetRecord = EmailVerification(token = HashedToken, token_expiry = datetime.now() + timedelta(minutes = 15), email = email, password = HashedPassword)
         db.session.add(PasswordResetRecord)
         db.session.commit()
 
+        #Send email to the user with the token
         PasswordResetEmail = Message("Reset password", sender = 'noreply@gmail.com', recipients = [email])
         PasswordResetEmail.body = f"Copy and paste the token into it's respective input box before it expires in 15 minutes: {original_token}"
         mail.send(PasswordResetEmail)
+        return redirect(url_for('reset'))
     return render_template("forgot.html")
+
+@app.route("/reset", methods = ["POST", "GET"])
+def reset():
+    if request.method == "POST":
+        user_token = request.form.get('user_token')
+        email = request.form.get('repeat_user_email')
+
+        Reset_Password_data = EmailVerification.query.filter_by(email=email).first()
+        if not Reset_Password_data:
+            flash('Email is not in the database')
+            return render_template("reset.html")
+
+        #Check if the token inputted by the user is not the same as the token stored in the database when unhashed or if the token is expired
+        if not hashing.check_value(Reset_Password_data.token, user_token, salt='AbCdE') or datetime.now() > Reset_Password_data.token_expiry:
+            flash('Token is expired or invalid')
+            return render_template("reset.html")
+
+        Original_User_record = User.query.filter_by(email=email).first()
+        Original_User_record.password = Reset_Password_data.password
+        EmailVerification.query.filter_by(email=email).delete()
+        db.session.commit()
+        return redirect(url_for('login'))
+
+
+    return render_template("reset.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
