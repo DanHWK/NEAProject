@@ -13,9 +13,8 @@ Run file
 python3 "file name"
 
 About creating a permanent (local) database:
-- Whilst the app is running create a new tab(MUST BE TAB) in the terminal
-- Import the db from the app
-- Then db.create_all() function must be used in the terminal
+- run the code with drop and create db
+- delete the code 
 https://www.youtube.com/watch?v=hbDRTZarMUw
 
 About sessions: (basically cookies but stored on the server side)

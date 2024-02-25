@@ -27,26 +27,6 @@ class Graph:
         self.linename2 = "line2"
         self.desired_goal = "desired goal"
 
-        #Stores the current time.
-        global today
-        today = datetime.now()
-
-        #Stores an integer representing what day of the week it is.
-        global weekday
-        weekday = today.weekday()
-
-        #Creates a calendar object.
-        global calendar_object
-        calendar_object = calendar.Calendar()
-
-        #Stores the id of the user currently logged in.
-        global currentuser
-        currentuser = current_user.id
-
-        #The GoalRecord associated with the currently logged in user.
-        global goals
-        goals = GoalRecord.query.filter_by(user_id = currentuser).first()
-
     def calculate_daily_values(self, date):
         #Will be implemented by the child classes
         pass
@@ -59,6 +39,8 @@ class Graph:
             list: All the y-axis values
         '''
         y_axis_values = []
+        calendar_object = calendar.Calendar()
+        today = datetime.now()
         match self.timeframe:
             case "day":
                 #Just needs to get the values for today.
@@ -87,12 +69,14 @@ class Graph:
             list: All the x-axis values
         '''
         x_axis_values = []
+        calendar_object = calendar.Calendar()
+        today = datetime.now()
         days_of_the_week = ["monday","tuesday","wednesday","thursday","friday","saturday","sunday"]
 
         match self.timeframe:
             case "day":
                 #Returns today's day
-                current_day = days_of_the_week[weekday]
+                current_day = days_of_the_week[today.weekday()]
                 x_axis_values.append(current_day)
                 return x_axis_values
             case "week":
@@ -139,6 +123,7 @@ class MealGraph(Graph):
     A class used to represent a graph that displays the user's meal data
     '''
     def __init__(self,timeframe):
+        goals = GoalRecord.query.filter_by(user_id = current_user.id).first()
         Graph.__init__(self,timeframe)
         self.title = "Diet graph"
         self.linename1 = "Calories consumed"
@@ -154,14 +139,9 @@ class MealGraph(Graph):
         Returns:
             int: The total value amount according to the user's meal records for a date
         '''
-        #day_calories_consumed = 0
-        #Gets all the meal records created on the specified date
-        #user_meal_data = MealRecord.query.filter_by(user_id = currentuser, date_created = date).all()
-        #Iterates through the meal records and sums up their calorie values
-        #for x in user_meal_data:
-            #day_calories_consumed = day_calories_consumed + x.calories
 
-        day_calories_consumed = db.session.query(func.sum(MealRecord.calories)).group_by(MealRecord.user_id, MealRecord.date_created).having(MealRecord.user_id == currentuser,MealRecord.date_created == date).scalar()
+        day_calories_consumed = db.session.query(func.sum(MealRecord.calories)).group_by(MealRecord.user_id,
+        MealRecord.date_created).having(MealRecord.user_id == current_user.id,MealRecord.date_created == date).scalar()
 
         if day_calories_consumed == None:
             return 0
@@ -173,6 +153,7 @@ class ExerciseGraph(Graph):
     A class used to represent a graph that displays the user's exercise data
     '''
     def __init__(self,timeframe):
+        goals = GoalRecord.query.filter_by(user_id = current_user.id).first()
         Graph.__init__(self,timeframe)
         self.title = "Fitness graph"
         self.linename1 = "Calories burnt"
@@ -188,7 +169,8 @@ class ExerciseGraph(Graph):
         Returns:
             int: The total value amount according to the user's exercise records for a date
         '''
-        day_calories_burnt = db.session.query(func.sum(ExerciseRecord.calories_burned)).group_by(ExerciseRecord.user_id, ExerciseRecord.date_created).having(ExerciseRecord.user_id == currentuser,ExerciseRecord.date_created == date).scalar()
+        day_calories_burnt = db.session.query(func.sum(ExerciseRecord.calories_burned)).group_by(ExerciseRecord.user_id,
+        ExerciseRecord.date_created).having(ExerciseRecord.user_id == current_user.id,ExerciseRecord.date_created == date).scalar()
 
         if day_calories_burnt == None:
             return 0
@@ -200,6 +182,7 @@ class SleepGraph(Graph):
     A class used to represent a graph that displays the user's sleep data
     '''
     def __init__(self,timeframe):
+        goals = GoalRecord.query.filter_by(user_id = current_user.id).first()
         Graph.__init__(self,timeframe)
         self.title = "Sleep graph"
         self.linename1 = "Hours of sleep"
@@ -217,7 +200,7 @@ class SleepGraph(Graph):
         '''
         day_sleep_hours = 0
         #Gets all the Sleep records created on the specified date
-        user_sleep_data = SleepRecord.query.filter_by(user_id = currentuser, date_created = date).all()
+        user_sleep_data = SleepRecord.query.filter_by(user_id = current_user.id, date_created = date).all()
         #Iterates through the sleep records and sums up the hours with minutes being converted into hours
         for x in user_sleep_data:
             day_sleep_hours = day_sleep_hours+ int(x.hours_slept) +(x.minutes_slept/60)
@@ -228,6 +211,7 @@ class WeightGraph(Graph):
     A class used to represent a graph that displays the user's weight data
     '''
     def __init__(self,timeframe):
+        goals = GoalRecord.query.filter_by(user_id = current_user.id).first()
         Graph.__init__(self,timeframe)
         self.title = "Weight graph"
         self.linename1 = "Weight (kg)"
@@ -244,7 +228,8 @@ class WeightGraph(Graph):
             int: The average value amount according to the user's weight records for a date
         '''
         #Gets the average weight from the weight records created on the specified date
-        average_weight_value = db.session.query(func.avg(WeightRecord.weight)).group_by(WeightRecord.user_id, WeightRecord.date_created).having(WeightRecord.user_id == currentuser,WeightRecord.date_created == date).scalar()
+        average_weight_value = db.session.query(func.avg(WeightRecord.weight)).group_by(WeightRecord.user_id,
+        WeightRecord.date_created).having(WeightRecord.user_id == current_user.id,WeightRecord.date_created == date).scalar()
 
         #if there is weight data return the average weight for the day, if not return 0
         if average_weight_value != None:

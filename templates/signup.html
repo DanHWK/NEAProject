@@ -6,7 +6,7 @@
     {% with messages = get_flashed_messages() %}
     {% if messages %}
     <div class="alert alert-danger">
-        {{ messages[0] }}. Go to <a href="{{ url_for('login') }}">login page</a>.
+        {{ messages[0] }}</a>.
     </div>
     {% endif %}
 
@@ -46,7 +46,7 @@
             <small class="form-text text-muted"> Contain at least one digit</small>
             <small class="form-text text-muted"> Contain a special character</small>
         </div>
-    
+
     </div>
 </div>
 {% endblock %}

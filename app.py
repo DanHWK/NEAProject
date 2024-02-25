@@ -15,7 +15,7 @@ import secrets
 from flask_hashing import Hashing
 from sqlalchemy import delete
 
-
+#Initialise app
 app = Flask(__name__)
 
 
@@ -24,6 +24,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///record.db'
 #Configures the app to the secret key and allows it to use sessions to store user information.
 app.config['SECRET_KEY'] = b'3733939879b55267c99dee411ca3c0369437268c9781771dcd258859f270292a'
 
+#Configures the app to send emails to mailtrap
 app.config['MAIL_SERVER']='sandbox.smtp.mailtrap.io'
 app.config['MAIL_PORT'] = 2525
 app.config['MAIL_USERNAME'] = '5d0778c9ab4b8c'
@@ -31,7 +32,8 @@ app.config['MAIL_PASSWORD'] = 'e5e5b5d527f28a'
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 
-
+#Before a request create a session and set its lifetime to 30 minutes
+#after this amount of time has passed the user will be logged out
 @app.before_request
 def before_request():
     session.permanent = True
@@ -46,21 +48,33 @@ with app.app_context():
     #Allows the app and the flask_login module to work together.
     login_manager = LoginManager()
     login_manager.init_app(app)
+
+    #Allows the app and the flask_mail module to work together
     mail = Mail()
     mail.init_app(app)
+
+    #Allows the app and the flask_hashing module to work together
     hashing = Hashing()
     hashing.init_app(app)
 
     #Configure logging to log to a file with a specific format.
     logging.basicConfig(filename='app.log', level=logging.DEBUG, format='%(asctime)s %(levelname)s %(name)s : %(message)s')
 
+    #Reload the user object from the user_id stored in the user table
     @login_manager.user_loader
     def load_user(user_id):
-        #user_id is the primary key of the user table.
-        #Returns the user object's id as an integer when given the user id.
         return User.query.get(int(user_id))
 
 def sum(list, key):
+    ''' Gets the sum value of the key passed in
+
+    Parameters:
+        list(list): The list of values that needs to be parsed
+        key(string): The key of the desired values in the list
+
+    Returns:
+        int: The sum of the desired values
+    '''
     if (len(list) == 0):
         return(0)
     else:
@@ -112,7 +126,11 @@ def get_calories_burned(activity, duration_minutes, duration_hours):
         #Gets the exercises returned in the json response.
         exercises = response.json().get('exercises')
 
-        return sum(exercises, 'nf_calories')
+        #The API assigns any activity it doesn't recognise as walking, this if statement prevents it from returning a value for a invalid activity
+        if exercises[0].get("user_input") == "walking" and activity != "walking":
+            return 0
+        else:
+            return sum(exercises, 'nf_calories')
     else:
         #Logs the error.
         app.logger.error(f'Status {response.status_code} - {response.text}')
@@ -170,17 +188,15 @@ def validate_goal_input(input):
 
 @app.route("/")
 def home():
-    #The user sees different things based on whether they are logged in or not.
+    """ Get all the information needed to create the dashboard for the home page"""
     if current_user.is_authenticated == True:
         username = current_user.name
-        #This boolean is passed to the HTML template and indicates what should be displayed to the user.
         user_logged_in = True
 
         graph_uris = GraphManager().graphs  #Gets the uris for all the graphs for the user.
         streak_manager = StreakManager()
         #Checks whether any of the streaks need to be reset and reset them if necessary.
         streak_manager.reset_streaks()
-        #Gets the StreakRecord for the currently logged in user.
         Streak = StreakRecord.query.filter_by(user_id = current_user.id).first()
         return render_template("homepage.html", username = username, user_logged_in = user_logged_in, StreakRecord =  Streak, graph_uris = graph_uris)
     else:
@@ -190,16 +206,20 @@ def home():
 @app.route("/fitness", methods = ["POST","GET"])
 @login_required
 def fitness():
-    #Occurs if the user submits a form on the /fitness page on the website.
+    """Gets all the information needed to create a new exercise record and checks if the streak value should be increased"""
     if request.method == "POST":
-        #Retrieves all the value input by the user.
         exercise_hours = request.form.get("exercise_hours")
         exercise_minutes = request.form.get("exercise_minutes")
         exercise_name = request.form.get("exercise_name")
+
         calories_burned = get_calories_burned(exercise_name, exercise_minutes, exercise_hours)
-        #Creates a new ExerciseRecord based on the values input by the user.
-        new_exercise_record = ExerciseRecord(hours = exercise_hours, minutes = exercise_minutes, name = exercise_name, calories_burned = calories_burned, user_id=current_user.id,date_created = datetime.now().strftime('%Y-%m-%d'))
-        #Tries to update the database with this new ExerciseRecord.
+
+        if calories_burned == 0:
+            flash("0 calories burned was returned, please check your inputs")
+            return render_template("fitness.html")
+
+        new_exercise_record = ExerciseRecord(hours = exercise_hours, minutes = exercise_minutes, name = exercise_name,
+        calories_burned = calories_burned, user_id=current_user.id,date_created = datetime.now().strftime('%Y-%m-%d'))
         try:
             db.session.add(new_exercise_record)
             db.session.commit()
@@ -207,9 +227,7 @@ def fitness():
             #Error handling if there is a problem with adding the record to the database
             app.logger.error(f'There was an error when trying to add {new_exercise_record} to the database')
             return "There was an error whilst recording your activity"
-        #Checks whether the exercise streak needs to be increased and increases it if necessary.
         StreakManager().increase_streak(StreakType.EXERCISE, calories_burned)
-        #Renders the relevant html template.
         return render_template("fitness.html", success = True)
     else:
         return render_template("fitness.html")
@@ -217,10 +235,10 @@ def fitness():
 @app.route("/diet", methods = ["POST", "GET"])
 @login_required
 def diet():
-    #Occurs if the user submits a form on the /diet page on the website.
+    """Gets all the information needed to create a new meal record and checks if the streak value should be increased"""
     if request.method == "POST":
         #If the user does not input the individual amount of of macronutrients in their meal
-        #then calculate the amount of calories using the API. Otherwise calculate manually.
+        #then calculate the amount of calories using the API. Otherwise calculate locally.
         if request.form.get("custom_meal_carbs") == None:
             calories = get_total_calories(request.form.get("meal_name"))
         else:
@@ -229,17 +247,18 @@ def diet():
             carbohydrates = int(request.form.get("custom_meal_carbs"))
             protein = int(request.form.get("custom_meal_protein"))
             fats = int(request.form.get("custom_meal_fats"))
-            calories = (carbohydrates*4)+(protein*4)+(fats*9)
-
+            if carbohydrates > 0 and protein > 0 and fats > 0:
+                calories = (carbohydrates*4)+(protein*4)+(fats*9)
+            else:
+                flash("Input positive values only")
+                return render_template("diet.html", success = False)
         #Means that the meal name input by the user is not recognised by the API as a food item
         if calories == 0:
             return render_template("diet.html", valid = False)
-        #Retrieves all the value input by the user.
         meal_name = request.form.get("meal_name")
         meal_time = request.form.get("meal_time")
-        #Creates a new MealRecord based on the values input by the user.
-        new_meal_record = MealRecord(name = meal_name, time = meal_time, calories = calories, user_id=current_user.id, date_created = datetime.now().strftime('%Y-%m-%d'))
-        #Tries to update the database with this new MealRecord.
+        new_meal_record = MealRecord(name = meal_name, time = meal_time, calories = calories,
+        user_id=current_user.id, date_created = datetime.now().strftime('%Y-%m-%d'))
         try:
             db.session.add(new_meal_record)
             db.session.commit()
@@ -247,9 +266,7 @@ def diet():
             #Error handling if there is a problem with adding the record to the database
             app.logger.error(f'There was an error when trying to add {new_meal_record} to the database')
             return "There was an error whilst recording your meal"
-        #Checks whether the meal streak needs to be increased and increases it if necessary.
         StreakManager().increase_streak(StreakType.DIET, calories)
-        #Renders the relevant html template
         return render_template("diet.html", success = True)
     else:
         return render_template("diet.html", success = False)
@@ -257,20 +274,17 @@ def diet():
 @app.route("/sleep", methods = ["POST", "GET"])
 @login_required
 def sleep():
-    #Occurs if the user submits a form on the /sleep page on the website.
+    """Gets all the information needed to create a new sleep record and checks if the streak value should be increased"""
     if request.method == "POST":
-        #Retrieves all the value input by the user.
         minutes_slept = request.form.get("minutes_slept")
         hours_slept = request.form.get("hours_slept")
 
-        #Validates the user input
         if int(minutes_slept) < 0 or int(hours_slept) < 0 :
             return render_template("sleep.html", success = False, valid = False)
         else:
-            #Creates a new SleepRecord based on the values input by the user.
-            new_sleep_record = SleepRecord(minutes_slept = minutes_slept, hours_slept = hours_slept, user_id = current_user.id,date_created = datetime.now().strftime('%Y-%m-%d'))
+            new_sleep_record = SleepRecord(minutes_slept = minutes_slept, hours_slept = hours_slept,
+            user_id = current_user.id,date_created = datetime.now().strftime('%Y-%m-%d'))
 
-        #Tries to update the database with this new SleepRecord.
         try:
             db.session.add(new_sleep_record)
             db.session.commit()
@@ -280,9 +294,7 @@ def sleep():
             return "There was an error whilst recording your activity"
         #How much sleep this newly added record would add to the daily total.
         increase_amount = int(hours_slept) + (int(minutes_slept)/60)
-        #Checks whether the sleep streak needs to be increased and increases it if necessary.
         StreakManager().increase_streak(StreakType.SLEEP, increase_amount)
-        #Renders the relevant html template.
         return render_template("sleep.html", success = True)
     else:
         return render_template("sleep.html", success = False)
@@ -290,16 +302,13 @@ def sleep():
 @app.route("/weight", methods = ["POST", "GET"])
 @login_required
 def weight():
-    #Occurs if the user submits a form on the /weight page on the website.
+    """Gets all the information needed to create a new weight record and checks if the streak value should be increased"""
     if request.method == "POST":
         weight = request.form.get("weight")
-        #Validates the user input
         if int(weight) < 0:
             return render_template("weight.html", success = False, valid = False)
         else:
-            #Creates a new WeightRecord based on the value input by the user.
             new_weight_record = WeightRecord(weight = weight, user_id = current_user.id,date_created = datetime.now().strftime('%Y-%m-%d'))
-        #Tries to update the database with this new WeightRecord.
         try:
             db.session.add(new_weight_record)
             db.session.commit()
@@ -307,9 +316,7 @@ def weight():
             #Error handling if there is a problem with adding the record to the database
             app.logger.error(f'There was an error when trying to add {new_weight_record} to the database')
             return "There was an error whilst recording your activity"
-        #Checks whether the sleep streak needs to be increased and increases it if necessary.
         StreakManager().increase_streak(StreakType.WEIGHT)
-        #Renders the relevant html template.
         return render_template("weight.html", success = True)
     else:
         return render_template("weight.html", success = False)
@@ -317,6 +324,7 @@ def weight():
 @app.route("/goals", methods = ["POST", "GET"])
 @login_required
 def goals():
+    """Updates the goal record to follow the user's inputs"""
     #Gets the GoalRecord for the currently logged in user.
     current_goals = GoalRecord.query.filter_by(user_id = current_user.id).first()
     #Occurs if the user submits a form on the /goal page on the website.
@@ -365,6 +373,7 @@ def goals():
 
 @app.route("/login", methods = ["POST", "GET"])
 def login():
+    '''Logs in the user if the inputs are correct '''
     if request.method == "POST":
         email = request.form.get('user_email')
         password = request.form.get('user_password')
@@ -385,6 +394,7 @@ def login():
 
 @app.route("/signup", methods = ["POST", "GET"])
 def signup():
+    '''Validates the inputs and sends a email to the user to verify their account'''
     if request.method == "POST":
         email = request.form.get('user_email')
         name = request.form.get('user_name')
@@ -411,21 +421,23 @@ def signup():
         #Generates a salt which is added to the password. This is done for security reasons as it means that when used
         #the same password will no longer yield the same hash, making the hash algorithm’s output unpredicatable.
         salt = bcrypt.gensalt()
-        HashedPassword = bcrypt.hashpw(password, salt)
+        Hashed_Password = bcrypt.hashpw(password, salt)
         #Creates a token that will be sent to the user
         original_token = secrets.token_urlsafe(32)
         #Hashes the token
-        HashedToken = hashing.hash_value(original_token, salt="AbCdE")
+        Hashed_Token = hashing.hash_value(original_token, salt="AbCdE")
         #Store token, hashed password and token expiry time in the database
-        EmailVerificationRecord = EmailVerification(token = HashedToken, token_expiry = datetime.now() + timedelta(minutes = 15), email = email, password= HashedPassword)
-        db.session.add(EmailVerificationRecord)
+        Email_Verification_Record = EmailVerification(token = Hashed_Token, token_expiry = datetime.now() + timedelta(minutes = 15),
+        email = email, password= Hashed_Password)
+        db.session.add(Email_Verification_Record)
         db.session.commit()
 
         #Send email to the user with the token
         try:
-            EmailVerificationMessage = Message("Email verification", sender = 'noreply@gmail.com', recipients = [email])
-            EmailVerificationMessage.body = f"To verify yout email copy and paste the token into it's respective input box before it expires in 15 minutes: {original_token}"
-            mail.send(EmailVerificationMessage)
+            Email_Verification_Message = Message("Email verification", sender = 'noreply@gmail.com', recipients = [email])
+            Email_Verification_Message.body = ("To verify yout email copy and paste the token into"
+            f"it's respective input box before it expires in 15 minutes: {original_token}")
+            mail.send(Email_Verification_Message)
 
         except:
             flash('There was a problem sending a email to your email address, check all your details are correct and try again')
@@ -441,15 +453,21 @@ def account_verification():
     if request.method == "POST":
         user_token = request.form.get('user_token')
 
-        EmailVerificationRecord = EmailVerification.query.filter_by(email=session.get("email")).first()
+        Email_Verification_Record = EmailVerification.query.filter_by(email=session.get("email")).first()
 
         #Check if the token inputted by the user is not the same as the token stored in the database when unhashed or if the token is expired
-        if not hashing.check_value(EmailVerificationRecord.token, user_token, salt='AbCdE') or datetime.now() > EmailVerificationRecord.token_expiry:
-            flash('Token is expired or invalid')
+        if not hashing.check_value(Email_Verification_Record.token, user_token, salt='AbCdE'):
+            flash('Token is invalid')
+            return render_template("account_verification.html")
+
+        if datetime.now() > Email_Verification_Record.token_expiry:
+            flash('Token is expired')
+            #Deletes the user's email verification record from the database
+            EmailVerification.query.filter_by(email=session.get("email")).delete()
             return render_template("signup.html")
 
         #Hash the password so the plaintext version isn't stored in the database.
-        new_user = User(email=session.get("email"), name=session.get("name"), password=EmailVerificationRecord.password)
+        new_user = User(email=session.get("email"), name=session.get("name"), password=Email_Verification_Record.password)
         #Add the new user to the database
         db.session.add(new_user)
         #Deletes the user's email verification record from the database
@@ -505,7 +523,8 @@ def forgot():
         #Hashes the token
         HashedToken = hashing.hash_value(original_token, salt="AbCdE")
         #Store token and token expiry time in the database
-        PasswordResetRecord = EmailVerification(token = HashedToken, token_expiry = datetime.now() + timedelta(minutes = 15), email = email, password = HashedPassword)
+        PasswordResetRecord = EmailVerification(token = HashedToken, token_expiry = datetime.now() + timedelta(minutes = 15),
+        email = email, password = HashedPassword)
         db.session.add(PasswordResetRecord)
         db.session.commit()
 
@@ -528,9 +547,15 @@ def reset():
             return render_template("reset.html")
 
         #Check if the token inputted by the user is not the same as the token stored in the database when unhashed or if the token is expired
-        if not hashing.check_value(Reset_Password_data.token, user_token, salt='AbCdE') or datetime.now() > Reset_Password_data.token_expiry:
-            flash('Token is expired or invalid')
+        if not hashing.check_value(Reset_Password_data.token, user_token, salt='AbCdE'):
+            flash('Token is invalid')
             return render_template("reset.html")
+
+        if datetime.now() > Email_Verification_Record.token_expiry:
+            flash('Token is expired')
+            #Deletes the user's email verification record from the database
+            EmailVerification.query.filter_by(email=session.get("email")).delete()
+            return render_template("forgot.html")
 
         Original_User_record = User.query.filter_by(email=email).first()
         Original_User_record.password = Reset_Password_data.password
@@ -542,5 +567,5 @@ def reset():
     return render_template("reset.html")
 
 if __name__ == "__main__":
-    app.run(debug=True)
     #Runs the app
+    app.run(debug=True)

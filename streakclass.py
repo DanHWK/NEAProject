@@ -194,7 +194,9 @@ class StreakManager():
                 return self.get_daily_value(record_type, today) - increase_amount >= self.get_goal(record_type)
             case StreakType.WEIGHT:
                 #Queries the database to get the amount of WeightRecords added today by the logged in user
-                weight_record_count = weight_record_count = db.session.query(func.count(WeightRecord.weight)).group_by(WeightRecord.user_id, WeightRecord.date_created).having(WeightRecord.user_id == current_user.id,WeightRecord.date_created == datetime.now().strftime('%Y-%m-%d')).scalar()
+                weight_record_count = weight_record_count = db.session.query(func.count(WeightRecord.weight)).group_by(WeightRecord.user_id,
+                WeightRecord.date_created).having(WeightRecord.user_id == current_user.id,
+                WeightRecord.date_created == datetime.now().strftime('%Y-%m-%d')).scalar()
                 return weight_record_count >= 1
             case _:
                 logging.error(f'Unknown StreakType {record_type} passed into has_streak_increased_today()')
@@ -214,7 +216,9 @@ class StreakManager():
             #The weight record streak increases as long as the user has recorded their weight at least once for the day.
             case StreakType.WEIGHT:
                 #Queries the database to get the amount of WeightRecords added today by the logged in user
-                weight_record_count = weight_record_count = weight_record_count = db.session.query(func.count(WeightRecord.weight)).group_by(WeightRecord.user_id, WeightRecord.date_created).having(WeightRecord.user_id == current_user.id,WeightRecord.date_created == datetime.now().strftime('%Y-%m-%d')).scalar()
+                weight_record_count = weight_record_count = weight_record_count = db.session.query(func.count(WeightRecord.weight)).group_by(
+                WeightRecord.user_id,WeightRecord.date_created).having(WeightRecord.user_id == current_user.id,
+                WeightRecord.date_created == datetime.now().strftime('%Y-%m-%d')).scalar()
                 return weight_record_count == 1
             case StreakType.DIET | StreakType.SLEEP | StreakType.EXERCISE:
                 if self.has_streak_increased_today(record_type, increase_amount):

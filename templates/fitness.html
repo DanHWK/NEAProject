@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 <!doctype html>
 {% block body %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="alert alert-danger">
+    {{ messages[0] }}</a>.
+</div>
+{% endif %}
+{% endwith %}
+
 <h1> Fitness </h1>
 <br>
 <h2> Add exercise session </h2>
@@ -11,7 +19,8 @@
 
   <div class="form-group">
     <label for="exercisedurationhours">Hours</label>
-    <select type="integer" class="form-control form-control-sm" id="exercisedurationhours" placeholder="Enter duration of session" name = "exercise_hours" required>
+    <select type="integer" class="form-control form-control-sm" id="exercisedurationhours"
+    placeholder="Enter duration of session" name = "exercise_hours" required>
       {% for x in range(0,11) %}
         <option>{{x}}</option>
       {% endfor %}
@@ -19,7 +28,8 @@
   </div>
   <div class="form-group">
     <label for="exercisedurationminutes">Minutes</label>
-    <select type="integer" multiple class="form-control form-control-sm" id="exercisedurationminutes" placeholder="Enter duration of session" name = "exercise_minutes" required>
+    <select type="integer" multiple class="form-control form-control-sm" id="exercisedurationminutes"
+    placeholder="Enter duration of session" name = "exercise_minutes" required>
       {% for x in range(0,60) %}
         <option>{{x}}</option>
       {% endfor %}
@@ -30,7 +40,8 @@
 
   <div class="form-group">
     <label for="exercisename">Name of activity</label>
-    <input type="text" class="form-control" id="exercisename" placeholder="Name of the activty" name = "exercise_name" required>
+    <input type="text" class="form-control" id="exercisename"
+    placeholder="Name of the activty" name = "exercise_name" required>
   </div>
 
   <button type="submit" class="btn btn-success">Submit</button>

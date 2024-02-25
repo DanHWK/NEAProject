@@ -775,3 +775,612 @@
 2024-02-23 17:59:13,110 INFO werkzeug : 127.0.0.1 - - [23/Feb/2024 17:59:13] "POST /forgot HTTP/1.1" 200 -
 2024-02-23 17:59:25,992 INFO werkzeug : 127.0.0.1 - - [23/Feb/2024 17:59:25] "[32mPOST /forgot HTTP/1.1[0m" 302 -
 2024-02-23 17:59:26,014 INFO werkzeug : 127.0.0.1 - - [23/Feb/2024 17:59:26] "GET /reset HTTP/1.1" 200 -
+2024-02-24 21:32:26,767 INFO werkzeug : [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-02-24 21:32:26,770 INFO werkzeug : [33mPress CTRL+C to quit[0m
+2024-02-24 21:32:26,773 INFO werkzeug :  * Restarting with stat
+2024-02-24 21:32:27,614 WARNING werkzeug :  * Debugger is active!
+2024-02-24 21:32:27,640 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 21:34:33,598 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 21:34:33] "GET /signup HTTP/1.1" 200 -
+2024-02-24 21:34:44,618 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 21:34:44] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2024-02-24 21:34:44,636 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 21:34:44] "GET /account_verification HTTP/1.1" 200 -
+2024-02-24 21:35:00,388 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 21:35:00] "[32mPOST /account_verification HTTP/1.1[0m" 302 -
+2024-02-24 21:35:00,399 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 21:35:00] "GET /login HTTP/1.1" 200 -
+2024-02-24 21:37:34,235 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/graphclasses.py', reloading
+2024-02-24 21:37:34,636 INFO werkzeug :  * Restarting with stat
+2024-02-24 21:37:36,648 WARNING werkzeug :  * Debugger is active!
+2024-02-24 21:37:36,669 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 21:37:37,683 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-24 21:37:37,848 INFO werkzeug :  * Restarting with stat
+2024-02-24 21:37:39,448 WARNING werkzeug :  * Debugger is active!
+2024-02-24 21:37:39,468 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 21:41:04,579 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-24 21:41:04,838 INFO werkzeug :  * Restarting with stat
+2024-02-24 21:41:06,829 WARNING werkzeug :  * Debugger is active!
+2024-02-24 21:41:06,853 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 21:41:27,984 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-24 21:41:28,157 INFO werkzeug :  * Restarting with stat
+2024-02-24 21:41:30,042 WARNING werkzeug :  * Debugger is active!
+2024-02-24 21:41:30,070 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 21:56:53,180 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-24 21:56:53,521 INFO werkzeug :  * Restarting with stat
+2024-02-24 21:56:56,366 WARNING werkzeug :  * Debugger is active!
+2024-02-24 21:56:56,406 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 21:57:04,502 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-24 21:57:04,698 INFO werkzeug :  * Restarting with stat
+2024-02-24 21:57:05,728 WARNING werkzeug :  * Debugger is active!
+2024-02-24 21:57:05,752 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 21:57:09,780 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-24 21:57:09,969 INFO werkzeug :  * Restarting with stat
+2024-02-24 21:57:11,634 WARNING werkzeug :  * Debugger is active!
+2024-02-24 21:57:11,658 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 22:06:12,605 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-24 22:06:12,940 INFO werkzeug :  * Restarting with stat
+2024-02-24 22:06:14,817 WARNING werkzeug :  * Debugger is active!
+2024-02-24 22:06:14,838 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 22:10:45,365 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-24 22:10:45,679 INFO werkzeug :  * Restarting with stat
+2024-02-24 22:10:47,690 WARNING werkzeug :  * Debugger is active!
+2024-02-24 22:10:47,710 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 22:12:44,364 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-24 22:12:44,579 INFO werkzeug :  * Restarting with stat
+2024-02-24 22:12:45,899 WARNING werkzeug :  * Debugger is active!
+2024-02-24 22:12:45,953 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 23:24:48,799 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-24 23:24:49,201 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:24:51,135 WARNING werkzeug :  * Debugger is active!
+2024-02-24 23:24:51,154 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 23:29:27,710 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/graphclasses.py', reloading
+2024-02-24 23:29:28,083 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:29:30,100 WARNING werkzeug :  * Debugger is active!
+2024-02-24 23:29:30,157 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 23:29:36,906 INFO werkzeug : [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-02-24 23:29:36,906 INFO werkzeug : [33mPress CTRL+C to quit[0m
+2024-02-24 23:29:36,909 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:29:37,749 WARNING werkzeug :  * Debugger is active!
+2024-02-24 23:29:37,770 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 23:29:43,461 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:29:43] "GET / HTTP/1.1" 200 -
+2024-02-24 23:29:47,010 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:29:47] "GET /signup HTTP/1.1" 200 -
+2024-02-24 23:30:00,868 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:30:00] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2024-02-24 23:30:00,882 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:30:00] "GET /account_verification HTTP/1.1" 200 -
+2024-02-24 23:30:51,179 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-24 23:30:51,364 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:30:53,588 WARNING werkzeug :  * Debugger is active!
+2024-02-24 23:30:53,610 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 23:30:57,019 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:30:57] "GET / HTTP/1.1" 200 -
+2024-02-24 23:30:58,282 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:30:58] "GET /login HTTP/1.1" 200 -
+2024-02-24 23:30:59,084 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:30:59] "GET /signup HTTP/1.1" 200 -
+2024-02-24 23:31:04,417 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:31:04] "[35m[1mPOST /signup HTTP/1.1[0m" 500 -
+2024-02-24 23:31:04,491 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:31:04] "[36mGET /signup?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-02-24 23:31:04,499 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:31:04] "[36mGET /signup?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-02-24 23:31:04,760 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:31:04] "[36mGET /signup?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-24 23:31:04,796 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:31:04] "[36mGET /signup?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-24 23:31:21,224 INFO werkzeug : [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-02-24 23:31:21,224 INFO werkzeug : [33mPress CTRL+C to quit[0m
+2024-02-24 23:31:21,225 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:31:22,004 WARNING werkzeug :  * Debugger is active!
+2024-02-24 23:31:22,021 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 23:31:31,014 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:31:31] "GET /signup HTTP/1.1" 200 -
+2024-02-24 23:31:37,383 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:31:37] "[35m[1mPOST /signup HTTP/1.1[0m" 500 -
+2024-02-24 23:31:37,428 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:31:37] "[36mGET /signup?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-02-24 23:31:37,429 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:31:37] "[36mGET /signup?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-02-24 23:31:37,453 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:31:37] "[36mGET /signup?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-24 23:33:25,090 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:33:25] "GET /signup HTTP/1.1" 200 -
+2024-02-24 23:33:30,391 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:33:30] "[35m[1mPOST /signup HTTP/1.1[0m" 500 -
+2024-02-24 23:33:30,434 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:33:30] "[36mGET /signup?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-02-24 23:33:30,436 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:33:30] "[36mGET /signup?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-02-24 23:33:30,476 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:33:30] "[36mGET /signup?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-24 23:33:57,876 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-24 23:33:58,265 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:34:00,299 WARNING werkzeug :  * Debugger is active!
+2024-02-24 23:34:00,322 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 23:34:27,465 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-24 23:34:27,949 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:34:30,422 WARNING werkzeug :  * Debugger is active!
+2024-02-24 23:34:30,452 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 23:34:36,884 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:34:36] "GET /signup HTTP/1.1" 200 -
+2024-02-24 23:34:44,967 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:34:44] "[35m[1mPOST /signup HTTP/1.1[0m" 500 -
+2024-02-24 23:34:45,020 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:34:45] "[36mGET /signup?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-02-24 23:34:45,021 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:34:45] "[36mGET /signup?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-02-24 23:34:45,073 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:34:45] "[36mGET /signup?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-24 23:35:39,398 INFO werkzeug : [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-02-24 23:35:39,398 INFO werkzeug : [33mPress CTRL+C to quit[0m
+2024-02-24 23:35:39,400 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:35:40,322 WARNING werkzeug :  * Debugger is active!
+2024-02-24 23:35:40,349 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 23:40:28,973 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-24 23:40:29,342 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:40:31,580 WARNING werkzeug :  * Debugger is active!
+2024-02-24 23:40:31,633 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 23:40:39,318 INFO werkzeug : [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-02-24 23:40:39,318 INFO werkzeug : [33mPress CTRL+C to quit[0m
+2024-02-24 23:40:39,320 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:40:40,138 WARNING werkzeug :  * Debugger is active!
+2024-02-24 23:40:40,158 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 23:40:46,992 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:40:46] "GET /signup HTTP/1.1" 200 -
+2024-02-24 23:40:59,861 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:40:59] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2024-02-24 23:40:59,877 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:40:59] "GET /account_verification HTTP/1.1" 200 -
+2024-02-24 23:41:18,678 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:41:18] "[32mPOST /account_verification HTTP/1.1[0m" 302 -
+2024-02-24 23:41:18,688 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:41:18] "GET /login HTTP/1.1" 200 -
+2024-02-24 23:41:25,581 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:41:25] "[32mPOST /login HTTP/1.1[0m" 302 -
+2024-02-24 23:41:25,867 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:41:25] "GET / HTTP/1.1" 200 -
+2024-02-24 23:41:33,464 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-24 23:41:33,633 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:41:35,760 WARNING werkzeug :  * Debugger is active!
+2024-02-24 23:41:35,784 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 23:41:36,189 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:41:36] "GET / HTTP/1.1" 200 -
+2024-02-24 23:41:38,625 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:41:38] "GET / HTTP/1.1" 200 -
+2024-02-24 23:41:40,201 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:41:40] "[32mGET /logout HTTP/1.1[0m" 302 -
+2024-02-24 23:41:40,215 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:41:40] "GET /login HTTP/1.1" 200 -
+2024-02-24 23:41:46,099 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:41:46] "[32mPOST /login HTTP/1.1[0m" 302 -
+2024-02-24 23:41:46,342 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:41:46] "GET / HTTP/1.1" 200 -
+2024-02-24 23:42:44,906 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:42:44] "GET /diet HTTP/1.1" 200 -
+2024-02-24 23:42:48,384 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:42:48] "GET / HTTP/1.1" 200 -
+2024-02-24 23:42:53,900 INFO werkzeug : [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-02-24 23:42:53,900 INFO werkzeug : [33mPress CTRL+C to quit[0m
+2024-02-24 23:42:53,904 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:42:54,711 WARNING werkzeug :  * Debugger is active!
+2024-02-24 23:42:54,742 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 23:42:56,650 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:42:56] "GET / HTTP/1.1" 200 -
+2024-02-24 23:42:57,752 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:42:57] "[32mGET /logout HTTP/1.1[0m" 302 -
+2024-02-24 23:42:57,762 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:42:57] "GET /login HTTP/1.1" 200 -
+2024-02-24 23:43:03,022 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:43:03] "GET / HTTP/1.1" 200 -
+2024-02-24 23:43:04,460 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:43:04] "GET /login HTTP/1.1" 200 -
+2024-02-24 23:43:09,248 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:43:09] "[32mPOST /login HTTP/1.1[0m" 302 -
+2024-02-24 23:43:09,491 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:43:09] "GET / HTTP/1.1" 200 -
+2024-02-24 23:43:12,595 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:43:12] "[32mGET /logout HTTP/1.1[0m" 302 -
+2024-02-24 23:43:12,602 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:43:12] "GET /login HTTP/1.1" 200 -
+2024-02-24 23:45:06,519 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/graphclasses.py', reloading
+2024-02-24 23:45:06,762 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:45:08,671 WARNING werkzeug :  * Debugger is active!
+2024-02-24 23:45:08,696 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 23:45:52,966 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/graphclasses.py', reloading
+2024-02-24 23:45:53,117 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:45:54,278 WARNING werkzeug :  * Debugger is active!
+2024-02-24 23:45:54,299 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 23:46:00,431 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:46:00] "GET /login HTTP/1.1" 200 -
+2024-02-24 23:46:05,101 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:46:05] "[32mPOST /login HTTP/1.1[0m" 302 -
+2024-02-24 23:46:05,327 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:46:05] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2024-02-24 23:46:05,384 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:46:05] "[36mGET /?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-02-24 23:46:05,391 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:46:05] "[36mGET /?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-02-24 23:46:05,421 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:46:05] "[36mGET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-24 23:46:05,450 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:46:05] "[36mGET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-24 23:46:30,514 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/graphclasses.py', reloading
+2024-02-24 23:46:30,701 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:46:31,541 WARNING werkzeug :  * Debugger is active!
+2024-02-24 23:46:31,558 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 23:46:37,376 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:46:37] "GET / HTTP/1.1" 200 -
+2024-02-24 23:47:02,739 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/graphclasses.py', reloading
+2024-02-24 23:47:02,902 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:47:03,833 WARNING werkzeug :  * Debugger is active!
+2024-02-24 23:47:03,856 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 23:47:42,058 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/graphclasses.py', reloading
+2024-02-24 23:47:42,219 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:47:44,234 WARNING werkzeug :  * Debugger is active!
+2024-02-24 23:47:44,253 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 23:48:10,384 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/graphclasses.py', reloading
+2024-02-24 23:48:10,541 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:48:11,617 WARNING werkzeug :  * Debugger is active!
+2024-02-24 23:48:11,645 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 23:48:15,686 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/graphclasses.py', reloading
+2024-02-24 23:48:15,866 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:48:16,790 WARNING werkzeug :  * Debugger is active!
+2024-02-24 23:48:16,809 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 23:48:16,875 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:16] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2024-02-24 23:48:16,943 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:16] "[36mGET /?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-02-24 23:48:16,945 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:16] "[36mGET /?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-02-24 23:48:16,977 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:16] "[36mGET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-24 23:48:17,011 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:17] "[36mGET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-24 23:48:41,050 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:41] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2024-02-24 23:48:41,084 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:41] "[36mGET /?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-02-24 23:48:41,087 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:41] "[36mGET /?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-02-24 23:48:41,114 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:41] "[36mGET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-24 23:48:41,133 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:41] "[36mGET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-24 23:48:43,392 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:43] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2024-02-24 23:48:43,430 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:43] "[36mGET /?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-02-24 23:48:43,435 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:43] "[36mGET /?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-02-24 23:48:43,456 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:43] "[36mGET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-24 23:48:43,479 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:43] "[36mGET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-24 23:48:45,388 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:45] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2024-02-24 23:48:45,426 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:45] "[36mGET /?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-02-24 23:48:45,431 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:45] "[36mGET /?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-02-24 23:48:45,456 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:45] "[36mGET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-24 23:48:45,479 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:45] "[36mGET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-24 23:48:53,704 INFO werkzeug : [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-02-24 23:48:53,705 INFO werkzeug : [33mPress CTRL+C to quit[0m
+2024-02-24 23:48:53,706 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:48:54,449 WARNING werkzeug :  * Debugger is active!
+2024-02-24 23:48:54,464 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 23:48:56,189 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:56] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2024-02-24 23:48:56,240 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:56] "[36mGET /?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-02-24 23:48:56,246 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:56] "[36mGET /?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-02-24 23:48:56,270 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:56] "[36mGET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-24 23:48:56,307 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:56] "[36mGET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-24 23:48:58,185 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:58] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2024-02-24 23:48:58,225 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:58] "[36mGET /?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-02-24 23:48:58,233 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:58] "[36mGET /?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-02-24 23:48:58,248 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:58] "[36mGET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-24 23:48:58,276 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:48:58] "[36mGET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-24 23:49:30,660 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/graphclasses.py', reloading
+2024-02-24 23:49:30,811 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:49:31,695 WARNING werkzeug :  * Debugger is active!
+2024-02-24 23:49:31,720 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 23:49:32,935 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:49:32] "GET / HTTP/1.1" 200 -
+2024-02-24 23:49:35,341 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:49:35] "GET /fitness HTTP/1.1" 200 -
+2024-02-24 23:49:36,113 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:49:36] "GET /diet HTTP/1.1" 200 -
+2024-02-24 23:49:37,300 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:49:37] "GET / HTTP/1.1" 200 -
+2024-02-24 23:57:09,246 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/graphclasses.py', reloading
+2024-02-24 23:57:09,674 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:59:36,469 INFO werkzeug : [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-02-24 23:59:36,470 INFO werkzeug : [33mPress CTRL+C to quit[0m
+2024-02-24 23:59:36,472 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:59:37,211 WARNING werkzeug :  * Debugger is active!
+2024-02-24 23:59:37,234 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-24 23:59:40,983 INFO werkzeug : 127.0.0.1 - - [24/Feb/2024 23:59:40] "GET / HTTP/1.1" 200 -
+2024-02-24 23:59:58,361 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/graphclasses.py', reloading
+2024-02-24 23:59:58,587 INFO werkzeug :  * Restarting with stat
+2024-02-24 23:59:59,691 WARNING werkzeug :  * Debugger is active!
+2024-02-24 23:59:59,710 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 00:00:03,685 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 00:00:03] "GET / HTTP/1.1" 200 -
+2024-02-25 00:00:15,515 INFO werkzeug : [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-02-25 00:00:15,515 INFO werkzeug : [33mPress CTRL+C to quit[0m
+2024-02-25 00:00:15,516 INFO werkzeug :  * Restarting with stat
+2024-02-25 00:00:16,243 WARNING werkzeug :  * Debugger is active!
+2024-02-25 00:00:16,262 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 00:00:26,566 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 00:00:26] "GET /diet HTTP/1.1" 200 -
+2024-02-25 00:00:28,269 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 00:00:28] "GET / HTTP/1.1" 200 -
+2024-02-25 00:02:20,939 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/graphclasses.py', reloading
+2024-02-25 00:02:21,331 INFO werkzeug :  * Restarting with stat
+2024-02-25 00:02:23,376 WARNING werkzeug :  * Debugger is active!
+2024-02-25 00:02:23,407 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 00:19:08,810 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/streakclass.py', reloading
+2024-02-25 00:19:09,178 INFO werkzeug :  * Restarting with stat
+2024-02-25 00:19:11,283 WARNING werkzeug :  * Debugger is active!
+2024-02-25 00:19:11,302 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 00:19:17,148 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 00:19:17] "GET / HTTP/1.1" 200 -
+2024-02-25 00:29:57,548 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 00:29:57] "GET / HTTP/1.1" 200 -
+2024-02-25 00:30:02,019 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 00:30:02] "GET /diet HTTP/1.1" 200 -
+2024-02-25 08:39:35,328 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-25 08:39:36,260 INFO werkzeug :  * Restarting with stat
+2024-02-25 08:39:38,907 WARNING werkzeug :  * Debugger is active!
+2024-02-25 08:39:38,934 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 08:39:58,635 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 08:39:58] "[31m[1mGET /fitness HTTP/1.1[0m" 401 -
+2024-02-25 08:40:03,519 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 08:40:03] "GET / HTTP/1.1" 200 -
+2024-02-25 08:40:10,677 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 08:40:10] "GET /signup HTTP/1.1" 200 -
+2024-02-25 08:40:30,715 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 08:40:30] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2024-02-25 08:40:30,733 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 08:40:30] "GET /account_verification HTTP/1.1" 200 -
+2024-02-25 08:40:41,642 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 08:40:41] "GET /signup HTTP/1.1" 200 -
+2024-02-25 10:42:28,834 INFO werkzeug : [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-02-25 10:42:28,838 INFO werkzeug : [33mPress CTRL+C to quit[0m
+2024-02-25 10:42:28,841 INFO werkzeug :  * Restarting with stat
+2024-02-25 10:42:29,670 WARNING werkzeug :  * Debugger is active!
+2024-02-25 10:42:29,693 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 10:42:30,986 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 10:42:30] "GET /signup HTTP/1.1" 200 -
+2024-02-25 10:53:02,185 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 10:53:02] "POST /signup HTTP/1.1" 200 -
+2024-02-25 10:54:10,934 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 10:54:10] "POST /signup HTTP/1.1" 200 -
+2024-02-25 10:59:25,401 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 10:59:25] "POST /signup HTTP/1.1" 200 -
+2024-02-25 11:04:35,645 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:04:35] "[35m[1mPOST /signup HTTP/1.1[0m" 500 -
+2024-02-25 11:04:35,843 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:04:35] "[36mGET /signup?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-02-25 11:04:35,847 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:04:35] "[36mGET /signup?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-02-25 11:04:36,008 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:04:36] "[36mGET /signup?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-25 11:04:36,079 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:04:36] "[36mGET /signup?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-25 11:04:59,646 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:04:59] "GET / HTTP/1.1" 200 -
+2024-02-25 11:05:17,889 INFO werkzeug : [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-02-25 11:05:17,889 INFO werkzeug : [33mPress CTRL+C to quit[0m
+2024-02-25 11:05:17,892 INFO werkzeug :  * Restarting with stat
+2024-02-25 11:05:18,665 WARNING werkzeug :  * Debugger is active!
+2024-02-25 11:05:18,708 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 11:05:20,616 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:05:20] "GET /signup HTTP/1.1" 200 -
+2024-02-25 11:05:26,744 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:05:26] "[35m[1mPOST /signup HTTP/1.1[0m" 500 -
+2024-02-25 11:05:26,785 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:05:26] "[36mGET /signup?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-02-25 11:05:26,791 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:05:26] "[36mGET /signup?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-02-25 11:05:26,823 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:05:26] "[36mGET /signup?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-25 11:07:07,265 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:07:07] "GET /signup HTTP/1.1" 200 -
+2024-02-25 11:07:28,463 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-25 11:07:28,636 INFO werkzeug :  * Restarting with stat
+2024-02-25 11:07:30,742 WARNING werkzeug :  * Debugger is active!
+2024-02-25 11:07:30,763 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 11:08:12,274 INFO werkzeug : [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-02-25 11:08:12,274 INFO werkzeug : [33mPress CTRL+C to quit[0m
+2024-02-25 11:08:12,276 INFO werkzeug :  * Restarting with stat
+2024-02-25 11:08:13,327 WARNING werkzeug :  * Debugger is active!
+2024-02-25 11:08:13,347 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 11:08:14,543 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:08:14] "GET / HTTP/1.1" 200 -
+2024-02-25 11:08:16,024 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:08:16] "GET /signup HTTP/1.1" 200 -
+2024-02-25 11:08:28,421 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:08:28] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2024-02-25 11:08:28,436 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:08:28] "GET /account_verification HTTP/1.1" 200 -
+2024-02-25 11:08:34,664 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:08:34] "POST /account_verification HTTP/1.1" 200 -
+2024-02-25 11:10:50,532 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:10:50] "GET /login HTTP/1.1" 200 -
+2024-02-25 11:10:52,047 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:10:52] "GET /signup HTTP/1.1" 200 -
+2024-02-25 11:11:19,333 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-25 11:11:19,649 INFO werkzeug :  * Restarting with stat
+2024-02-25 11:11:21,760 WARNING werkzeug :  * Debugger is active!
+2024-02-25 11:11:21,788 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 11:11:21,842 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:11:21] "GET /signup HTTP/1.1" 200 -
+2024-02-25 11:11:31,647 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:11:31] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2024-02-25 11:11:31,662 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:11:31] "GET /account_verification HTTP/1.1" 200 -
+2024-02-25 11:11:36,899 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:11:36] "[32mPOST /account_verification HTTP/1.1[0m" 302 -
+2024-02-25 11:11:36,906 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:11:36] "GET /signup HTTP/1.1" 200 -
+2024-02-25 11:11:44,966 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-25 11:11:45,174 INFO werkzeug :  * Restarting with stat
+2024-02-25 11:11:46,480 WARNING werkzeug :  * Debugger is active!
+2024-02-25 11:11:46,506 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 11:13:02,953 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-25 11:13:03,159 INFO werkzeug :  * Restarting with stat
+2024-02-25 11:13:04,038 WARNING werkzeug :  * Debugger is active!
+2024-02-25 11:13:04,054 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 11:13:06,102 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:13:06] "GET /signup HTTP/1.1" 200 -
+2024-02-25 11:13:16,607 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:13:16] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2024-02-25 11:13:16,623 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:13:16] "GET /account_verification HTTP/1.1" 200 -
+2024-02-25 11:13:22,271 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:13:22] "[35m[1mPOST /account_verification HTTP/1.1[0m" 500 -
+2024-02-25 11:13:22,347 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:13:22] "GET /account_verification?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2024-02-25 11:13:22,352 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:13:22] "GET /account_verification?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2024-02-25 11:13:22,385 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:13:22] "[36mGET /account_verification?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-25 11:13:22,407 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:13:22] "[36mGET /account_verification?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-25 11:13:32,256 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-25 11:13:32,434 INFO werkzeug :  * Restarting with stat
+2024-02-25 11:13:33,339 WARNING werkzeug :  * Debugger is active!
+2024-02-25 11:13:33,367 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 11:13:33,886 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:13:33] "GET /account_verification HTTP/1.1" 200 -
+2024-02-25 11:13:38,795 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:13:38] "[35m[1mPOST /account_verification HTTP/1.1[0m" 500 -
+2024-02-25 11:13:38,838 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:13:38] "[36mGET /account_verification?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-02-25 11:13:38,847 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:13:38] "[36mGET /account_verification?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-02-25 11:13:38,862 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:13:38] "[36mGET /account_verification?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-25 11:13:38,886 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:13:38] "[36mGET /account_verification?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-25 11:13:44,926 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:13:44] "GET / HTTP/1.1" 200 -
+2024-02-25 11:13:46,006 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:13:46] "GET /signup HTTP/1.1" 200 -
+2024-02-25 11:13:56,996 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:13:56] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2024-02-25 11:13:57,004 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:13:57] "GET /account_verification HTTP/1.1" 200 -
+2024-02-25 11:14:03,614 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:14:03] "POST /account_verification HTTP/1.1" 200 -
+2024-02-25 11:14:11,550 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:14:11] "GET / HTTP/1.1" 200 -
+2024-02-25 11:18:36,100 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-25 11:18:36,455 INFO werkzeug :  * Restarting with stat
+2024-02-25 11:18:38,211 WARNING werkzeug :  * Debugger is active!
+2024-02-25 11:18:38,238 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 11:22:15,431 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-25 11:22:16,224 INFO werkzeug :  * Restarting with stat
+2024-02-25 11:22:19,292 WARNING werkzeug :  * Debugger is active!
+2024-02-25 11:22:19,319 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 11:23:20,692 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-25 11:23:20,856 INFO werkzeug :  * Restarting with stat
+2024-02-25 11:23:21,778 WARNING werkzeug :  * Debugger is active!
+2024-02-25 11:23:21,805 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 11:31:24,124 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:31:24] "GET /login HTTP/1.1" 200 -
+2024-02-25 11:31:34,441 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:31:34] "[32mPOST /login HTTP/1.1[0m" 302 -
+2024-02-25 11:31:34,447 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:31:34] "GET /login HTTP/1.1" 200 -
+2024-02-25 11:35:22,663 INFO werkzeug : [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-02-25 11:35:22,663 INFO werkzeug : [33mPress CTRL+C to quit[0m
+2024-02-25 11:35:22,666 INFO werkzeug :  * Restarting with stat
+2024-02-25 11:35:23,523 WARNING werkzeug :  * Debugger is active!
+2024-02-25 11:35:23,542 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 11:36:09,527 INFO werkzeug : [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-02-25 11:36:09,527 INFO werkzeug : [33mPress CTRL+C to quit[0m
+2024-02-25 11:36:09,531 INFO werkzeug :  * Restarting with stat
+2024-02-25 11:36:10,430 WARNING werkzeug :  * Debugger is active!
+2024-02-25 11:36:10,454 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 11:36:10,870 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:36:10] "GET /login HTTP/1.1" 200 -
+2024-02-25 11:36:12,155 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 11:36:12] "GET /forgot HTTP/1.1" 200 -
+2024-02-25 13:32:25,454 INFO werkzeug : [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-02-25 13:32:25,454 INFO werkzeug : [33mPress CTRL+C to quit[0m
+2024-02-25 13:32:25,456 INFO werkzeug :  * Restarting with stat
+2024-02-25 13:32:26,287 WARNING werkzeug :  * Debugger is active!
+2024-02-25 13:32:26,311 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 13:32:27,294 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:32:27] "GET /signup HTTP/1.1" 200 -
+2024-02-25 13:32:37,729 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:32:37] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2024-02-25 13:32:37,746 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:32:37] "GET /account_verification HTTP/1.1" 200 -
+2024-02-25 13:32:54,190 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:32:54] "[32mPOST /account_verification HTTP/1.1[0m" 302 -
+2024-02-25 13:32:54,198 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:32:54] "GET /login HTTP/1.1" 200 -
+2024-02-25 13:33:01,846 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:33:01] "[32mPOST /login HTTP/1.1[0m" 302 -
+2024-02-25 13:33:01,851 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:33:01] "GET /login HTTP/1.1" 200 -
+2024-02-25 13:33:13,453 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:33:13] "[32mPOST /login HTTP/1.1[0m" 302 -
+2024-02-25 13:33:13,459 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:33:13] "GET /login HTTP/1.1" 200 -
+2024-02-25 13:33:25,414 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:33:25] "GET /signup HTTP/1.1" 200 -
+2024-02-25 13:33:36,823 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:33:36] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2024-02-25 13:33:36,834 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:33:36] "GET /account_verification HTTP/1.1" 200 -
+2024-02-25 13:33:50,395 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:33:50] "[32mPOST /account_verification HTTP/1.1[0m" 302 -
+2024-02-25 13:33:50,403 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:33:50] "GET /login HTTP/1.1" 200 -
+2024-02-25 13:33:57,782 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:33:57] "[32mPOST /login HTTP/1.1[0m" 302 -
+2024-02-25 13:33:57,789 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:33:57] "GET /login HTTP/1.1" 200 -
+2024-02-25 13:35:02,520 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:35:02] "[32mPOST /login HTTP/1.1[0m" 302 -
+2024-02-25 13:35:02,866 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:35:02] "GET / HTTP/1.1" 200 -
+2024-02-25 13:35:05,411 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:35:05] "GET /diet HTTP/1.1" 200 -
+2024-02-25 13:35:18,036 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:35:18] "POST /diet HTTP/1.1" 200 -
+2024-02-25 13:35:19,677 INFO root : Resetting the StreakType.DIET streak to 0 for test
+2024-02-25 13:35:19,685 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:35:19] "GET / HTTP/1.1" 200 -
+2024-02-25 13:35:27,754 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:35:27] "GET /fitness HTTP/1.1" 200 -
+2024-02-25 13:55:52,062 INFO werkzeug : [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-02-25 13:55:52,065 INFO werkzeug : [33mPress CTRL+C to quit[0m
+2024-02-25 13:55:52,067 INFO werkzeug :  * Restarting with stat
+2024-02-25 13:55:53,223 WARNING werkzeug :  * Debugger is active!
+2024-02-25 13:55:53,260 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 13:55:53,326 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:55:53] "[31m[1mGET /diet HTTP/1.1[0m" 401 -
+2024-02-25 13:55:53,344 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:55:53] "GET / HTTP/1.1" 200 -
+2024-02-25 13:55:54,765 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:55:54] "GET /signup HTTP/1.1" 200 -
+2024-02-25 13:56:05,284 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:56:05] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2024-02-25 13:56:05,301 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:56:05] "GET /account_verification HTTP/1.1" 200 -
+2024-02-25 13:56:16,615 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:56:16] "[32mPOST /account_verification HTTP/1.1[0m" 302 -
+2024-02-25 13:56:16,623 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:56:16] "GET /login HTTP/1.1" 200 -
+2024-02-25 13:56:21,746 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:56:21] "[32mPOST /login HTTP/1.1[0m" 302 -
+2024-02-25 13:56:22,024 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:56:22] "GET / HTTP/1.1" 200 -
+2024-02-25 13:56:23,407 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:56:23] "[35m[1mGET /diet HTTP/1.1[0m" 500 -
+2024-02-25 13:56:23,477 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:56:23] "GET /diet?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2024-02-25 13:56:23,478 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:56:23] "GET /diet?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2024-02-25 13:56:23,517 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:56:23] "GET /diet?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2024-02-25 13:56:23,582 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:56:23] "[36mGET /diet?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-25 13:56:54,524 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:56:54] "GET /diet HTTP/1.1" 200 -
+2024-02-25 13:57:02,693 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 13:57:02] "POST /diet HTTP/1.1" 200 -
+2024-02-25 14:05:52,802 INFO werkzeug : [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-02-25 14:05:52,802 INFO werkzeug : [33mPress CTRL+C to quit[0m
+2024-02-25 14:05:52,806 INFO werkzeug :  * Restarting with stat
+2024-02-25 14:05:53,746 WARNING werkzeug :  * Debugger is active!
+2024-02-25 14:05:53,769 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 14:05:56,356 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:05:56] "GET / HTTP/1.1" 200 -
+2024-02-25 14:05:57,948 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:05:57] "GET /signup HTTP/1.1" 200 -
+2024-02-25 14:06:08,541 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:06:08] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2024-02-25 14:06:08,554 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:06:08] "GET /account_verification HTTP/1.1" 200 -
+2024-02-25 14:06:18,626 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:06:18] "[32mPOST /account_verification HTTP/1.1[0m" 302 -
+2024-02-25 14:06:18,634 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:06:18] "GET /login HTTP/1.1" 200 -
+2024-02-25 14:06:26,410 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:06:26] "[32mPOST /login HTTP/1.1[0m" 302 -
+2024-02-25 14:06:26,653 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:06:26] "GET / HTTP/1.1" 200 -
+2024-02-25 14:06:28,175 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:06:28] "GET /diet HTTP/1.1" 200 -
+2024-02-25 14:06:29,127 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:06:29] "GET /fitness HTTP/1.1" 200 -
+2024-02-25 14:06:34,667 DEBUG urllib3.connectionpool : Starting new HTTPS connection (1): trackapi.nutritionix.com:443
+2024-02-25 14:06:35,891 DEBUG urllib3.connectionpool : https://trackapi.nutritionix.com:443 "POST /v2/natural/exercise HTTP/1.1" 200 283
+2024-02-25 14:06:35,892 INFO app : Query: {'query': 'football for 0 minutes and 0 hours'}, Response: {'exercises': [{'tag_id': 269, 'user_input': 'football', 'duration_min': 0, 'met': 8, 'nf_calories': 0, 'photo': {'highres': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/269_highres.jpg', 'thumb': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/269_thumb.jpg', 'is_user_uploaded': False}, 'compendium_code': 15210, 'name': 'american football', 'description': None, 'benefits': None}, {'tag_id': 100, 'user_input': 'walking', 'duration_min': 0, 'met': 3.5, 'nf_calories': 0, 'photo': {'highres': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_highres.jpg', 'thumb': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_thumb.jpg', 'is_user_uploaded': False}, 'compendium_code': 17190, 'name': 'walking', 'description': None, 'benefits': None}]}
+2024-02-25 14:06:35,909 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:06:35] "POST /fitness HTTP/1.1" 200 -
+2024-02-25 14:06:38,612 INFO root : Resetting the StreakType.EXERCISE streak to 0 for test
+2024-02-25 14:06:38,617 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:06:38] "GET / HTTP/1.1" 200 -
+2024-02-25 14:06:49,609 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:06:49] "GET /fitness HTTP/1.1" 200 -
+2024-02-25 14:07:00,065 DEBUG urllib3.connectionpool : Starting new HTTPS connection (1): trackapi.nutritionix.com:443
+2024-02-25 14:07:01,310 DEBUG urllib3.connectionpool : https://trackapi.nutritionix.com:443 "POST /v2/natural/exercise HTTP/1.1" 200 250
+2024-02-25 14:07:01,311 INFO app : Query: {'query': 'qwerty for 5 minutes and 0 hours'}, Response: {'exercises': [{'tag_id': 100, 'user_input': 'walking', 'duration_min': 5, 'met': 3.5, 'nf_calories': 20.42, 'photo': {'highres': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_highres.jpg', 'thumb': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_thumb.jpg', 'is_user_uploaded': False}, 'compendium_code': 17190, 'name': 'walking', 'description': None, 'benefits': None}, {'tag_id': 100, 'user_input': 'walking', 'duration_min': 0, 'met': 3.5, 'nf_calories': 0, 'photo': {'highres': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_highres.jpg', 'thumb': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_thumb.jpg', 'is_user_uploaded': False}, 'compendium_code': 17190, 'name': 'walking', 'description': None, 'benefits': None}]}
+2024-02-25 14:07:01,326 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:07:01] "POST /fitness HTTP/1.1" 200 -
+2024-02-25 14:07:04,569 INFO root : Resetting the StreakType.EXERCISE streak to 0 for test
+2024-02-25 14:07:04,575 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:07:04] "GET / HTTP/1.1" 200 -
+2024-02-25 14:07:41,714 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:07:41] "GET /fitness HTTP/1.1" 200 -
+2024-02-25 14:07:52,642 DEBUG urllib3.connectionpool : Starting new HTTPS connection (1): trackapi.nutritionix.com:443
+2024-02-25 14:07:54,014 DEBUG urllib3.connectionpool : https://trackapi.nutritionix.com:443 "POST /v2/natural/exercise HTTP/1.1" 200 250
+2024-02-25 14:07:54,015 INFO app : Query: {'query': 'abcd for 5 minutes and 0 hours'}, Response: {'exercises': [{'tag_id': 100, 'user_input': 'walking', 'duration_min': 5, 'met': 3.5, 'nf_calories': 20.42, 'photo': {'highres': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_highres.jpg', 'thumb': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_thumb.jpg', 'is_user_uploaded': False}, 'compendium_code': 17190, 'name': 'walking', 'description': None, 'benefits': None}, {'tag_id': 100, 'user_input': 'walking', 'duration_min': 0, 'met': 3.5, 'nf_calories': 0, 'photo': {'highres': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_highres.jpg', 'thumb': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_thumb.jpg', 'is_user_uploaded': False}, 'compendium_code': 17190, 'name': 'walking', 'description': None, 'benefits': None}]}
+2024-02-25 14:07:54,032 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:07:54] "POST /fitness HTTP/1.1" 200 -
+2024-02-25 14:18:41,342 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-25 14:18:41,797 INFO werkzeug :  * Restarting with stat
+2024-02-25 14:18:43,704 WARNING werkzeug :  * Debugger is active!
+2024-02-25 14:18:43,725 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 14:21:51,770 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-25 14:21:52,007 INFO werkzeug :  * Restarting with stat
+2024-02-25 14:21:53,868 WARNING werkzeug :  * Debugger is active!
+2024-02-25 14:21:53,887 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 14:22:01,953 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-25 14:22:02,109 INFO werkzeug :  * Restarting with stat
+2024-02-25 14:22:03,033 WARNING werkzeug :  * Debugger is active!
+2024-02-25 14:22:03,055 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 14:24:00,786 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:24:00] "GET / HTTP/1.1" 200 -
+2024-02-25 14:24:02,020 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:24:02] "GET /signup HTTP/1.1" 200 -
+2024-02-25 14:24:11,222 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:24:11] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2024-02-25 14:24:11,234 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:24:11] "GET /account_verification HTTP/1.1" 200 -
+2024-02-25 14:24:20,385 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:24:20] "[32mPOST /account_verification HTTP/1.1[0m" 302 -
+2024-02-25 14:24:20,393 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:24:20] "GET /login HTTP/1.1" 200 -
+2024-02-25 14:24:26,606 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:24:26] "[32mPOST /login HTTP/1.1[0m" 302 -
+2024-02-25 14:24:26,864 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:24:26] "GET / HTTP/1.1" 200 -
+2024-02-25 14:24:28,744 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:24:28] "GET /diet HTTP/1.1" 200 -
+2024-02-25 14:24:29,372 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:24:29] "GET /fitness HTTP/1.1" 200 -
+2024-02-25 14:24:34,642 DEBUG urllib3.connectionpool : Starting new HTTPS connection (1): trackapi.nutritionix.com:443
+2024-02-25 14:24:36,112 DEBUG urllib3.connectionpool : https://trackapi.nutritionix.com:443 "POST /v2/natural/exercise HTTP/1.1" 200 283
+2024-02-25 14:24:36,115 INFO app : Query: {'query': 'football for 0 minutes and 0 hours'}, Response: {'exercises': [{'tag_id': 269, 'user_input': 'football', 'duration_min': 0, 'met': 8, 'nf_calories': 0, 'photo': {'highres': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/269_highres.jpg', 'thumb': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/269_thumb.jpg', 'is_user_uploaded': False}, 'compendium_code': 15210, 'name': 'american football', 'description': None, 'benefits': None}, {'tag_id': 100, 'user_input': 'walking', 'duration_min': 0, 'met': 3.5, 'nf_calories': 0, 'photo': {'highres': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_highres.jpg', 'thumb': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_thumb.jpg', 'is_user_uploaded': False}, 'compendium_code': 17190, 'name': 'walking', 'description': None, 'benefits': None}]}
+2024-02-25 14:24:36,137 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:24:36] "[35m[1mPOST /fitness HTTP/1.1[0m" 500 -
+2024-02-25 14:24:36,235 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:24:36] "GET /fitness?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2024-02-25 14:24:36,236 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:24:36] "GET /fitness?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2024-02-25 14:24:36,285 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:24:36] "GET /fitness?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2024-02-25 14:24:36,308 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:24:36] "[36mGET /fitness?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-02-25 14:25:16,087 INFO werkzeug :  * Detected change in '/Users/administrator/Desktop/NEA/app.py', reloading
+2024-02-25 14:25:16,360 INFO werkzeug :  * Restarting with stat
+2024-02-25 14:25:18,517 WARNING werkzeug :  * Debugger is active!
+2024-02-25 14:25:18,540 INFO werkzeug :  * Debugger PIN: 142-209-007
+2024-02-25 14:25:22,293 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:25:22] "GET / HTTP/1.1" 200 -
+2024-02-25 14:25:23,501 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:25:23] "GET /signup HTTP/1.1" 200 -
+2024-02-25 14:25:32,536 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:25:32] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2024-02-25 14:25:32,552 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:25:32] "GET /account_verification HTTP/1.1" 200 -
+2024-02-25 14:25:53,167 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:25:53] "[32mPOST /account_verification HTTP/1.1[0m" 302 -
+2024-02-25 14:25:53,176 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:25:53] "GET /login HTTP/1.1" 200 -
+2024-02-25 14:26:00,798 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:26:00] "[32mPOST /login HTTP/1.1[0m" 302 -
+2024-02-25 14:26:01,064 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:26:01] "GET / HTTP/1.1" 200 -
+2024-02-25 14:26:02,453 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:26:02] "GET /fitness HTTP/1.1" 200 -
+2024-02-25 14:26:07,697 DEBUG urllib3.connectionpool : Starting new HTTPS connection (1): trackapi.nutritionix.com:443
+2024-02-25 14:26:09,094 DEBUG urllib3.connectionpool : https://trackapi.nutritionix.com:443 "POST /v2/natural/exercise HTTP/1.1" 200 283
+2024-02-25 14:26:09,095 INFO app : Query: {'query': 'football for 0 minutes and 0 hours'}, Response: {'exercises': [{'tag_id': 269, 'user_input': 'football', 'duration_min': 0, 'met': 8, 'nf_calories': 0, 'photo': {'highres': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/269_highres.jpg', 'thumb': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/269_thumb.jpg', 'is_user_uploaded': False}, 'compendium_code': 15210, 'name': 'american football', 'description': None, 'benefits': None}, {'tag_id': 100, 'user_input': 'walking', 'duration_min': 0, 'met': 3.5, 'nf_calories': 0, 'photo': {'highres': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_highres.jpg', 'thumb': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_thumb.jpg', 'is_user_uploaded': False}, 'compendium_code': 17190, 'name': 'walking', 'description': None, 'benefits': None}]}
+2024-02-25 14:26:09,101 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:26:09] "POST /fitness HTTP/1.1" 200 -
+2024-02-25 14:26:20,177 DEBUG urllib3.connectionpool : Starting new HTTPS connection (1): trackapi.nutritionix.com:443
+2024-02-25 14:26:21,409 DEBUG urllib3.connectionpool : https://trackapi.nutritionix.com:443 "POST /v2/natural/exercise HTTP/1.1" 200 250
+2024-02-25 14:26:21,410 INFO app : Query: {'query': 'qwerty for 5 minutes and 0 hours'}, Response: {'exercises': [{'tag_id': 100, 'user_input': 'walking', 'duration_min': 5, 'met': 3.5, 'nf_calories': 20.42, 'photo': {'highres': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_highres.jpg', 'thumb': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_thumb.jpg', 'is_user_uploaded': False}, 'compendium_code': 17190, 'name': 'walking', 'description': None, 'benefits': None}, {'tag_id': 100, 'user_input': 'walking', 'duration_min': 0, 'met': 3.5, 'nf_calories': 0, 'photo': {'highres': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_highres.jpg', 'thumb': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_thumb.jpg', 'is_user_uploaded': False}, 'compendium_code': 17190, 'name': 'walking', 'description': None, 'benefits': None}]}
+2024-02-25 14:26:21,417 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:26:21] "POST /fitness HTTP/1.1" 200 -
+2024-02-25 14:26:27,559 DEBUG urllib3.connectionpool : Starting new HTTPS connection (1): trackapi.nutritionix.com:443
+2024-02-25 14:26:28,754 DEBUG urllib3.connectionpool : https://trackapi.nutritionix.com:443 "POST /v2/natural/exercise HTTP/1.1" 200 294
+2024-02-25 14:26:28,755 INFO app : Query: {'query': 'football for 2 minutes and 0 hours'}, Response: {'exercises': [{'tag_id': 269, 'user_input': 'football', 'duration_min': 2, 'met': 8, 'nf_calories': 18.67, 'photo': {'highres': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/269_highres.jpg', 'thumb': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/269_thumb.jpg', 'is_user_uploaded': False}, 'compendium_code': 15210, 'name': 'american football', 'description': None, 'benefits': None}, {'tag_id': 100, 'user_input': 'walking', 'duration_min': 0, 'met': 3.5, 'nf_calories': 0, 'photo': {'highres': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_highres.jpg', 'thumb': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_thumb.jpg', 'is_user_uploaded': False}, 'compendium_code': 17190, 'name': 'walking', 'description': None, 'benefits': None}]}
+2024-02-25 14:26:28,767 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:26:28] "POST /fitness HTTP/1.1" 200 -
+2024-02-25 14:26:34,274 DEBUG urllib3.connectionpool : Starting new HTTPS connection (1): trackapi.nutritionix.com:443
+2024-02-25 14:26:35,498 DEBUG urllib3.connectionpool : https://trackapi.nutritionix.com:443 "POST /v2/natural/exercise HTTP/1.1" 200 248
+2024-02-25 14:26:35,499 INFO app : Query: {'query': 'werty for 3 minutes and 0 hours'}, Response: {'exercises': [{'tag_id': 100, 'user_input': 'walking', 'duration_min': 3, 'met': 3.5, 'nf_calories': 12.25, 'photo': {'highres': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_highres.jpg', 'thumb': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_thumb.jpg', 'is_user_uploaded': False}, 'compendium_code': 17190, 'name': 'walking', 'description': None, 'benefits': None}, {'tag_id': 100, 'user_input': 'walking', 'duration_min': 0, 'met': 3.5, 'nf_calories': 0, 'photo': {'highres': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_highres.jpg', 'thumb': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_thumb.jpg', 'is_user_uploaded': False}, 'compendium_code': 17190, 'name': 'walking', 'description': None, 'benefits': None}]}
+2024-02-25 14:26:35,505 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:26:35] "POST /fitness HTTP/1.1" 200 -
+2024-02-25 14:28:56,654 DEBUG urllib3.connectionpool : Starting new HTTPS connection (1): trackapi.nutritionix.com:443
+2024-02-25 14:28:57,980 DEBUG urllib3.connectionpool : https://trackapi.nutritionix.com:443 "POST /v2/natural/exercise HTTP/1.1" 200 248
+2024-02-25 14:28:57,982 INFO app : Query: {'query': 'walking for 2 minutes and 0 hours'}, Response: {'exercises': [{'tag_id': 100, 'user_input': 'walking', 'duration_min': 2, 'met': 3.5, 'nf_calories': 8.17, 'photo': {'highres': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_highres.jpg', 'thumb': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_thumb.jpg', 'is_user_uploaded': False}, 'compendium_code': 17190, 'name': 'walking', 'description': None, 'benefits': None}, {'tag_id': 100, 'user_input': 'walking', 'duration_min': 0, 'met': 3.5, 'nf_calories': 0, 'photo': {'highres': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_highres.jpg', 'thumb': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_thumb.jpg', 'is_user_uploaded': False}, 'compendium_code': 17190, 'name': 'walking', 'description': None, 'benefits': None}]}
+2024-02-25 14:28:58,009 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:28:58] "POST /fitness HTTP/1.1" 200 -
+2024-02-25 14:34:10,066 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:34:10] "GET /sleep HTTP/1.1" 200 -
+2024-02-25 14:34:16,265 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:34:16] "POST /sleep HTTP/1.1" 200 -
+2024-02-25 14:35:30,405 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:35:30] "GET /weight HTTP/1.1" 200 -
+2024-02-25 14:35:32,989 INFO root : Increasing the StreakType.WEIGHT streak for test
+2024-02-25 14:35:32,997 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:35:32] "POST /weight HTTP/1.1" 200 -
+2024-02-25 14:35:37,187 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:35:37] "POST /weight HTTP/1.1" 200 -
+2024-02-25 14:36:36,428 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:36:36] "GET /sleep HTTP/1.1" 200 -
+2024-02-25 14:36:40,478 INFO root : Increasing the StreakType.SLEEP streak for test
+2024-02-25 14:36:40,483 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:36:40] "POST /sleep HTTP/1.1" 200 -
+2024-02-25 14:37:18,615 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:37:18] "GET /weight HTTP/1.1" 200 -
+2024-02-25 14:37:20,493 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:37:20] "POST /weight HTTP/1.1" 200 -
+2024-02-25 14:37:45,478 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:37:45] "GET /goals HTTP/1.1" 200 -
+2024-02-25 14:46:19,307 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:46:19] "POST /goals HTTP/1.1" 200 -
+2024-02-25 14:46:22,431 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:46:22] "GET /diet HTTP/1.1" 200 -
+2024-02-25 14:46:23,356 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:46:23] "GET /fitness HTTP/1.1" 200 -
+2024-02-25 14:46:23,985 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:46:23] "GET /sleep HTTP/1.1" 200 -
+2024-02-25 14:46:25,304 INFO root : Resetting the StreakType.EXERCISE streak to 0 for test
+2024-02-25 14:46:25,324 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:46:25] "GET / HTTP/1.1" 200 -
+2024-02-25 14:46:26,248 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:46:26] "GET /diet HTTP/1.1" 200 -
+2024-02-25 14:46:29,288 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:46:29] "GET /goals HTTP/1.1" 200 -
+2024-02-25 14:46:33,732 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:46:33] "POST /goals HTTP/1.1" 200 -
+2024-02-25 14:46:44,432 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:46:44] "POST /goals HTTP/1.1" 200 -
+2024-02-25 14:46:52,381 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:46:52] "POST /goals HTTP/1.1" 200 -
+2024-02-25 14:47:01,769 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:47:01] "POST /goals HTTP/1.1" 200 -
+2024-02-25 14:49:36,172 ERROR app : An invalid goal was input by the user - potato
+2024-02-25 14:49:36,175 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:49:36] "POST /goals HTTP/1.1" 200 -
+2024-02-25 14:51:27,534 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:51:27] "POST /goals HTTP/1.1" 200 -
+2024-02-25 14:59:51,820 INFO root : Resetting the StreakType.EXERCISE streak to 0 for test
+2024-02-25 14:59:51,833 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 14:59:51] "GET / HTTP/1.1" 200 -
+2024-02-25 15:00:30,792 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:00:30] "GET /fitness HTTP/1.1" 200 -
+2024-02-25 15:15:04,115 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:15:04] "GET /diet HTTP/1.1" 200 -
+2024-02-25 15:15:05,091 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:15:05] "GET /fitness HTTP/1.1" 200 -
+2024-02-25 15:15:06,190 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:15:06] "GET /fitness HTTP/1.1" 200 -
+2024-02-25 15:15:07,007 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:15:07] "GET /diet HTTP/1.1" 200 -
+2024-02-25 15:15:08,335 INFO root : Resetting the StreakType.EXERCISE streak to 0 for test
+2024-02-25 15:15:08,354 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:15:08] "GET / HTTP/1.1" 200 -
+2024-02-25 15:15:08,654 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:15:08] "GET /fitness HTTP/1.1" 200 -
+2024-02-25 15:15:09,452 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:15:09] "GET /diet HTTP/1.1" 200 -
+2024-02-25 15:15:28,058 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:15:28] "GET /sleep HTTP/1.1" 200 -
+2024-02-25 15:15:28,996 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:15:28] "GET /diet HTTP/1.1" 200 -
+2024-02-25 15:15:41,940 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:15:41] "GET /fitness HTTP/1.1" 200 -
+2024-02-25 15:15:42,943 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:15:42] "GET /diet HTTP/1.1" 200 -
+2024-02-25 15:17:09,126 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:17:09] "GET /sleep HTTP/1.1" 200 -
+2024-02-25 15:17:09,858 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:17:09] "GET /weight HTTP/1.1" 200 -
+2024-02-25 15:17:10,357 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:17:10] "GET /goals HTTP/1.1" 200 -
+2024-02-25 15:17:11,177 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:17:11] "GET /diet HTTP/1.1" 200 -
+2024-02-25 15:18:45,935 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:18:45] "GET /fitness HTTP/1.1" 200 -
+2024-02-25 15:18:46,606 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:18:46] "GET /sleep HTTP/1.1" 200 -
+2024-02-25 15:18:47,275 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:18:47] "GET /diet HTTP/1.1" 200 -
+2024-02-25 15:18:48,870 INFO root : Resetting the StreakType.EXERCISE streak to 0 for test
+2024-02-25 15:18:48,887 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:18:48] "GET / HTTP/1.1" 200 -
+2024-02-25 15:18:49,780 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:18:49] "GET /fitness HTTP/1.1" 200 -
+2024-02-25 15:18:50,704 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:18:50] "GET /diet HTTP/1.1" 200 -
+2024-02-25 15:18:51,735 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:18:51] "GET /fitness HTTP/1.1" 200 -
+2024-02-25 15:18:58,066 DEBUG urllib3.connectionpool : Starting new HTTPS connection (1): trackapi.nutritionix.com:443
+2024-02-25 15:18:59,465 DEBUG urllib3.connectionpool : https://trackapi.nutritionix.com:443 "POST /v2/natural/exercise HTTP/1.1" 200 293
+2024-02-25 15:18:59,469 INFO app : Query: {'query': 'football for 15 minutes and 0 hours'}, Response: {'exercises': [{'tag_id': 269, 'user_input': 'football', 'duration_min': 15, 'met': 8, 'nf_calories': 140, 'photo': {'highres': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/269_highres.jpg', 'thumb': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/269_thumb.jpg', 'is_user_uploaded': False}, 'compendium_code': 15210, 'name': 'american football', 'description': None, 'benefits': None}, {'tag_id': 100, 'user_input': 'walking', 'duration_min': 0, 'met': 3.5, 'nf_calories': 0, 'photo': {'highres': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_highres.jpg', 'thumb': 'https://d2xdmhkmkbyw75.cloudfront.net/exercise/100_thumb.jpg', 'is_user_uploaded': False}, 'compendium_code': 17190, 'name': 'walking', 'description': None, 'benefits': None}]}
+2024-02-25 15:18:59,495 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 15:18:59] "POST /fitness HTTP/1.1" 200 -
+2024-02-25 19:52:50,243 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 19:52:50] "GET / HTTP/1.1" 200 -
+2024-02-25 19:52:52,893 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 19:52:52] "GET /login HTTP/1.1" 200 -
+2024-02-25 19:52:56,611 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 19:52:56] "GET /signup HTTP/1.1" 200 -
+2024-02-25 19:53:16,039 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 19:53:16] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2024-02-25 19:53:16,056 INFO werkzeug : 127.0.0.1 - - [25/Feb/2024 19:53:16] "GET /account_verification HTTP/1.1" 200 -

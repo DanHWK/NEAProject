@@ -1,6 +1,14 @@
 {% extends 'base.html' %} #Inherits the base html template
 <!doctype html>
 {% block body %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="alert alert-danger">
+    {{ messages[0] }}</a>.
+</div>
+{% endif %}
+{% endwith %}
+
 <h1> Diet </h1>
 <br>
 <h2> Add meal record </h2>
@@ -16,7 +24,8 @@
     <div class="form-group">
       <label for="meal_name">Meal name</label>
       <input type="text" class="form-control" id="meal_name" placeholder="Enter meal name" name = "meal_name" required>
-      <small class="form-text text-muted"> The serving size of the meal should also be specified before stating the type of food(e.g 50 grams of cheese) or else a default serving of 100 grams will be assumed </small>
+      <small class="form-text text-muted"> The serving size of the meal should also be specified before stating the type of food
+        (e.g 50 grams of cheese) or else a default serving of 100 grams will be assumed </small>
     </div>
 
 
@@ -44,17 +53,20 @@
 
     <div class="form-group">
       <label for="custom_meal_carbs"> Carbohydrates</label>
-      <input type="integer" class="form-control" id="custom_meal_carbs" name = "custom_meal_carbs" placeholder="Amount of carbs in grams (g)" required>
+      <input type="integer" class="form-control" id="custom_meal_carbs" name = "custom_meal_carbs"
+      placeholder="Amount of carbs in grams (g)" required>
     </div>
 
     <div class="form-group">
       <label for="custom_meal_protein"> Protein</label>
-      <input type="integer" class="form-control" id="custom_meal_protein" name = "custom_meal_protein" placeholder="Amount of protein in grams (g)" required>
+      <input type="integer" class="form-control" id="custom_meal_protein" name = "custom_meal_protein"
+      placeholder="Amount of protein in grams (g)" required>
     </div>
 
     <div class="form-group">
       <label for="custom_meal_fats"> Fats</label>
-      <input type="integer" class="form-control" id="custom_meal_carbs" name = "custom_meal_fats" placeholder="Amount of fats in grams (g)" required>
+      <input type="integer" class="form-control" id="custom_meal_carbs" name = "custom_meal_fats"
+      placeholder="Amount of fats in grams (g)" required>
     </div>
 
     <div class="form-group">
