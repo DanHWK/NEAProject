@@ -14,16 +14,12 @@ from flask_mail import Mail, Message
 import secrets
 from flask_hashing import Hashing
 from sqlalchemy import delete
-
 #Initialise app
 app = Flask(__name__)
-
-
 #Gets the app configured for the databases.
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///record.db'
 #Configures the app to the secret key and allows it to use sessions to store user information.
 app.config['SECRET_KEY'] = b'3733939879b55267c99dee411ca3c0369437268c9781771dcd258859f270292a'
-
 #Configures the app to send emails to mailtrap
 app.config['MAIL_SERVER']='sandbox.smtp.mailtrap.io'
 app.config['MAIL_PORT'] = 2525
@@ -31,7 +27,6 @@ app.config['MAIL_USERNAME'] = '5d0778c9ab4b8c'
 app.config['MAIL_PASSWORD'] = 'e5e5b5d527f28a'
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
-
 #Before a request create a session and set its lifetime to 30 minutes
 #after this amount of time has passed the user will be logged out
 @app.before_request
@@ -39,7 +34,6 @@ def before_request():
     session.permanent = True
     app.permanent_session_lifetime = timedelta(minutes=30)
     session.modified = True
-
 with app.app_context():
     db.init_app(app) #Configuring the application to support the db, needed because db is defined globally.
     db.drop_all()
@@ -64,6 +58,10 @@ with app.app_context():
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    return redirect(url_for('login'))
 
 def sum(list, key):
     ''' Gets the sum value of the key passed in
@@ -429,13 +427,14 @@ def signup():
         #Store token, hashed password and token expiry time in the database
         Email_Verification_Record = EmailVerification(token = Hashed_Token, token_expiry = datetime.now() + timedelta(minutes = 15),
         email = email, password= Hashed_Password)
+
         db.session.add(Email_Verification_Record)
         db.session.commit()
 
         #Send email to the user with the token
         try:
             Email_Verification_Message = Message("Email verification", sender = 'noreply@gmail.com', recipients = [email])
-            Email_Verification_Message.body = ("To verify yout email copy and paste the token into"
+            Email_Verification_Message.body = ("To verify your email copy and paste the token into"
             f"it's respective input box before it expires in 15 minutes: {original_token}")
             mail.send(Email_Verification_Message)
 
@@ -551,7 +550,7 @@ def reset():
             flash('Token is invalid')
             return render_template("reset.html")
 
-        if datetime.now() > Email_Verification_Record.token_expiry:
+        if datetime.now() > Reset_Password_data.token_expiry:
             flash('Token is expired')
             #Deletes the user's email verification record from the database
             EmailVerification.query.filter_by(email=session.get("email")).delete()
